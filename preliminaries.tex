@@ -1,10 +1,25 @@
 \section{Mathematics}
 
-% total order relation
-% set partition
-% primes n..2n
+\begin{defn}
+A total order over set $X$ is a binary relation $\succ$ on $X$ which~is:
+\begin{itemize}
+	\item transitive, i.e. $\forall a,b,c \in X a \succ b \land b \succ c \Rightarrow a \succ c$,
+	\item antisymmetric, i.e. $\forall a,b \in X a \succ b \land b \succ a \Rightarrow a=b $,
+	\item total, i.e. $\forall a,b \in X a \succ b \lor b \succ a$.
+\end{itemize}
+\end{defn}
 
+\begin{defn}
+A partition of a set $X$ is a family of non-empty subsets
+such that every element in $X$ is in exactly one of these subsets.
+\end{defn}
+
+\begin{thm}[Bertrand–Chebyshev]
+For any integer $n>1$ there always exists at least one prime $p$ such that $n < p < 2n$.
+\end{thm}
 
 \section{Complexity Theory}
 
 % p, np, np-completness
+
+\section{Elections} \input{"elections.tex"}

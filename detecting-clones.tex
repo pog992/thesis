@@ -14,13 +14,35 @@
 %\usepackage{indentfirst}
 %\setcounter{secnumdepth}{0}
 
+\usepackage{amsmath}
+\newcommand{\card}[1]{\ensuremath{\left\|#1\right\|}}
+
+
 \usepackage{amsthm}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{exmp}[thm]{Example} % same for example numbers
 
 
 \author{Szymon Gut\\\newline\\supervisor:\\dr hab. inż. Piotr Faliszewski}
 
 \title{\textsc{The Computational Complexity of~Detecting Clones in Elections}}
 \date{}
+
+
+\usepackage{environ}
+
+\NewEnviron{problem}[1]{%
+\begin{center}\fbox{\parbox{\linewidth}{%
+    {\centering\scshape #1\par}%
+    \parskip=1ex
+    \everypar{\hangindent=1em}%
+    \BODY
+}}\end{center}}
 
 \begin{document}
 
@@ -42,7 +64,7 @@ Finally, we prove that optimal decloning for~sample error function is $NP$-compl
 
 \chapter{Introduction} \input{"introduction.tex"}
 \chapter{Preliminaries} \input{"preliminaries.tex"}
-\chapter{Elections}	\input{"elections.tex"}
+%\chapter{Elections}	\input{"elections.tex"}
 
 \chapter{Decloning} \input{"decloning.tex"}
 \chapter{Imperfect Clones} \input{"imperfect.tex"}
