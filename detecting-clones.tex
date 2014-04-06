@@ -1,0 +1,65 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[utf8]{inputenc}
+%\usepackage{polski}
+%\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+%\usepackage[latin2]{inputenc} 
+
+
+%\usepackage[unicode]{hyperref}
+
+%\usepackage{url}
+%\usepackage{listings}
+
+%\usepackage{indentfirst}
+%\setcounter{secnumdepth}{0}
+
+\usepackage{amsthm}
+
+
+\author{Szymon Gut\\\newline\\supervisor:\\dr hab. inż. Piotr Faliszewski}
+
+\title{\textsc{The Computational Complexity of~Detecting Clones in Elections}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+\abstract{
+In elections, a subset of candidates ranked consecutively (though possibly in~different order)
+by all voters is called a clone set, and its members are called clones.
+A clone structure is a family of all clone sets of a given election.
+In~this work we study the problem of decloning, i.e. finding the clone structure of given cardinality.
+We give a polynomial-time algorithm for decloning problem.
+We also consider decloning into imperfect clone structure: we define error function measuring
+cost of turning given clone sets family into clone structure.
+Finally, we prove that optimal decloning for~sample error function is $NP$-complete.
+}
+
+\tableofcontents
+
+\chapter{Introduction} \input{"introduction.tex"}
+\chapter{Preliminaries} \input{"preliminaries.tex"}
+\chapter{Elections}	\input{"elections.tex"}
+
+\chapter{Decloning} \input{"decloning.tex"}
+\chapter{Imperfect Clones} \input{"imperfect.tex"}
+
+\chapter{Summary} \input{"summary.tex"}
+
+
+
+\begin{thebibliography}{9}
+
+%\bibitem{lamport94}
+%  Leslie Lamport,
+%  \emph{\LaTeX: A Document Preparation System}.
+%  Addison Wesley, Massachusetts,
+%  2nd Edition,
+%  1994.
+
+\end{thebibliography}
+
+\end{document}
