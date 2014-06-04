@@ -48,13 +48,16 @@ For any integer $n>1$ there always exists at least one prime $p$ such that $n < 
 
 
 \begin{defn}
-We say that a function $f:\mathbb{R}\rightarrow\mathbb{R}$ is convex on an interval $I \subset \mathbb{R}$
-if for each $x_1, x_2 \in I$ and $t \in [0,1]$ occurs $f(t x_1 + (1-t) x_2) \leq tf(x_1) + (1-t)f(x_2)$.
+We say that a function $f:\mathbb{R}\rightarrow\mathbb{R}$ is strictly convex on an interval $I \subset \mathbb{R}$
+if for each $x_1, x_2 \in I$ and $t \in [0,1]$ occurs $f(t x_1 + (1-t) x_2) < tf(x_1) + (1-t)f(x_2)$.
 \end{defn}
 
+The following is a convenient way of proving that a function is strictly convex.
+
 \begin{prp}
-A twice differentiable function $f:\mathbb{R}\rightarrow\mathbb{R}$ is convex on an interval $I \subset \mathbb{R}$
-if and only if for each $x \in I$ occurs $f''(x) \geq 0$.
+A twice differentiable function $f:\mathbb{R}\rightarrow\mathbb{R}$
+that for each $x$ on interval $I \subset \mathbb{R}$ has $f''(x) > 0$
+is strictly convex on $I$.
 \end{prp}
 
 \begin{defn}
@@ -68,15 +71,78 @@ if the following conditions are met:
 \end{itemize}
 \end{defn}
 
-\begin{thm}[Karamata's inequality]
-If $f:\mathbb{R}\rightarrow\mathbb{R}$ is convex on interval~$I$
-and $(a_i) \in I^n$ majorizes $(b_i) \in I^n$ then
-$\sum_{i=1}^n f(a_i) \geq \sum_{i=1}^n f(b_i)$.
+\begin{thm}[Karamata's inequality] \label{thm:Kar}
+If function $f:\mathbb{R}\rightarrow\mathbb{R}$ is strictly convex on interval~$I \subset \mathbb{R}$,
+sequence $(a_i) \in I^n$ majorizes sequence $(b_i) \in I^n$ and $(a_i) \neq (b_i)$, then
+$\sum_{i=1}^n f(a_i) > \sum_{i=1}^n f(b_i)$.
 \end{thm}
 
 
 \section{Complexity Theory}
 
 % p, np, np-completness
+
+%A reduction is an algorithm that transforms a problem into another one.
+%Given an instance
+
+
+\begin{problem}{Clique}
+    Input: Graph $G = (V, E)$, integer $c$.
+
+    Question: Is there a subgraph of $G$ that is a clique of size $c$?
+\end{problem}
+
+\begin{thm}
+\textsc{Clique} is $NP$-complete.
+\end{thm}
+
+
+We will show a sample $NP$-completeness proof using the method of reduction.
+
+\begin{problem}{GraphPartition}
+Input: Graph $G = (V, E)$, integer $k$ and $l$.
+
+Question: Is it possible to partition $V$ into $k$ parts so that the number of edges
+whose vertices belong to the same part is at least $l$?
+\end{problem}
+
+We will call an edge whose vertices belong to the same part an internal edge
+and the set of all internal edges an intra-part edges.
+
+\begin{thm}
+\textsc{GraphPartition} is $NP$-complete.
+\end{thm}
+
+\begin{proof}
+\textsc{GraphPartition} is clearly in $NP$,
+as given the partition we may verify its properties in a polynomial time.
+To prove $NP$-hardness we will show a reduction from the \textsc{Clique} problem.
+
+We are given graph $G$ and integer $c$.
+Let us denote $n = \left\vert{S}\right\vert $.
+Let us leave $G$ unchanged and take $k = n-c+1$ and $l = c(c-1)/2$.
+We will show that this is a valid reduction to \textsc{GraphPartition}.
+
+Let us first consider the case when the answer to the \textsc{Clique} problem is yes,
+i.e. $G$ contains clique consisting of vertices $C$, $\left\vert{C}\right\vert = c$.
+We may then partition $V$ into $k$ parts: $C$ and $n-c$ singletons of each vertex in $V \backslash C$.
+The number of intra-part edges equals $c(c-1)/2$ for part $C$ and $0$ for remaining parts.
+This gives $l$ in total, so the answer to \textsc{GraphPartition} problem is also yes.
+
+Now it suffices to show that when there is no $c$-sized clique in $G$
+the answer to the reduced problem is no.
+In that case every $c$-sized part of $V$ has less than $l$ internal edges,
+so partitioning $V$ into $k$ parts of sizes $(c, 1, ..., 1)$ will lead to less than $l$ intra-part edges.
+Now let us consider partitioning $P$ into parts that form a different sequence $S$ of sizes.
+Let us denote the number of intra-part edges in $P$ by $e$.
+Every part of size $m$ has at most $f(m) = m(m-1)/2$ internal edges,
+this number is reached only when a part forms a clique.
+Function $f$ is strictly convex, because $f''(x) = 1 > 0$ and $(c,1,...,1)$ majorizes $s$,
+so we can use inequality \ref{thm:Kar} for $f$ and both sequences.
+This gives us the following upper limit on $e$:
+$$e \leq \sum_{s\in{S}} f(s) < f(c) + f(1) + ... + f(1) = l$$
+We thus get that each partition has less than $l$ internal edges,
+so the answer to the \textsc{GraphPartition} problem remains no.
+\end{proof}
 
 \section{Elections} \input{"elections.tex"}
