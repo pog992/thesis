@@ -1,3 +1,9 @@
+In this chapter we present briefly basic concepts and facts to be used later in the thesis.
+It is divided into three sections.
+First one is a short revision of necessary mathematics.
+Second section build intuition regarding computational complexity theory.
+Finally in the last section we formally introduce notions connected to cloning in elections.
+
 \section{Mathematics}
 
 \begin{defn}
@@ -9,14 +15,65 @@ A total order over set $X$ is a binary relation $\succ$ on $X$ which~is:
 \end{itemize}
 \end{defn}
 
+
 \begin{defn}
-A partition of a set $X$ is a family of non-empty subsets
-such that every element in $X$ is in exactly one of these subsets.
+A partition of a set $X$ is a family $F$ of non-empty subsets of $X$
+such that for every $a \in X$ there is exactly one $Y \in F$ such that $a \in Y$.
 \end{defn}
+
+
+\begin{defn}
+A graph $G$ is an ordered pair $(V,E)$ of set $V$ of nodes
+and set $E$ of edges, which are 2-element subsets of $V$.
+\end{defn}
+
+\begin{defn}
+A multigraph $G$ is an ordered pair $(V,E$) of set $V$ of nodes
+and multiset $E$ of edges, which are 2-element subsets of $V$.
+\end{defn}
+
+%\begin{defn}
+%A path in a graph or multigraph $G=(V,E)$ is a 
+%\end{defn}
+
+%\begin{defn}
+%A Hamiltonian path is ...
+%\end{defn}
+
 
 \begin{thm}[Bertrand–Chebyshev]
 For any integer $n>1$ there always exists at least one prime $p$ such that $n < p < 2n$.
 \end{thm}
+
+
+
+\begin{defn}
+We say that a function $f:\mathbb{R}\rightarrow\mathbb{R}$ is convex on an interval $I \subset \mathbb{R}$
+if for each $x_1, x_2 \in I$ and $t \in [0,1]$ occurs $f(t x_1 + (1-t) x_2) \leq tf(x_1) + (1-t)f(x_2)$.
+\end{defn}
+
+\begin{prp}
+A twice differentiable function $f:\mathbb{R}\rightarrow\mathbb{R}$ is convex on an interval $I \subset \mathbb{R}$
+if and only if for each $x \in I$ occurs $f''(x) \geq 0$.
+\end{prp}
+
+\begin{defn}
+We say that sequence $(a_1, ..., a_n) \in \mathbb{R}^n$ majorizes sequence $(b_1, ..., b_n) \in \mathbb{R}^n$
+if the following conditions are met:
+\begin{itemize}
+	\item $a_1 \geq a_2 \geq ... \geq a_n$,
+	\item $b_1 \geq b_2 \geq ... \geq b_n$,
+	\item $\sum_{i=1}^n a_i = \sum_{i=1}^n b_i$,
+	\item $\sum_{i=1}^k a_i \geq \sum_{i=1}^k b_i$ $\forall k \in \{ 1, ..., n\}$.
+\end{itemize}
+\end{defn}
+
+\begin{thm}[Karamata's inequality]
+If $f:\mathbb{R}\rightarrow\mathbb{R}$ is convex on interval~$I$
+and $(a_i) \in I^n$ majorizes $(b_i) \in I^n$ then
+$\sum_{i=1}^n f(a_i) \geq \sum_{i=1}^n f(b_i)$.
+\end{thm}
+
 
 \section{Complexity Theory}
 
