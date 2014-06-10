@@ -6,7 +6,7 @@ Finally in the last section we formally introduce notions connected to cloning i
 
 \section{Mathematics}
 
-\begin{defn}
+\begin{defn}[total order]
 A total order over set $X$ is a binary relation $\succ$ on $X$ which~is:
 \begin{itemize}
 	\item transitive, i.e. $\forall a,b,c \in X a \succ b \land b \succ c \Rightarrow a \succ c$,
@@ -16,18 +16,18 @@ A total order over set $X$ is a binary relation $\succ$ on $X$ which~is:
 \end{defn}
 
 
-\begin{defn}
+\begin{defn}[set partition]
 A partition of a set $X$ is a family $F$ of non-empty subsets of $X$
 such that for every $a \in X$ there is exactly one $Y \in F$ such that $a \in Y$.
 \end{defn}
 
 
-\begin{defn}
+\begin{defn}[graph]
 A graph $G$ is an ordered pair $(V,E)$ of set $V$ of nodes
 and set $E$ of edges, which are 2-element subsets of $V$.
 \end{defn}
 
-\begin{defn}
+\begin{defn}[multigraph]
 A multigraph $G$ is an ordered pair $(V,E$) of set $V$ of nodes
 and multiset $E$ of edges, which are 2-element subsets of $V$.
 \end{defn}
@@ -47,7 +47,7 @@ For any integer $n>1$ there always exists at least one prime $p$ such that $n < 
 
 
 
-\begin{defn}
+\begin{defn}[strictly convex function]
 We say that a function $f:\mathbb{R}\rightarrow\mathbb{R}$ is strictly convex on an interval $I \subset \mathbb{R}$
 if for each $x_1, x_2 \in I$ and $t \in [0,1]$ occurs $f(t x_1 + (1-t) x_2) < tf(x_1) + (1-t)f(x_2)$.
 \end{defn}
@@ -60,7 +60,7 @@ that for each $x$ on interval $I \subset \mathbb{R}$ has $f''(x) > 0$
 is strictly convex on $I$.
 \end{prp}
 
-\begin{defn}
+\begin{defn}[majorization]
 We say that sequence $(a_1, ..., a_n) \in \mathbb{R}^n$ majorizes sequence $(b_1, ..., b_n) \in \mathbb{R}^n$
 if the following conditions are met:
 \begin{itemize}
@@ -84,6 +84,16 @@ $\sum_{i=1}^n f(a_i) > \sum_{i=1}^n f(b_i)$.
 
 %A reduction is an algorithm that transforms a problem into another one.
 %Given an instance
+
+\begin{problem}{Exact3Cover (X3C)}
+	Input: Collection $S$ of three-element subsets of set $X$, $\vert{X}\vert = 3n$.
+
+	Question: Is there an $n$-element subset $A \subset S$ such that $\bigcup A = S$?
+\end{problem}
+
+\begin{thm}
+\textsc{X3C} is $NP$-complete.
+\end{thm}
 
 
 \begin{problem}{Clique}

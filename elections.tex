@@ -1,15 +1,29 @@
-\begin{defn}
+Elections is a situation when a set of voters collaboratively chooses one or many winners from multiple candidates.
+In order to model views of each voter we assume that each voter has his full preference order over the set of candidates.
+This model is general enough to describe special cases when we care only for some first or last candidates for every voter.
+It assumes the ability of each voter to arrange all candidates according to his preferences.
+On the other hand, it fails to express the situation when a voter perceives that some differences
+between his consecutive candidates are bigger than others, e.g. statement like:
+\textit{candidates A and B are fine, with A slightly better than B, but C and D are absolutely not acceptable}.
+
+\begin{defn}[preference order]
 Given a finite candidate set $C$ a preference order over $C$
 is~a~total order over $C$.
 \end{defn}
 
-%\newtheorem{preference profile}[preference]{Definition}
-\begin{defn}
+\begin{defn}[preference profile]
 Preference profile $P = (\succ_1, ... , \succ_n)$ for given candidate set $C$
 is a sequence of $n$ preference orders over $C$,
 where each $\succ_i, 1 \leq i \leq n$ represents preference order of $i$-th voter.
 \end{defn}
 
 
-
-%Example.
+\begin{exmp}
+For a candidate set $C = \{1, 2, 3, 4\}$ we have that $P = (\succ_1, \succ_2, \succ_3)$ with
+\begin{align*}
+1 \succ_1 2 \succ_1 3 \succ_1 4 \\
+2 \succ_2 4 \succ_2 3 \succ_2 1	\\
+1 \succ_3 2 \succ_3 4 \succ_3 3
+\end{align*}
+is a preference profile over $C$.
+\end{exmp}

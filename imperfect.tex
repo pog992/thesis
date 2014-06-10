@@ -1,3 +1,38 @@
-% formulation of problem
-% error functions
-% example error function and proof
+The problem of \textsc{Decloning} turned out to be simple in the sense of $P$ vs. $NP$-hard.
+%However,
+
+
+\begin{defn}[clone set error function]
+Given a preference profile $P$ over $C$ we say that a function $f: 2^C \rightarrow \mathbb{R}_+\cup\{0\}$
+is a clone set error function for $P$ when $f(X) = 0$ iff $X$ is a clone set for $P$.
+\end{defn}
+
+\begin{problem}{OptimalDecloning}
+	Input: Preference profile $P$ over $C$, clone set error function $f$,
+		integer $k$, positive real number $l$.
+
+	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f(C_i) \leq l$?
+\end{problem}
+
+\begin{thm} \label{optdecl}
+	\textsc{OptimalDecloning} is $NP$-complete.
+\end{thm}
+
+\begin{lmm}
+	Preference profle $P = (\succ_1, ... , \succ_n)$ over $C = \{1, ..., n\}$
+	where for each $i=1,...,n$ we have
+	$$i \succ_i i+1 \succ_i ... \succ_i n \succ_i 1 \succ_i 2 \succ_i ... \succ_i i-1$$
+	has no non-trivial clone sets.
+\end{lmm}
+
+\begin{proof}[Proof by contradiction]
+Let us consider a non-trivial clone set $X$ for $P$.
+It is a contiguous subsequence of preference order $\succ_1$, so $X = \{i,...,j\}$ for some $i,j \in C$.
+Clone set $X$ is not trivial, so both $i\neq{j}$ and $X\neq{C}$.
+Let us notice that $X$ is not contiguous on the preference order $\succ_{i+1}$.
+Subset $X$ is thus not a clone set for $P$.
+\end{proof}
+
+\begin{proof}[Proof of \ref{optdecl}]
+We will show a reduction from the \textsc{X3C} problem.
+\end{proof}
