@@ -14,6 +14,34 @@ if for each $k,l \in X$, each $a \in C \backslash X$ and each $1 \leq i \leq n $
 $k \succ_i a$ iff $l \succ_i a$.
 \end{defn}
 
+\begin{exmp} \label{clone-sets}
+Let us consider a candidate set $C = \{a,b,c,d,e,f\}$
+and a preference profile $P = (\succ_1, \succ_2, \succ_3, \succ_4)$ defined by the following relations:
+\begin{align*}
+a \succ_1 b \succ_1 c \succ_1 d \succ_1 e \succ_1 f, \\
+b \succ_2 c \succ_2 a \succ_2 d \succ_2 f \succ_2 e, \\
+e \succ_3 f \succ_3 c \succ_3 b \succ_3 a \succ_3 d, \\
+e \succ_4 f \succ_4 e \succ_4 a \succ_4 c \succ_4 b.
+\end{align*}
+In this case we have the following clone sets:
+$$\{a,b,c,d,e,f\}, \{a\}, \{b\}, \{c\}, \{d\}, \{e\}, \{f\}, \{a,b,c\}, \{e,f\}, \{b,c\}.$$
+\end{exmp}
+
+\begin{rmrk}
+Let us notice that for any preference profile $P$ over candidate set $C$
+we have that each $c \in C$ and $C$ itself is a clone set.
+\end{rmrk}
+
+\begin{defn}[trivial clone set]
+Given a candidate set $C$ we say that $X$ is a trivial clone set
+when $X \in C$ or $X = C$.
+\end{defn}
+
+\begin{exmp}
+In the example \ref{clone-sets} the only non-trivial clone sets were
+$\{a,b,c\}$, $\{e,f\}$ and $\{b,c\}$.
+\end{exmp}
+
 \begin{defn}[decloning]
 We call a decloning for preference profile $P$ over $C$
 such a partition of $C$  into $C_1, ... , C_k$
@@ -27,13 +55,13 @@ that for each $1 \leq i \leq k$ $C_i$ is a clone set for $P$.
     Question: Is there a decloning for $P$ with cardinality $k$?
 \end{problem}
 
-$$
-pos(i) =
-    \begin{cases}
-        \top & \text{if $i=0$ or } \exists X \in clones(i): p(i - \card{X}) \\
-        \bot & \text{otherwise.}
-    \end{cases}
-$$
+%$$
+%pos(i) =
+%    \begin{cases}
+%        \top & \text{if $i=0$ or } \exists X \in clones(i): p(i - \card{X}) \\
+%        \bot & \text{otherwise.}
+%    \end{cases}
+%$$
 
 \begin{thm}
 \textsc{Decloning} is in $P$.
