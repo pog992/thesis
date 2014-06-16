@@ -18,9 +18,14 @@
 %\setcounter{secnumdepth}{0}
 
 \usepackage{amsmath}
-\newcommand{\card}[1]{\ensuremath{\left\|#1\right\|}}
+%\newcommand{\card}[1]{\ensuremath{\left\|#1\right\|}}
 \usepackage{amssymb}
 \usepackage{amsthm}
+
+\makeatletter
+% \def\@endtheorem{\endtrivlist\@endpefalse }% OLD
+\def\@endtheorem{\endtrivlist}% NEW
+\makeatother
 
 \theoremstyle{plain}
 \newtheorem{thm}{Theorem}[chapter] % reset theorem numbering for each chapter
