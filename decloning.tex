@@ -7,7 +7,6 @@ We also introduce the problem of detecting clones and show an efficient algorith
 
 We are interested in a situation when some candidates are indistinguishable for voters.
 In that case every voter ranks them consecutively.
-% TODO: consecutive ranking as a remark
 
 \begin{defn}[clone set]
 We say that non-empty $X \subseteq C$ is a clone set for preference profile $P = (\succ_1, ... , \succ_n)$ over $C$,
@@ -49,9 +48,23 @@ such a partition of $C$  into $C_1, ... , C_k$
 that for each $1 \leq i \leq k$ $C_i$ is a clone set for $P$.
 \end{defn}
 
+\begin{exmp}
+In the example \ref{clone-sets} some of the possible declonings are:
+$$
+\big\{ \{a,b,c\}, \{d\}, \{e,f\} \big\} \text{, }
+\big\{ \{a\}, \{b,c\}, \{d\}, \{e\}, \{f\} \big\} \text{, }
+\big\{ \{a,b,c,d,e,f\} \big\} \text{.}
+$$
+\end{exmp}
+
+\begin{rmrk} \label{sequence-split}
+Let us note that a decloning corresponds to some splitting into parts
+the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g. first voter).
+\end{rmrk}
+
 
 \begin{problem}{Decloning}
-    Input: preference profile $P$, integer $k$
+    Input: preference profile $P$ for candidate set $C$, integer $k$
 
     Question: Is there a decloning for $P$ with cardinality $k$?
 \end{problem}
@@ -67,3 +80,37 @@ that for each $1 \leq i \leq k$ $C_i$ is a clone set for $P$.
 \begin{thm}
 \textsc{Decloning} is in $P$.
 \end{thm}
+
+\begin{proof}
+We will show a polynomial algorithm for the \textsc{Decloning} problem.
+
+Let us denote candidate set as $C = \{c_1, ..., c_n\}$ and preference profile as $P = (\succ_1, ... , \succ_n)$.
+Without loss of generality let us assume that $c_1 \succ_1 c_2 \succ_1 ... \succ_1 c_n$.
+We will use the remark \ref{sequence-split} to split the sequence $(c_1, ..., c_n)$
+into $k$ parts to obtain a decloning for~$P$.
+
+Let us define a helper predicate $IsCloneSet: 2^C \rightarrow \{true,false\}$
+such that $IsCloneSet(X) = true$ iff $X$ is a clone set for $P$.
+It is easy to see that $IsCloneSet$ is computable in polynomial time
+using either simple brute-force method or any more sophisticated algorithm.
+
+% TODO ranges
+Now let us define another predicate $IsDeclonable: \{1,...,n\}\times\{1,...,k\} \rightarrow \{true,false\}$
+such that $IsDeclonable(i,j)= true$ iff there is a decloning for $P$ over reduced candidate set $\{c_1,...,c_i\}$
+with cardinality $j$.
+Predicate $IsDeclonable$ can be computed with the following recursive formula:
+$$ IsDeclonable(i,j) =
+\begin{cases}
+true,	&\text{when} j=1 \\
+IsCloneSet(\{c_i\}) \wedge IsDeclonable(i-1,j-1) \vee \\
+IsCloneSet(\{c_{i-1},c_i\}) \wedge IsDeclonable(i-2, j-1) \vee \\
+... \vee \\
+IsCloneSet(\{c_2,...,c_i\}) \wedge IsDeclonable(1,j-1)
+, 		&\text{when} j>1
+\end{cases}
+$$
+
+Direct implementation of this recursion with memoizing
+results in a polynomial-time algorithm that computes the value $IsDeclonable(n,k)$
+solving the \textsc{Decloning} problem.
+\end{proof}
