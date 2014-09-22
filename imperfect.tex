@@ -87,3 +87,34 @@ iff the answer to \textsc{X3C} is~\textsc{yes}.
 
 
 \section{Specific Error Functions}
+
+Let us try to fix a value of error function input to \textsc{OptimalDecloning} problem
+treating it as if it was hardcoded into the specification of the new problem.
+
+% good error function discussion
+
+% intuition for f_com
+
+\begin{defn}[component error function]
+Let us define for given preference profile $P = (\succ_1, ..., \succ_m)$ over candidate set $C$
+a function $f_{com}: 2^C \rightarrow \mathbb{N}_0$ with the following formula:
+$$ f_{com}(X) = \sum_{i=1}^m \left( \abs{X}-1 -
+\abs{\left\lbrace \left( a,b \right) \in X^2 : a \overline{\succ}_i b \right\rbrace }
+\right) \text{.}$$
+\end{defn}
+
+\begin{rmrk}
+Function $f_{com}$ for preference profile $P$ is a clone set error function for $P$.
+\end{rmrk}
+
+\begin{problem}{ComponentOptimalDecloning}
+	Input: Preference profile $P$ over $C$, integers $k$ and $l$.
+
+	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f_{com}(C_i) \leq l$?
+\end{problem}
+
+% graph interpretation
+
+\begin{thm}
+\textsc{ComponentOptimalDecloning} is $NP$-complete.
+\end{thm}
