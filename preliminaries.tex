@@ -174,12 +174,12 @@ as given the partition we may verify its properties in a polynomial time.
 To prove $NP$-hardness we will show a reduction from the \textsc{Clique} problem.
 
 We are given graph $G$ and integer $c$.
-Let us denote $n = \left\vert{S}\right\vert $.
+Let us denote $n = \abs{S}$.
 Let us leave $G$ unchanged and take $k = n-c+1$ and $l = c(c-1)/2$.
 We will show that this is a valid reduction to \textsc{GraphPartition}.
 
 Let us first consider the case when the answer to the \textsc{Clique} problem is yes,
-i.e. $G$ contains clique consisting of vertices $C$, $\left\vert{C}\right\vert = c$.
+i.e. $G$ contains clique consisting of vertices $C$, $\abs{C} = c$.
 We may then partition $V$ into $k$ parts: $C$ and $n-c$ singletons of each vertex in $V \backslash C$.
 The number of intra-part edges equals $c(c-1)/2$ for part $C$ and $0$ for remaining parts.
 This gives $l$ in total, so the answer to \textsc{GraphPartition} problem is also yes.

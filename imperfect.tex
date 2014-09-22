@@ -54,12 +54,12 @@ We are given set $X$, collection $S$ and integer $n$.
 Let us take clone set $C = X$ and function $f:2^C\rightarrow \{0,1,n+1\}$ such that:
 $$ f(X) =
 \begin{cases}
-0, &\text{when} \left\vert{X}\right\vert \in \{1,3n\} \\
+0, &\text{when} \abs{X} \in \{1,3n\} \\
 1, &\text{when} X \in S \\
 n+1, &\text{in other cases}
 \end{cases}
 $$
-Function $f$ is well-defined, because then $\left\vert{X}\right\vert = \not\in \{1,3n\}$.
+Function $f$ is well-defined, because then $\abs{X} = \not\in \{1,3n\}$.
 Let us take preference profile $P$ over $C$ as in lemma \ref{lmmnotrivial}.
 Function $f$ is a clone set error function for $P$, because $f(X) = 0$ iff $X$ is a trivial clone set
 and preference profile $P$ has no non-trivial clone sets.
@@ -67,13 +67,13 @@ Let us take $l=k=n$, what gives us all the inputs necessary for \textsc{OptimalD
 Let us check when the answer to this problem is \textsc{yes}.
 
 No part $X$ of the partition of $C$ can have $f(X)=n+1$, as it itself exceeds limit $l$.
-This means that every part $X$ either belongs to $S$ or has $\left\vert{X}\right\vert \in \{1,3n\}$.
-In both cases $\left\vert{X}\right\vert \in \{1,3,3n\}$.
+This means that every part $X$ either belongs to $S$ or has $\abs{X} \in \{1,3n\}$.
+In both cases $\abs{X} \in \{1,3,3n\}$.
 When $n>1$ ($n=1$ can be special-cased during the runtime of reduction) we cannot use $3n$-sized parts,
 as it yields only one part in partition while $k>1$.
 
-We are left with $\left\vert{X}\right\vert \in \{1,3\}$.
-Let us note that due to the specified size $k=n$ of partition and $\left\vert{C}\right\vert = 3n$
+We are left with $\abs{X} \in \{1,3\}$.
+Let us note that due to the specified size $k=n$ of partition and $\abs{C} = 3n$
 the partition can contain only three-element parts.
 This means that we may choose $X$ only from $S$.
 It is possible to construct a valid partition only when there is an $A \subset S$ satisfying the \textsc{X3C} problem.
