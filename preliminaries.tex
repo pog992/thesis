@@ -6,6 +6,10 @@ It also introduces some $NP$-complete computational problems for further use.
 
 This chapter might be skipped and used as a reference only when necessary.
 
+\section{Symbols}
+
+% natural, positive natural numbers, integers, real number, sum, ...
+
 \section{Mathematics}
 
 \begin{defn}[total order]
@@ -17,6 +21,28 @@ A total order over set $X$ is a binary relation $\succ$ on $X$ which~is:
 \end{itemize}
 \end{defn}
 
+\begin{defn}[transitive closure]
+Transitive closure $R^*$ of relation $R$ is a minimal transitive relation 
+such that $R^*$ is a superset of $R$.
+\end{defn}
+
+Given a total order $\succ$ over a finite set we may sort its elements into a sequence
+such that for every pair of elements former is in the relation $\succ$ with the latter.
+This sequence naturally induces another relation, namely relation $\overline{\succ}$
+between every two consecutive elements.
+We will call such a relation a kernel of $\overline{\succ}$.
+It is easy to recover $\succ$ from $\overline{\succ}$ simply by taking the transitive closure of $\succ$.
+
+\begin{defn}[kernel of total order]
+Given a total order $\succ$ over a finite set we say that $\overline{\succ}$ is its kernel when
+$\overline{\succ}$ is a minimal relation whose transitive closure equals $\succ$.
+\end{defn}
+
+\begin{exmp}
+Kernel of natural order $>$ over set $\{1,2,3,4\}$ is the relation
+$\overline{>} = \{(4,3), (3,2), (2,1)\}$.
+\end{exmp}
+
 \begin{defn}[set partition]
 A partition of a set $X$ is a family $F$ of non-empty subsets of $X$
 such that for every $a \in X$ there is exactly one $Y \in F$ such that $a \in Y$.
@@ -27,8 +53,14 @@ A predicate is a function $f$ with a codomain $\{true, false\}$,
 where $true$ is a logical truth and $false$ its negation.
 \end{defn}
 
+\begin{defn}[multiset]
+A multiset is a pair $M = (X, c)$, where $X$ is some set and $c:X \rightarrow \mathbb{N}_0$
+is a multiplicity function, i.e. $c(x)$ for $x \in X$ denotes the number of occurrences of $x$ in $M$.
+\end{defn}
 
-Let us revise some notions from graph theory.
+When the set $X$ is clear from the context we will informally call $c$ a multiset.
+
+Let us now revise some notions from graph theory.
 
 \begin{defn}[graph]
 A graph $G$ is an ordered pair $(V,E)$ of set $V$ of nodes
