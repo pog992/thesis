@@ -72,13 +72,16 @@ A multigraph $G$ is an ordered pair $(V,E$) of set $V$ of nodes
 and multiset $E$ of edges, which are 2-element subsets of $V$.
 \end{defn}
 
-%\begin{defn}
-%A path in a graph or multigraph $G=(V,E)$ is a 
-%\end{defn}
+\begin{defn}[induced subgraph]
+(Multi)graph $(V', E')$ is a sub(multi)graph of (multi)graph $(V,E)$ induced by $V'$
+iff $V' \subset V$, $E' \subset E$ and for each $u,v \in V'$ if $\{u,v\}\in E$ then $\{u,v\}\in E'$.
+\end{defn}
 
-%\begin{defn}
-%A Hamiltonian path is ...
-%\end{defn}
+\begin{defn}[Hamiltonian path]
+A Hamiltionian path in (multi)graph $(V,E)$ where $V = \{u_1, ..., u_n\}$
+is a sequence of edges $\{u_1, u_2\}, \{u_2, u_3\} ..., \{u_{n-1}, u_n\}$,
+i.e. for each $i=1,...,n-1$ we have $\{u_i, u_{i+1}\} \in E$.
+\end{defn}
 
 
 This theorem states that prime number are dense in an informal sense.

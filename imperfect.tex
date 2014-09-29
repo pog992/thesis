@@ -12,7 +12,8 @@ Now we drop this restriction and instead measure how different in some sense a p
 Of course, we require that this measure equals $0$ only for clone sets.
 
 \begin{defn}[clone set error function]
-Given a preference profile $P$ over $C$ we say that a function $f: 2^C \rightarrow \mathbb{R}_+\cup\{0\}$
+Given a preference profile $P$ over $C$ we say that a function
+$f: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{R}_+\cup\{0\}$
 is a clone set error function for $P$ when $f(X) = 0$ iff $X$ is a clone set for $P$.
 \end{defn}
 
@@ -110,10 +111,34 @@ Function $f_{com}$ for preference profile $P$ is a clone set error function for 
 \begin{problem}{ComponentOptimalDecloning}
 	Input: Preference profile $P$ over $C$, integers $k$ and $l$.
 
-	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f_{com}(C_i) \leq l$?
+	Question: Given than $f_{com}$ is a component error function for $P$,
+		is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f_{com}(C_i) \leq l$?
 \end{problem}
 
-% graph interpretation
+Given a preference profile $P = (\succ_1, ..., \succ_m)$ let us create now a multigraph $G=(C,E)$
+where $E$ is a multiset obtained by multisum
+of each $\{a,b\}$ such that $a,b \in P$ and $a \overline{\succ} b$ for some $\succ \in P$.
+We get a multigraph created from Hamiltonian path of each voter's preferences.
+Partitioning $C$ into $C_1,...,C_k$ corresponds to
+partitioning $G$ into submultigraphs $G_1,...,G_k$ induced by $C_1,...,C_k$ respectively.
+Let us denote by $c_{ij}$ part
+$\abs{\left\lbrace \left( a,b \right) \in C_i^2 : a \overline{\succ}_j b \right\rbrace }$
+of the formula of $f_{com}(C_i)$ such that
+$f_{com}(C_i) = \sum_{j=1}^m \left( \abs{C_i} - 1 - c_{ij} \right)$.
+We have that $c_{ij}$ is the number of edges from $j$-th voter's Hamiltonian path
+that connects two vertices from $C_i$.
+We will call such edges the $C_i$ intra-part edges.
+
+Now the error value equals:
+$$
+\sum_{i=1}^k f_{com}(C_i) =
+\sum_{i=1}^k \sum_{j=1}^m \left( \abs{C_i} - 1 - c_{ij} \right) =
+m \sum_{i=1}^k \abs{C_i} - m k - \sum_{i=1}^k \sum_{j=1}^m c_{ij} =
+m(n-k) - \sum_{j=i}^m \sum_{i=1}^k c_{ij}
+$$
+
+
+
 
 \begin{thm}
 \textsc{ComponentOptimalDecloning} is $NP$-complete.
