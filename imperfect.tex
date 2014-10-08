@@ -97,6 +97,25 @@ treating it as if it was hardcoded into the specification of the new problem.
 
 % intuition for f_com
 
+To formulate the definition of component error function we will need a definition of kernel of total order relation.
+
+Given a total order $\succ$ over a finite set we may sort its elements into a sequence
+such that for every pair of elements former is in the relation $\succ$ with the latter.
+This sequence naturally induces another relation, namely relation $\overline{\succ}$
+between every two consecutive elements.
+We will call such a relation a kernel of $\overline{\succ}$.
+It is easy to recover $\succ$ from $\overline{\succ}$ simply by taking the transitive closure of $\succ$.
+
+\begin{defn}[kernel of total order]
+Given a total order $\succ$ over a finite set we say that $\overline{\succ}$ is its kernel when
+$\overline{\succ}$ is a minimal relation whose transitive closure equals $\succ$.
+\end{defn}
+
+\begin{exmp}
+Kernel of natural order $>$ over set $\{1,2,3,4\}$ is the relation
+$\overline{>} = \{(4,3), (3,2), (2,1)\}$.
+\end{exmp}
+
 \begin{defn}[component error function]
 Let us define for given preference profile $P = (\succ_1, ..., \succ_m)$ over candidate set $C$
 a function $f_{com}: 2^C \rightarrow \mathbb{N}_0$ with the following formula:
