@@ -34,8 +34,8 @@ where we try to minimize the sum of errors of parts of candidate set partition.
 \end{thm}
 
 \begin{lmm} \label{lmmnotrivial}
-	Preference profle $P = (\succ_1, ... , \succ_n)$ over $C = \{1, ..., n\}$
-	where for each $i=1,...,n$ we have
+	Preference profle $P = (\succ_1, ... , \succ_m)$ over $C = \{1, ..., n\}$
+	where for each $i=1,...,m$ we have
 	$$i \succ_i i+1 \succ_i ... \succ_i n \succ_i 1 \succ_i 2 \succ_i ... \succ_i i-1$$
 	has no non-trivial clone sets.
 \end{lmm}
@@ -60,7 +60,8 @@ $$ f(X) =
 n+1, &\text{in other cases}
 \end{cases}
 $$
-Function $f$ is well-defined, because then $\abs{X} = \not\in \{1,3n\}$.
+Function $f$ is well-defined when $n>1$, because if $X \in S$ then $\abs{X} = 3 \not\in \{1,3n\}$.
+Condition $n=1$ can be special-cased during the runtime of reduction.
 Let us take preference profile $P$ over $C$ as in lemma \ref{lmmnotrivial}.
 Function $f$ is a clone set error function for $P$, because $f(X) = 0$ iff $X$ is a trivial clone set
 and preference profile $P$ has no non-trivial clone sets.
@@ -70,7 +71,7 @@ Let us check when the answer to this problem is \textsc{yes}.
 No part $X$ of the partition of $C$ can have $f(X)=n+1$, as it itself exceeds limit $l$.
 This means that every part $X$ either belongs to $S$ or has $\abs{X} \in \{1,3n\}$.
 In both cases $\abs{X} \in \{1,3,3n\}$.
-When $n>1$ ($n=1$ can be special-cased during the runtime of reduction) we cannot use $3n$-sized parts,
+When $n>1$ we cannot use $3n$-sized parts,
 as it yields only one part in partition while $k>1$.
 
 We are left with $\abs{X} \in \{1,3\}$.
