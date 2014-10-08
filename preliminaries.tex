@@ -26,22 +26,28 @@ Transitive closure $R^*$ of relation $R$ is a minimal transitive relation
 such that $R^*$ is a superset of $R$.
 \end{defn}
 
-\begin{defn}[set partition]
-A partition of a set $X$ is a family $F$ of non-empty subsets of $X$
-such that for every $a \in X$ there is exactly one $Y \in F$ such that $a \in Y$.
-\end{defn}
-
 \begin{defn}[predicate]
 A predicate is a function $f$ with a codomain $\{true, false\}$,
 where $true$ is a logical truth and $false$ its negation.
 \end{defn}
+
+A multiset is a generalization of the notion of set, it can hold multiple same elements.
 
 \begin{defn}[multiset]
 A multiset is a pair $M = (X, c)$, where $X$ is some set and $c:X \rightarrow \mathbb{N}_0$
 is a multiplicity function, i.e. $c(x)$ for $x \in X$ denotes the number of occurrences of $x$ in $M$.
 \end{defn}
 
-When the set $X$ is clear from the context we will informally call $c$ a multiset.
+We will say that $x \in M$ when $c(x) > 0$.
+We also say that $M_1 = (X, c_1)$ is a multiset sum of $M_2 = (X, c_2)$ and $M_3 = (X, c_3)$
+if for each $x \in X$ we have $c_1(x) = c_2(x) + c_3(x)$.
+
+When the set $X$ is clear from the context we will informally call $c$ itself a multiset.
+
+\begin{defn}[set partition]
+A partition of a set $X$ is a family $F$ of non-empty subsets of $X$
+such that for every $a \in X$ there is exactly one $Y \in F$ such that $a \in Y$.
+\end{defn}
 
 Let us now revise some notions from graph theory.
 
