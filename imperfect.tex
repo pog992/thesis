@@ -139,15 +139,23 @@ Given a preference profile $P = (\succ_1, ..., \succ_m)$ let us create now a mul
 where $E$ is a multiset obtained by multisum
 of each $\{a,b\}$ such that $a,b \in P$ and $a \overline{\succ} b$ for some $\succ \in P$.
 We get a multigraph created from Hamiltonian path of each voter's preferences.
+Let us call this a Hamiltonian path multigraph.
+
+\begin{defn}[Hamiltonian path multigraph]
+A multigraph $G=(V,E)$ is a Hamiltonian path multigraph if there exists a partition of $E$
+into sets of edges of Hamiltonian paths in $G$.
+\end{defn}
+
 Partitioning $C$ into $C_1,...,C_k$ corresponds to
-partitioning $G$ into submultigraphs $G_1,...,G_k$ induced by $C_1,...,C_k$ respectively.
+partitioning Hamiltonian path multigraph $G$ into submultigraphs $G_1,...,G_k$
+induced by $C_1,...,C_k$ respectively.
 Let us denote by $c_{ij}$ part
 $\abs{\left\lbrace \left( a,b \right) \in C_i^2 : a \overline{\succ}_j b \right\rbrace }$
 of the formula of $f_{com}(C_i)$ such that
 $f_{com}(C_i) = \sum_{j=1}^m \left( \abs{C_i} - 1 - c_{ij} \right)$.
 We have that $c_{ij}$ is the number of edges from $j$-th voter's Hamiltonian path
 that connects two vertices from $C_i$.
-We will call such edges the $C_i$ intra-part edges.
+We will call such edges the $C_i$ intra-part edges and edges that end in different parts the inter-part edges.
 
 Now the error value equals:
 $$
@@ -155,9 +163,19 @@ $$
 \sum_{i=1}^k \sum_{j=1}^m \left( \abs{C_i} - 1 - c_{ij} \right) =
 m \sum_{i=1}^k \abs{C_i} - m k - \sum_{i=1}^k \sum_{j=1}^m c_{ij} =
 m(n-k) - \sum_{j=i}^m \sum_{i=1}^k c_{ij}
-$$
+\text{.}$$
 
+Let us note that $\sum_{i=1}^k c_{ij}$ is the total number of $C_i$ intra-part edges
+and $\sum_{j=i}^m \sum_{i=1}^k c_{ij}$ is the total number of intra-part edges.
+As $m(n-k)$ is the number of all edges in multigraph $G$,
+we have that the error value equals the number of inter-part edges.
+% TODO score interpretation
 
+This lets us to formulate another problem which \textsc{ComponentOptimalDecloning} reduces to.
+
+\begin{defn}[partition score]
+
+\end{defn}
 
 
 \begin{thm}
