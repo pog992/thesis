@@ -6,7 +6,9 @@ We also introduce the problem of detecting clones and show an efficient algorith
 \section{Decloning}
 
 We are interested in a situation when some candidates are indistinguishable for voters.
-In that case every voter ranks them consecutively.
+We expect a total order over the set of candidates for each voter,
+so every voter needs to somehow break ties.
+Still, members of a single clone set are ranked consecutively by every voter.
 
 \begin{defn}[clone set]
 We say that non-empty $X \subseteq C$ is a clone set for preference profile $P = (\succ_1, ... , \succ_n)$ over $C$,
