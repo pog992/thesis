@@ -128,7 +128,7 @@ $$ f_{com}(X) = \sum_{i=1}^m \left( \abs{X}-1 -
 Function $f_{com}$ for preference profile $P$ is a clone set error function for $P$.
 \end{rmrk}
 
-\begin{problem}{ComponentOptimalDecloning}
+\begin{problem}{ComponentOptimalDecloning (COD)}
 	Input: Preference profile $P$ over $C$, integers $k$ and $l$.
 
 	Question: Given than $f_{com}$ is a component error function for $P$,
@@ -148,6 +148,7 @@ into sets of edges of Hamiltonian paths in $G$.
 
 Partitioning $C$ into $C_1,...,C_k$ corresponds to
 partitioning Hamiltonian path multigraph $G$ into submultigraphs $G_1,...,G_k$
+% necessary induced graphs? maybe just partition of V?
 induced by $C_1,...,C_k$ respectively.
 Let us denote by $c_{ij}$ part
 $\abs{\left\lbrace \left( a,b \right) \in C_i^2 : a \overline{\succ}_j b \right\rbrace }$
@@ -167,16 +168,29 @@ m(n-k) - \sum_{j=i}^m \sum_{i=1}^k c_{ij}
 
 Let us note that $\sum_{i=1}^k c_{ij}$ is the total number of $C_i$ intra-part edges
 and $\sum_{j=i}^m \sum_{i=1}^k c_{ij}$ is the total number of intra-part edges.
-As $m(n-k)$ is the number of all edges in multigraph $G$,
-we have that the error value equals the number of inter-part edges.
-% TODO score interpretation
-
-This lets us to formulate another problem which \textsc{ComponentOptimalDecloning} reduces to.
+As value of $m(n-k)$ is constant for a given graph,
+we have that \textsc{ComponentOptimalDecloning} is essentially a problem of maximizing the number of intra-part edges.
+We will that number a score of partition.
 
 \begin{defn}[partition score]
-
+Given a multigraph $G=(V,E)$, $E=(V,e)$ and a partition $\{V_1, ..., V_k\}$ of $V$
+we say that its score equals:
+$$\sum_{i=1}^k \sum_{u,v \in V_i} e(\{u,v\}) \text{.}$$
 \end{defn}
 
+This lets us to formulate another problem which is equivalent to \textsc{ComponentOptimalDecloning}
+in terms of reduction.
+
+\begin{problem}{HamiltonianPathMultigraphPartition (HPMP)}
+	Input: Hamiltonian path multigraph $G=(V,E)$
+		together with its partition into Hamiltonian paths, integers $k$ and $s$.
+
+	Question: Is there a $k$-sized partition of $V$ of score at least $s$?
+\end{problem}
+
+\begin{rmrk}
+There is a reduction of problem \textsc{HPMP} to \textsc{COD}.
+\end{rmrk}
 
 \begin{thm}
 \textsc{ComponentOptimalDecloning} is $NP$-complete.
