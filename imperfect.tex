@@ -95,6 +95,8 @@ treating it as if it was hardcoded into the specification of the new problem.
 
 % good error function discussion
 
+\subsection{Component error function}
+
 % intuition for f_com
 
 To formulate the definition of component error function we will need a definition of kernel of total order relation.
@@ -173,10 +175,14 @@ we have that \textsc{ComponentOptimalDecloning} is essentially a problem of maxi
 We will that number a score of partition.
 
 \begin{defn}[partition score]
-Given a multigraph $G=(V,E)$, $E=(V,e)$ and a partition $\{V_1, ..., V_k\}$ of $V$
-we say that its score equals:
-$$\sum_{i=1}^k \sum_{u,v \in V_i} e(\{u,v\}) \text{.}$$
+Given a multigraph $G=(V,E)$, $E=(V,e)$ and a partition $(V_1, ..., V_k)$ of $V$
+we say that a score of part $V_i$ for $i=1,...,k$ equals $\sum_{u,v \in V_i} e(\{u,v\})$.
+We say that a partition score is a sum of the scores of its parts.
 \end{defn}
+
+\begin{rmrk}
+Score of a part that is a singleton equals $0$.
+\end{rmrk}
 
 This lets us to formulate another problem which is equivalent to \textsc{ComponentOptimalDecloning}
 in terms of reduction.
@@ -192,19 +198,60 @@ in terms of reduction.
 There is a reduction of problem \textsc{HPMP} to \textsc{COD}.
 \end{rmrk}
 
-\begin{thm}
+\begin{thm} \label{ultimate-theorem}
 \textsc{ComponentOptimalDecloning} is $NP$-complete.
 \end{thm}
 
-\begin{lmm}
-There is a clique of size $c$ in graph $G=(V,E)$ iff
-for some hamiltonian path multigraph $G=(V',E')$, $E=(V',w)$ such that $V' \supset V$ and
+\begin{lmm} \label{hpmd-red}
+For every graph $G=(V,E)$ and hamiltonian path multigraph $G=(V',E')$, $E=(V',w)$ such that $V' \supset V$ and
 $$ w(\{u,v\}) =
 \begin{cases}
-2, &\text{when} \{u,v\} \in \{1,3n\} \\
+2, &\text{when} \{u,v\} \in E \\
 0, &\text{when} \{u,v\} \not\in E, u,v \in V \\
 <= 1, &\text{when} u \not\in V \vee v \not\in V
 \end{cases}
 $$
-there is a $\left(\abs{V'}-c-1\right)$-sized partition of score $c(c-1)/{2}$.
+there is a clique of size $c$ in $G$ iff
+there is $\left(\abs{V'}-c-1\right)$-sized partition of $V'$ of score $c(c-1)/{2}$.
 \end{lmm}
+
+\begin{proof}
+Let us consider any graphs $G=(V,E)$ and $G'=(V',(V',w))$ satisfying the condition of the lemma.
+If there is a $c$-sized clique $C \subset V$ in $G$,
+then we may partition $V'$ into $C$ and singletons for each $u \in V' \setminus C$.
+As $f(\{u,v\})=2$ for $u,v \in C$, such a partition has score $2 {c(c-1) \over 2} = c(c-1)$.
+This proves the implication in one direction.
+
+Now let us study the case when there is no $c$-sized clique in $G$.
+Let us consider any partition $P$ of $V'$, $P=(V_1, ..., V_k)$ for $k = \abs{V'}-c-1$.
+Partition $P$ cannot contain any part bigger than $c$,
+because all of the parts need to be nonempty.
+If $P$ contains $c$-sized part $V_1$ included entirely in $V$, then its score is less than $c(c-1)$,
+for $V$ does not contain $c$-sized cliques.
+In other case part $V_1$ contains a vertex from $V' \setminus V$.
+This means that there is an edge $e$ ended in $V_1$ such $w(e)<=1$, so the score of $P$ is less that $c(c-1)$.
+
+The only case left is when each part of $P$ has size less than $c$.
+We will do reasoning similar to the one in the proof of theorem \ref{gp-np}.
+Let us denote the upper bound of the score $m$-sized part of $f(m)$, $f(m) = m(m-1)$.
+Function $f$ is strictly convex because $f'' = 2 > 0$
+and sequence $(c,1,...,1)$ majorizes sequence $S$ of sizes, so we can use inequality \ref{thm:Kar}
+for $f$ and both sequence.
+This gives us the following upper limit on score $q$ of $P$:
+$$q <= \sum_{s \in S} f(s) < f(c) + f(1) + ... + f(1) = c(c-1) \text{.}$$
+So also in this case the score of $P$ is less than $c(c-1)$ and the lemma is proved.
+\end{proof}
+
+\begin{lmm}
+Given a graph $G$ and integer $c$ there is a polynomial-time construction
+of hamiltonian path multigraph $G'$ together with its path decomposition
+satisfying the conditions of lemma \ref{hpmd-red}.
+\end{lmm}
+
+\begin{proof}
+\end{proof}
+
+\begin{proof}[Proof of theorem \ref{ultimate-theorem}.]
+\end{proof}
+
+\subsection{Something error function}

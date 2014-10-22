@@ -156,7 +156,7 @@ whose vertices belong to the same part is at least $l$?
 We will call an edge whose vertices belong to the same part an internal edge
 and the set of all internal edges an intra-part edges.
 
-\begin{thm}
+\begin{thm} \label{gp-np}
 \textsc{GraphPartition} is $NP$-complete.
 \end{thm}
 
@@ -184,7 +184,7 @@ Now let us consider partitioning $P$ into parts that form a different sequence $
 Let us denote the number of intra-part edges in $P$ by $e$.
 Every part of size $m$ has at most $f(m) = m(m-1)/2$ internal edges,
 this number is reached only when a part forms a clique.
-Function $f$ is strictly convex, because $f''(x) = 1 > 0$ and $(c,1,...,1)$ majorizes $s$,
+Function $f$ is strictly convex, because $f'' = 1 > 0$ and $(c,1,...,1)$ majorizes $s$,
 so we can use inequality \ref{thm:Kar} for $f$ and both sequences.
 This gives us the following upper limit on $e$:
 $$e \leq \sum_{s\in{S}} f(s) < f(c) + f(1) + ... + f(1) = l$$
