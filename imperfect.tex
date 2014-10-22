@@ -212,10 +212,10 @@ $$ w(\{u,v\}) =
 \end{cases}
 $$
 there is a clique of size $c$ in $G$ iff
-there is $\left(\abs{V'}-c-1\right)$-sized partition of $V'$ of score $c(c-1)/{2}$.
+there is $\left(\abs{V'}-c-1\right)$-sized partition of $V'$ of score $c(c-1)$.
 \end{lmm}
 
-\begin{proof}
+\begin{proof} \label{hpmp-red-2}
 Let us consider any graphs $G=(V,E)$ and $G'=(V',(V',w))$ satisfying the condition of the lemma.
 If there is a $c$-sized clique $C \subset V$ in $G$,
 then we may partition $V'$ into $C$ and singletons for each $u \in V' \setminus C$.
@@ -252,6 +252,12 @@ satisfying the conditions of lemma \ref{hpmd-red}.
 \end{proof}
 
 \begin{proof}[Proof of theorem \ref{ultimate-theorem}.]
+We will show a reduction from \textsc{Clique} problem to \textsc{HPMP}.
+We are given graph $G$ and integer $c$
+Lemma \ref{hpmp-red-2} shows a polynomial-time construction of multigraph $G'$.
+Let us take $k=\abs{V'}-c-1$ and $s=c(c-1)$.
+Lemma \ref{hpmd-red} proves that it is a valid reduction, i.e. it preserves the answer.
+So \textsc{HPMP} problem is $NP$-complete.
 \end{proof}
 
 \subsection{Something error function}
