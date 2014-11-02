@@ -117,10 +117,101 @@ $\sum_{i=1}^n f(a_i) > \sum_{i=1}^n f(b_i)$.
 
 \section{Complexity Theory}
 
-% p, np, np-completness
+We will not give a full introduction to computational complexity theory here.
+Instead, we will try to revise the most important notions.
 
-%A reduction is an algorithm that transforms a problem into another one.
-%Given an instance
+We model an algorithm by an abstract \textit{Turing machine}.
+Computation is an execution of Turing machine on a given input.
+The Church-Turing conjecture is an informal definition what a Turing machine can.
+
+\begin{thm}[Church-Turing conjecture]
+Computability by Turing machine is equivalent to intuitive notion of computability.
+\end{thm}
+
+\begin{defn}[decision problem]
+Decision problem is any function that transforms an input into \textsc{yes} or \textsc{no}.
+\end{defn}
+
+A Turing machine solves a problem if it is its implementation.
+
+\begin{defn}[solvability by Turing machine]
+We say that a Turing machine solves a decision problem $A$ if for each input $x$
+it ends its execution in state equal to $A(x)$.
+\end{defn}
+
+We define \p as a class of problems solvable by a polynomial-time Turing machine.
+
+\begin{defn}[polynomial-time Turing machine]
+Polynomial-time Turing machine is such a Turing machine $M$ that there exist integers $k$ and $c$
+that for every input of size $n$ machine $M$ executed on this input makes at most $c n^k$ steps.
+\end{defn}
+
+\begin{defn}[\p]
+Decision problem $A$ belongs to $P$ iff there is a polynomial-time Turing machine that solves $A$.
+\end{defn}
+
+A reduction is an algorithm that transforms an input of one problem into another one
+preserving the answer.
+
+\begin{defn}[polynomial-time reduction]
+Polynomial-time reduction from problem $A$ to $B$ is a polynomial-time Turing machine
+that transforms every \textsc{yes}-inputs of $A$ into some \textsc{yes}-input of $B$
+and every \textsc{no}-input of $A$ into some \textsc{no}-inputs of $B$.
+\end{defn}
+
+If there is a reduction from problem $A$ to $B$, we say that $A$ reduces to $B$.
+
+Here we present some simple facts about reductions.
+
+\begin{rmrk}\label{tran-red}
+Relation "reduces polynomially to" is transitive.
+\end{rmrk}
+
+\begin{rmrk}\label{p-red}
+If problem $A$ reduces polynomially to $B$ and $B \in \p$ then $A \in \p$.
+\end{rmrk}
+
+\np is a complexity class of problems to which \textsc{yes}-inputs are polynomially verifiable.
+
+\begin{defn}[\np]
+Problem $A$ belongs to \np iff there is a Turing machine $M$ such that
+for each \textsc{yes}-input $x$ of $A$ answers \textsc{yes} to input $(x,y)$ for some $y$
+and for eaach \textsc{no}-input $z$ of $A$ answers \textsc{no} to every input $(z,w$).
+\end{defn}
+
+It remains an open problem whether $\text{\textsc{P}}\neq\np$.
+This is why we define \np-hard as complexity class of problems as hard as every problem in \np.
+
+\begin{defn}[\np-hard]
+Problem $A$ belongs to \np-hard iff for each problem $B \in \np$
+there is a polynomial-time reduction from $B$ to $A$.
+\end{defn}
+
+We are often interested only in \np-hard problems that remain in \np class.
+
+\begin{defn}[\np-complete]
+Problem $A$ belongs to \np-complete if $A$ belongs both to \np and \np-hard.
+\end{defn}
+
+We say that a problem \textit{is} \np-hard or \np-complete if it belongs to \np-hard or \np-complete respectively.
+
+The following captures why proving \np-completeness of a problem is valuable.
+
+\begin{rmrk}
+If \np-complete problem $A$ belongs to \p then using remarks \ref{tran-red} and \ref{p-red}
+we have that $\p = \np$.
+\end{rmrk}
+
+What, using contraposition, gives us that if $\p \neq \np$ then \np-complete problems are not in \p.
+
+We have a very convenient method of proving that a problem is \np-hard.
+
+\begin{rmrk}
+If problem $A \in \text{\np-hard}$ reduces polynomially to $B$ then also $B \in \text{\np-hard}$.
+\end{rmrk}
+
+With that we only need to show a polynomial-time reduction from a well-known \np-hard problem.
+Now we will introduce some such problems.
 
 \begin{problem}{Exact3Cover (X3C)}
 	Input: Collection $S$ of three-element subsets of set $X$, $\vert{X}\vert = 3n$.
