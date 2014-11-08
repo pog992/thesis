@@ -95,6 +95,8 @@ treating it as if it was hardcoded into the specification of the new problem.
 
 % good error function discussion
 
+% problem template
+
 \subsection{Component error function}
 
 % intuition for f_com
@@ -120,7 +122,7 @@ $\overline{>} = \{(4,3), (3,2), (2,1)\}$.
 
 \begin{defn}[component error function]
 Let us define for given preference profile $P = (\succ_1, ..., \succ_m)$ over candidate set $C$
-a function $f_{com}: 2^C \rightarrow \mathbb{N}_0$ with the following formula:
+a function $f_{com}: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{N}_0$ with the following formula:
 $$ f_{com}(X) = \sum_{i=1}^m \left( \abs{X}-1 -
 \abs{\left\lbrace \left( a,b \right) \in X^2 : a \overline{\succ}_i b \right\rbrace }
 \right) \text{.}$$
@@ -225,7 +227,7 @@ This proves the implication in one direction.
 Now let us study the case when there is no $c$-sized clique in $G$.
 Let us consider any partition $P$ of $V'$, $P=(V_1, ..., V_k)$ for $k = \abs{V'}-c-1$.
 Partition $P$ cannot contain any part bigger than $c$,
-because all of the parts need to be nonempty.
+because all of the parts need to be non-empty.
 If $P$ contains $c$-sized part $V_1$ included entirely in $V$, then its score is less than $c(c-1)$,
 for $V$ does not contain $c$-sized cliques.
 In other case part $V_1$ contains a vertex from $V' \setminus V$.
@@ -260,4 +262,37 @@ Lemma \ref{hpmd-red} proves that it is a valid reduction, i.e. it preserves the 
 So \textsc{HPMP} problem is $NP$-complete.
 \end{proof}
 
+
 \subsection{Inconsistent voters error function}
+
+Component error function has useful properties, but also could yield decloning
+seemingly far from intuitively optimal.
+In the proof of theorem \ref{ultimate-theorem} we 
+% ...
+
+\begin{defn}[inconsistent voter]
+We say that a voter described by preference order~$\succ$ over $C$
+is consistent with a non-empty subset $X \subset C$
+iff $X$ is a clone set for preference profile $P = (\succ)$.
+We also say that $\succ$ is inconsistent with $X$ if it is not consistent with $X$.
+\end{defn}
+
+\begin{defn}[inconsistent voters error function]
+Given a preference profile $P$ over $C$ we define function
+$f_{iv}: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{N}_0$ so that
+$f(X)$ is a number of preference orders in $P$ that are inconsistent with $X$.
+\end{defn}
+
+\begin{rmrk}
+Function $f_{iv}$ for preference profile $P$ is a clone set error function for $P$.
+\end{rmrk}
+
+
+\begin{problem}{ConsistentVotersOptimalDecloning (CVOD)}
+	Input: Preference profile $P$ over $C$, integers $k$ and $l$.
+
+	Question: Given than $f_{iv}$ is a inconsistent voters error function for $P$,
+		is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f_{iv}(C_i) \leq l$?
+\end{problem}
+
+It remains an open problem whether \textsc{CVOD} problem is \np-hard.
