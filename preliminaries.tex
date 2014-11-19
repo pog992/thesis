@@ -8,7 +8,17 @@ This chapter might be skipped and used as a reference only when necessary.
 
 \section{Symbols}
 
-% natural, positive natural numbers, integers, real number, sum, ...
+\begin{tabular}{l l}
+	$\mathbb{N}_0$	& natural numbers including zero \\
+	$\mathbb{N}_+$	& positive natural numbers \\
+	$\mathbb{R}$	& real numbers \\
+	$\mathbb{P}$	& prime numbers \\
+	$\sum$			& sum \\
+	$\bigcup$		& set sum of elements\\
+	$\abs{\cdot}$	& set cardinality \\
+	$2^\cdot$		& family of subsets \\
+	$f''$			& second derivative of function $f$ \\
+\end{tabular}
 
 \section{Mathematics}
 
@@ -76,7 +86,7 @@ i.e. for each $i=1,...,n-1$ we have $\{u_i, u_{i+1}\} \in E$.
 This theorem states that prime number are dense in an informal sense.
 
 \begin{thm}[Bertrand–Chebyshev]
-For any integer $n>1$ there always exists at least one prime $p$ such that $n < p < 2n$.
+For any integer $n>1$ there exists $p \in \mathbb{P}$ such that $n < p < 2n$.
 \end{thm}
 
 
@@ -118,9 +128,9 @@ $\sum_{i=1}^n f(a_i) > \sum_{i=1}^n f(b_i)$.
 \section{Complexity Theory}
 
 We will not give a full introduction to computational complexity theory here.
-Instead, we will try to revise the most important notions.
+Instead, we will revise the most important notions.
 
-We model an algorithm by an abstract \textit{Turing machine}.
+We model algorithms by an abstract \textit{Turing machine}.
 Computation is an execution of Turing machine on a given input.
 The Church-Turing conjecture is an informal definition what a Turing machine can.
 
@@ -139,7 +149,7 @@ We say that a Turing machine solves a decision problem $A$ if for each input $x$
 it ends its execution in state equal to $A(x)$.
 \end{defn}
 
-We define \p as a class of problems solvable by a polynomial-time Turing machine.
+We define \textsc{P} as a class of problems solvable by a polynomial-time Turing machine.
 
 \begin{defn}[polynomial-time Turing machine]
 Polynomial-time Turing machine is such a Turing machine $M$ that there exist integers $k$ and $c$
@@ -150,8 +160,8 @@ that for every input of size $n$ machine $M$ executed on this input makes at mos
 Decision problem $A$ belongs to $P$ iff there is a polynomial-time Turing machine that solves $A$.
 \end{defn}
 
-A reduction is an algorithm that transforms an input of one problem into another one
-preserving the answer.
+A reduction is an algorithm that transforms an input of one problem
+into input of another one preserving the answer.
 
 \begin{defn}[polynomial-time reduction]
 Polynomial-time reduction from problem $A$ to $B$ is a polynomial-time Turing machine
@@ -159,7 +169,8 @@ that transforms every \textsc{yes}-inputs of $A$ into some \textsc{yes}-input of
 and every \textsc{no}-input of $A$ into some \textsc{no}-inputs of $B$.
 \end{defn}
 
-If there is a reduction from problem $A$ to $B$, we say that $A$ reduces to $B$.
+If there is a polynomial-time reduction from problem $A$ to $B$,
+we say that $A$ reduces polynomially to $B$.
 
 Here we present some simple facts about reductions.
 
@@ -176,7 +187,7 @@ If problem $A$ reduces polynomially to $B$ and $B \in \p$ then $A \in \p$.
 \begin{defn}[\np]
 Problem $A$ belongs to \np iff there is a Turing machine $M$ such that
 for each \textsc{yes}-input $x$ of $A$ answers \textsc{yes} to input $(x,y)$ for some $y$
-and for eaach \textsc{no}-input $z$ of $A$ answers \textsc{no} to every input $(z,w$).
+and for each \textsc{no}-input $z$ of $A$ answers \textsc{no} to input $(z,w)$ for every $w$.
 \end{defn}
 
 It remains an open problem whether $\text{\textsc{P}}\neq\np$.
@@ -190,7 +201,7 @@ there is a polynomial-time reduction from $B$ to $A$.
 We are often interested only in \np-hard problems that remain in \np class.
 
 \begin{defn}[\np-complete]
-Problem $A$ belongs to \np-complete if $A$ belongs both to \np and \np-hard.
+Problem $A$ belongs to \np-complete if $A$ belongs both to \textsc{NP} and \np-hard.
 \end{defn}
 
 We say that a problem \textit{is} \np-hard or \np-complete if it belongs to \np-hard or \np-complete respectively.
@@ -198,11 +209,11 @@ We say that a problem \textit{is} \np-hard or \np-complete if it belongs to \np-
 The following captures why proving \np-completeness of a problem is valuable.
 
 \begin{rmrk}
-If \np-complete problem $A$ belongs to \p then using remarks \ref{tran-red} and \ref{p-red}
+If any \np-complete problem $A$ belongs to \textsc{P} then using remarks \ref{tran-red} and \ref{p-red}
 we have that $\p = \np$.
 \end{rmrk}
 
-What, using contraposition, gives us that if $\p \neq \np$ then \np-complete problems are not in \p.
+This, using contraposition, gives us that if $\p \neq \np$ then \np-complete problems are not in \p.
 
 We have a very convenient method of proving that a problem is \np-hard.
 

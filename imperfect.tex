@@ -216,9 +216,9 @@ There is a reduction of problem \textsc{HPMP} to \textsc{COD}.
 For every graph $G=(V,E)$ and hamiltonian path multigraph $G=(V',E')$, $E=(V',w)$ such that $V' \supset V$ and
 $$ w(\{u,v\}) =
 \begin{cases}
-2, &\text{when} \{u,v\} \in E \\
-0, &\text{when} \{u,v\} \not\in E, u,v \in V \\
-<= 1, &\text{when} u \not\in V \vee v \not\in V
+2, 				&\text{when } \{u,v\} \in E \\
+0, 				&\text{when } \{u,v\} \not\in E \text{ and } u,v \in V \\
+w_{u v}\leq 1,	&\text{when } u \not\in V \text{ and } v \not\in V
 \end{cases}
 $$
 there is a clique of size $c$ in $G$ iff
@@ -248,7 +248,7 @@ Function $f$ is strictly convex because $f'' = 2 > 0$
 and sequence $(c,1,...,1)$ majorizes sequence $S$ of sizes, so we can use inequality \ref{thm:Kar}
 for $f$ and both sequence.
 This gives us the following upper limit on score $q$ of $P$:
-$$q <= \sum_{s \in S} f(s) < f(c) + f(1) + ... + f(1) = c(c-1) \text{.}$$
+$$q \leq \sum_{s \in S} f(s) < f(c) + f(1) + ... + f(1) = c(c-1) \text{.}$$
 So also in this case the score of $P$ is less than $c(c-1)$ and the lemma is proved.
 \end{proof}
 
@@ -274,7 +274,7 @@ So \textsc{HPMP} problem is $NP$-complete.
 \subsection{Inconsistent Voters Error Function}
 
 Component error function has useful properties, but also could yield partition
-seemingly far from intuitively optimal.
+intuitively far from optimal.
 It constructs the partition using only very local information,
 such as edges in the graph of kernels of preference orders.
 For example, in the proof of theorem \ref{ultimate-theorem} we constructed a partition
