@@ -1,33 +1,37 @@
-In this chapter we present briefly basic concepts and facts to be used later in the thesis.
-It is divided into two sections.
-First one is a short revision of necessary mathematics.
-Second section revises basics and builds intuition regarding computational complexity theory.
-It also introduces some $NP$-complete computational problems for further use.
+In this chapter we briefly present basic concepts and facts from mathematics and computer science
+that we use throughout this thesis.
+This chapter is divided into two sections.
+The first one is a short revision of necessary mathematics.
+The second section revises basics ideas of, and builds intuition regarding, computational complexity theory.
+It also introduces some $NP$-complete decision problems for further use.
 
-This chapter might be skipped and used as a reference only when necessary.
-
-\section{Symbols}
-
-\begin{tabular}{l l}
-	$\mathbb{N}_0$	& natural numbers including zero \\
-	$\mathbb{N}_+$	& positive natural numbers \\
-	$\mathbb{R}$	& real numbers \\
-	$\mathbb{P}$	& prime numbers \\
-	$\sum$			& sum \\
-	$\bigcup$		& set sum of elements\\
-	$\abs{\cdot}$	& set cardinality \\
-	$2^\cdot$		& family of subsets \\
-	$f''$			& second derivative of function $f$ \\
-\end{tabular}
+%This chapter might be skipped and used as a reference only when necessary.
 
 \section{Mathematics}
+
+Table \ref{symbols} presents symbol that we use in this work.
+
+\begin{table} \centering
+\begin{tabular}{| l | l |} \hline
+	$\mathbb{N}_0$	& natural numbers including zero \\ \hline
+	$\mathbb{N}_+$	& positive natural numbers \\ \hline
+	$\mathbb{R}$	& real numbers \\ \hline
+	$\mathbb{P}$	& prime numbers \\ \hline
+	$\sum$			& sum \\ \hline 
+	$\bigcup$		& set sum of elements\\ \hline
+	$\abs{\cdot}$	& set cardinality \\ \hline
+	$2^\cdot$		& family of subsets \\ \hline
+	$f''$			& second derivative of function $f$ \\ \hline
+\end{tabular}
+\caption{Mathematical symbols used throughout the work.} \label{symbols}
+\end{table}
 
 \begin{defn}[total order]
 A total order over set $X$ is a binary relation $\succ$ on $X$ which~is:
 \begin{itemize}
-	\item transitive, i.e. $\forall a,b,c \in X a \succ b \land b \succ c \Rightarrow a \succ c$,
-	\item antisymmetric, i.e. $\forall a,b \in X a \succ b \land b \succ a \Rightarrow a=b $,
-	\item total, i.e. $\forall a,b \in X a \succ b \lor b \succ a$.
+	\item transitive, i.e. $\forall a,b,c \in X: a \succ b \land b \succ c \Rightarrow a \succ c$,
+	\item antisymmetric, i.e. $\forall a,b \in X: a \succ b \land b \succ a \Rightarrow a=b $,
+	\item total, i.e. $\forall a,b \in X: a \succ b \lor b \succ a$.
 \end{itemize}
 \end{defn}
 
@@ -38,21 +42,22 @@ such that $R^*$ is a superset of $R$.
 
 \begin{defn}[predicate]
 A predicate is a function $f$ with a codomain $\{true, false\}$,
-where $true$ is a logical truth and $false$ its negation.
+where $true$ is a logical truth and $false$ is falsity.
 \end{defn}
 
-A multiset is a generalization of the notion of set, it can hold multiple same elements.
+A multiset is a generalization of the notion of a set that can hold multiple instances of the same element.
 
 \begin{defn}[multiset]
 A multiset is a pair $M = (X, c)$, where $X$ is some set and $c:X \rightarrow \mathbb{N}_0$
-is a multiplicity function, i.e. $c(x)$ for $x \in X$ denotes the number of occurrences of $x$ in $M$.
+is a multiplicity function.
+That is, for each $x \in X$, $c(x)$ denotes the number of occurrences of $x$ in $M$.
 \end{defn}
 
-We will say that $x \in M$ when $c(x) > 0$.
-We also say that $M_1 = (X, c_1)$ is a multiset sum of $M_2 = (X, c_2)$ and $M_3 = (X, c_3)$
+For a multiset $M$, we say that $x \in M$ when $c(x) > 0$.
+We also say that $M_1 = (X, c_1)$ is a multiset union of $M_2 = (X, c_2)$ and $M_3 = (X, c_3)$
 if for each $x \in X$ we have $c_1(x) = c_2(x) + c_3(x)$.
 
-When the set $X$ is clear from the context we will informally call $c$ itself a multiset.
+When the set $X$ is clear from context, we will informally refer to $c$ itself as a multiset.
 
 \begin{defn}[set partition]
 A partition of a set $X$ is a family $F$ of non-empty subsets of $X$
@@ -62,22 +67,22 @@ such that for every $a \in X$ there is exactly one $Y \in F$ such that $a \in Y$
 Let us now revise some notions from graph theory.
 
 \begin{defn}[graph]
-A graph $G$ is an ordered pair $(V,E)$ of set $V$ of nodes
-and set $E$ of edges, which are 2-element subsets of $V$.
+A graph $G$ is an ordered pair $(V,E)$ of set $V$ of vertices and a set $E$ of edges.
+Each edge is a 2-element subset of $V$.
 \end{defn}
 
 \begin{defn}[multigraph]
-A multigraph $G$ is an ordered pair $(V,E$) of set $V$ of nodes
-and multiset $E$ of edges, which are 2-element subsets of $V$.
+A multigraph $G$ is an ordered pair $(V,E)$ of a set $V$ of vertices and a multiset $E$ of edges,
+where the edges are defined in the same way as for graphs.
 \end{defn}
 
 \begin{defn}[induced subgraph]
 (Multi)graph $(V', E')$ is a sub(multi)graph of (multi)graph $(V,E)$ induced by $V'$
-iff $V' \subset V$, $E' \subset E$ and for each $u,v \in V'$ if $\{u,v\}\in E$ then $\{u,v\}\in E'$.
+if $V' \subset V$, $E' \subset E$, and for each $u,v \in V'$ if $\{u,v\}\in E$ then $\{u,v\}\in E'$.
 \end{defn}
 
 \begin{defn}[Hamiltonian path]
-A Hamiltionian path in (multi)graph $(V,E)$ where $V = \{u_1, ..., u_n\}$
+A Hamiltionian path in (multi)graph $(V,E)$
 is a sequence of edges $\{u_1, u_2\}, \{u_2, u_3\} ..., \{u_{n-1}, u_n\}$,
 i.e. for each $i=1,...,n-1$ we have $\{u_i, u_{i+1}\} \in E$.
 \end{defn}
@@ -94,7 +99,7 @@ The following are definitions necessary to formulate the Karamata's inequality.
 
 \begin{defn}[strictly convex function]
 We say that a function $f:\mathbb{R}\rightarrow\mathbb{R}$ is strictly convex on an interval $I \subset \mathbb{R}$
-if for each $x_1, x_2 \in I$ and $t \in [0,1]$ occurs $f(t x_1 + (1-t) x_2) < tf(x_1) + (1-t)f(x_2)$.
+if for each $x_1, x_2 \in I$ and $t \in [0,1]$ it holds that $f(t x_1 + (1-t) x_2) < tf(x_1) + (1-t)f(x_2)$.
 \end{defn}
 
 The next property is a convenient way of proving that a function is strictly convex.
@@ -106,12 +111,11 @@ is strictly convex on $I$.
 \end{prp}
 
 \begin{defn}[majorization]
-We say that sequence $(a_1, ..., a_n) \in \mathbb{R}^n$ majorizes sequence $(b_1, ..., b_n) \in \mathbb{R}^n$
-if the following conditions are met:
+We say that sequence $(a_1, ..., a_n) \in \mathbb{R}^n, a_1 \geq a_2 \geq ... \geq a_n$,
+majorizes sequence $(b_1, ..., b_n) \in \mathbb{R}^n, b_1 \geq b_2 \geq ... \geq b_n$,
+if the following conditions hold:
 \begin{itemize}
-	\item $a_1 \geq a_2 \geq ... \geq a_n$,
-	\item $b_1 \geq b_2 \geq ... \geq b_n$,
-	\item $\sum_{i=1}^n a_i = \sum_{i=1}^n b_i$,
+	\item $\sum_{i=1}^n a_i = \sum_{i=1}^n b_i$ and
 	\item $\sum_{i=1}^k a_i \geq \sum_{i=1}^k b_i$ $\forall k \in \{ 1, ..., n\}$.
 \end{itemize}
 \end{defn}
@@ -120,57 +124,59 @@ Finally the Karamata's inequality that formalizes a very intuitive phenomenon.
 
 \begin{thm}[Karamata's inequality] \label{thm:Kar}
 If function $f:\mathbb{R}\rightarrow\mathbb{R}$ is strictly convex on interval~$I \subset \mathbb{R}$,
-sequence $(a_i) \in I^n$ majorizes sequence $(b_i) \in I^n$ and $(a_i) \neq (b_i)$, then
+sequence $(a_i) \in I^n$ majorizes sequence $(b_i) \in I^n$,
+and $(a_1, ..., a_n) \neq (b_1, ..., b_n)$, then
 $\sum_{i=1}^n f(a_i) > \sum_{i=1}^n f(b_i)$.
 \end{thm}
 
 
 \section{Complexity Theory}
 
-We will not give a full introduction to computational complexity theory here.
-Instead, we will revise the most important notions.
+We will not give a full introduction to computational complexity theory here,
+but instead, we will revise the most important notions.
 
-We model algorithms by an abstract \textit{Turing machine}.
+We model algorithms through \textit{Turing machine}.
 Computation is an execution of Turing machine on a given input.
-The Church-Turing conjecture is an informal definition what a Turing machine can.
+The Church-Turing Thesis states informally what a Turing machine can.
 
-\begin{thm}[Church-Turing conjecture]
+\begin{cnj}[Church-Turing Thesis]
 Computability by Turing machine is equivalent to intuitive notion of computability.
-\end{thm}
+\end{cnj}
 
 \begin{defn}[decision problem]
-Decision problem is any function that transforms an input into \textsc{yes} or \textsc{no}.
+Decision problem is a function that transforms an input into one of two possible answers,
+\textsc{yes} or \textsc{no}.
 \end{defn}
 
-A Turing machine solves a problem if it is its implementation.
+The following defines when a Turing machine solves a given prolem.
 
-\begin{defn}[solvability by Turing machine]
+\begin{defn}[solvability by a Turing machine]
 We say that a Turing machine solves a decision problem $A$ if for each input $x$
-it ends its execution in state equal to $A(x)$.
+it ends its execution in a state equal to $A(x)$.
 \end{defn}
-
-We define \textsc{P} as a class of problems solvable by a polynomial-time Turing machine.
 
 \begin{defn}[polynomial-time Turing machine]
-Polynomial-time Turing machine is such a Turing machine $M$ that there exist integers $k$ and $c$
+A polynomial-time Turing machine is a Turing machine $M$ for which there are integers $k$ and $c$
 that for every input of size $n$ machine $M$ executed on this input makes at most $c n^k$ steps.
 \end{defn}
 
-\begin{defn}[\p]
-Decision problem $A$ belongs to $P$ iff there is a polynomial-time Turing machine that solves $A$.
+we define \p as a class of problems solvable by polynomial-time Turing machines.
+
+\begin{defn}[class \p]
+Decision problem $A$ belongs to class $P$ if there is a polynomial-time Turing machine that solves $A$.
 \end{defn}
 
 A reduction is an algorithm that transforms an input of one problem
-into input of another one preserving the answer.
+into an input of another while one preserving the answer.
 
 \begin{defn}[polynomial-time reduction]
-Polynomial-time reduction from problem $A$ to $B$ is a polynomial-time Turing machine
-that transforms every \textsc{yes}-inputs of $A$ into some \textsc{yes}-input of $B$
-and every \textsc{no}-input of $A$ into some \textsc{no}-inputs of $B$.
+A polynomial-time reduction from problem $A$ to $B$ is a polynomial-time Turing machine
+that transforms every \textsc{yes}-input of $A$ into some \textsc{yes}-input of $B$,
+and every \textsc{no}-input of $A$ into some \textsc{no}-input of $B$.
 \end{defn}
 
 If there is a polynomial-time reduction from problem $A$ to $B$,
-we say that $A$ reduces polynomially to $B$.
+then we say that $A$ polynomially reduces to $B$.
 
 Here we present some simple facts about reductions.
 
@@ -183,33 +189,34 @@ If problem $A$ reduces polynomially to $B$ and $B \in \p$ then $A \in \p$.
 \end{rmrk}
 
 \np is a complexity class of problems to which \textsc{yes}-inputs are polynomially verifiable.
+We verify an input by augmenting it with a polynomial-sized proof.
 
 \begin{defn}[\np]
-Problem $A$ belongs to \np iff there is a Turing machine $M$ such that
-for each \textsc{yes}-input $x$ of $A$ answers \textsc{yes} to input $(x,y)$ for some $y$
-and for each \textsc{no}-input $z$ of $A$ answers \textsc{no} to input $(z,w)$ for every $w$.
+Problem $A$ belongs to \np if there is a Turing machine $M$ and integers $k$ and $c$ such that
+for each $n$-sized \textsc{yes}-input $x$ of $A$,
+$M$ answers \textsc{yes} to input $(x,y)$ for some $y$ whose size is not greater than $c n^k$,
+and for each $n$-sized \textsc{no}-input $z$ of $A$,
+$M$ answers \textsc{no} to input $(z,w)$ for every $w$ whose size is not greater than $c n^k$.
 \end{defn}
 
 It remains an open problem whether $\text{\textsc{P}}\neq\np$.
-This is why we define \np-hard as complexity class of problems as hard as every problem in \np.
+This is why we define \np-hard as complexity class of problems as hard or harder than every problem in \np.
 
 \begin{defn}[\np-hard]
-Problem $A$ belongs to \np-hard iff for each problem $B \in \np$
+Problem $A$ is \np-hard if for each problem $B \in \np$
 there is a polynomial-time reduction from $B$ to $A$.
 \end{defn}
 
-We are often interested only in \np-hard problems that remain in \np class.
+We are often interested in those \np-hard problems that remain in \np.
 
 \begin{defn}[\np-complete]
-Problem $A$ belongs to \np-complete if $A$ belongs both to \textsc{NP} and \np-hard.
+Problem $A$ is \np-complete if $A$ is both in \np and is \np-hard.
 \end{defn}
-
-We say that a problem \textit{is} \np-hard or \np-complete if it belongs to \np-hard or \np-complete respectively.
 
 The following captures why proving \np-completeness of a problem is valuable.
 
 \begin{rmrk}
-If any \np-complete problem $A$ belongs to \textsc{P} then using remarks \ref{tran-red} and \ref{p-red}
+If an \np-complete problem $A$ belongs to \p then using remarks \ref{tran-red} and \ref{p-red}
 we have that $\p = \np$.
 \end{rmrk}
 
@@ -218,14 +225,15 @@ This, using contraposition, gives us that if $\p \neq \np$ then \np-complete pro
 We have a very convenient method of proving that a problem is \np-hard.
 
 \begin{rmrk}
-If problem $A \in \text{\np-hard}$ reduces polynomially to $B$ then also $B \in \text{\np-hard}$.
+If an \np-hard problem $A$ reduces polynomially to problem $B$, then also $B$ is also \np-hard.
 \end{rmrk}
 
-With that we only need to show a polynomial-time reduction from a well-known \np-hard problem.
+With that we only need to show a polynomial-time reduction from a well-known \np-hard problem
+to prove that a given problem is \np-hard.
 Now we will introduce some such problems.
 
 \begin{problem}{Exact3Cover (X3C)}
-	Input: Collection $S$ of three-element subsets of set $X$, $\vert{X}\vert = 3n$.
+	Input: Set $X$, family $S$ of three-element subsets of $X$, $\vert{X}\vert = 3n$.
 
 	Question: Is there an $n$-element subset $A \subset S$ such that $\bigcup A = X$?
 \end{problem}
@@ -246,7 +254,7 @@ Now we will introduce some such problems.
 \end{thm}
 
 
-We will show a sample $NP$-completeness proof using the method of reduction.
+We will show an example of an $NP$-completeness proof using the method of reduction.
 
 \begin{problem}{GraphPartition}
 Input: Graph $G = (V, E)$, integer $k$ and $l$.
@@ -272,26 +280,25 @@ Let us denote $n = \abs{S}$.
 Let us leave $G$ unchanged and take $k = n-c+1$ and $l = c(c-1)/2$.
 We will show that this is a valid reduction to \textsc{GraphPartition}.
 
-Let us first consider the case when the answer to the \textsc{Clique} problem is yes,
-i.e. $G$ contains clique consisting of vertices $C$, $\abs{C} = c$.
-We may then partition $V$ into $k$ parts: $C$ and $n-c$ singletons of each vertex in $V \backslash C$.
+Let us first consider the case where the answer to the \textsc{Clique} problem is \textsc{yes},
+i.e., $G$ contains a clique consisting of $c$ vertices $C$.
+We may then partition $V$ into $k$ parts:
+$C$ istelf and $n-c$ singletons of the remaining vertices from $V \backslash C$.
 The number of intra-part edges equals $c(c-1)/2$ for part $C$ and $0$ for remaining parts.
-This gives $l$ in total, so the answer to \textsc{GraphPartition} problem is also yes.
+This gives $l$ in total, so the answer to \textsc{GraphPartition} problem is \textsc{yes} as well.
 
-Now it suffices to show that when there is no $c$-sized clique in $G$
-the answer to the reduced problem is no.
-In that case every $c$-sized part of $V$ has less than $l$ internal edges,
-so partitioning $V$ into $k$ parts of sizes $(c, 1, ..., 1)$ will lead to less than $l$ intra-part edges.
-Now let us consider partitioning $P$ into parts that form a different sequence $S$ of sizes.
+Now it suffices to show that when there is no $c$-size clique in $G$,
+then the answer to the reduced problem is \textsc{no}.
+In that case every $c$-size part of $V$ has fewer than $l$ internal edges,
+so partitioning $V$ into $k$ parts of sizes $(c, 1, ..., 1)$ will lead to fewer than $l$ intra-part edges.
+Now let us consider partitioning $P$ of $V$ into parts that form a different sequence $S$ of sizes.
 Let us denote the number of intra-part edges in $P$ by $e$.
 Every part of size $m$ has at most $f(m) = m(m-1)/2$ internal edges,
 this number is reached only when a part forms a clique.
-Function $f$ is strictly convex, because $f'' = 1 > 0$ and $(c,1,...,1)$ majorizes $s$,
-so we can use inequality \ref{thm:Kar} for $f$ and both sequences.
+Function $f$ is strictly convex, because $f''(x) = 1 > 0$ and $(c,1,...,1)$ majorizes $s$,
+so we can use inequality \eqref{thm:Kar} for $f$ and both sequences.
 This gives us the following upper limit on $e$:
 $$e \leq \sum_{s\in{S}} f(s) < f(c) + f(1) + ... + f(1) = l$$
 We thus get that each partition has less than $l$ internal edges,
-so the answer to the \textsc{GraphPartition} problem remains no.
+so the answer to the \textsc{GraphPartition} problem remains \textsc{no}.
 \end{proof}
-
-% circuit

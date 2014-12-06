@@ -25,6 +25,8 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 
+\usepackage{xspace}
+
 \makeatletter
 % \def\@endtheorem{\endtrivlist\@endpefalse }% OLD
 \def\@endtheorem{\endtrivlist}% NEW
@@ -34,6 +36,7 @@
 \newtheorem{thm}{Theorem}[chapter] % reset theorem numbering for each chapter
 \newtheorem{prp}[thm]{Property}
 \newtheorem{lmm}[thm]{Lemma}
+\newtheorem{cnj}[thm]{Conjecture}
 
 \theoremstyle{definition}
 \newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
@@ -44,8 +47,8 @@
 
 \newcommand{\abs}[1]{\left\vert #1 \right\vert}
 %\newcommand{\np}{\textsc{NP}}
-\newcommand{\np}{\text{\textsc{NP}}}
-\newcommand{\p}{\text{\textsc{P}}}
+\newcommand{\np}{\text{\textsc{NP}}\xspace}
+\newcommand{\p}{\text{\textsc{P}}\xspace}
 
 \author{Szymon Gut\\\newline\\supervisor:\\dr hab. inż. Piotr Faliszewski}
 
