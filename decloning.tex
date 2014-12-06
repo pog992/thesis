@@ -1,19 +1,20 @@
 In this chapter we formalize notions connected to elections and clones.
-We also introduce the problem of detecting clones and show an efficient algorithm for that.
+We also introduce the problem of detecting clones and show an efficient algorithm for it.
 
 \section{Elections} \input{"elections.tex"}
 
 \section{Decloning}
 
-We are interested in a situation when some candidates are indistinguishable for voters.
+We are interested in a situation where some candidates are indistinguishable for voters.
 We expect a total order over the set of candidates for each voter,
 so every voter needs to somehow break ties.
 Still, members of a single clone set are ranked consecutively by every voter.
 
 \begin{defn}[clone set]
-We say that non-empty $X \subseteq C$ is a clone set for preference profile $P = (\succ_1, ... , \succ_n)$ over $C$,
-if for each $k,l \in X$, each $a \in C \backslash X$ and each $1 \leq i \leq n $ it holds that
-$k \succ_i a$ iff $l \succ_i a$.
+We say that a non-empty set $X \subseteq C$ is a clone set
+for preference profile $P = (\succ_1, ... , \succ_n)$ over $C$,
+if for each $k,l \in X$, each $a \in C \backslash X$, and each $i=1, ..., n$ it holds that
+$k \succ_i a$ if $l \succ_i a$.
 \end{defn}
 
 \begin{exmp} \label{clone-sets}
@@ -23,35 +24,35 @@ and a preference profile $P = (\succ_1, \succ_2, \succ_3, \succ_4)$ defined by t
 a \succ_1 b \succ_1 c \succ_1 d \succ_1 e \succ_1 f, \\
 b \succ_2 c \succ_2 a \succ_2 d \succ_2 f \succ_2 e, \\
 e \succ_3 f \succ_3 c \succ_3 b \succ_3 a \succ_3 d, \\
-e \succ_4 f \succ_4 e \succ_4 a \succ_4 c \succ_4 b.
+d \succ_4 f \succ_4 e \succ_4 a \succ_4 c \succ_4 b.
 \end{align*}
 In this case we have the following clone sets:
 $$\{a,b,c,d,e,f\}, \{a\}, \{b\}, \{c\}, \{d\}, \{e\}, \{f\}, \{a,b,c\}, \{e,f\}, \{b,c\}.$$
 \end{exmp}
 
 \begin{rmrk}
-Let us notice that for any preference profile $P$ over candidate set $C$
-we have that each $c \in C$ and $C$ itself is a clone set.
+We note that for any preference profile $P$ over candidate set $C$
+we have that for each $c \in C$, $\{c\}$ is a clone set and as is $C$ itself.
 \end{rmrk}
 
 \begin{defn}[trivial clone set]
-Given a candidate set $C$ we say that $X$ is a trivial clone set
+Given a candidate set $C$, we say that $X$ is a trivial clone set
 when $\abs{X} = 1$ or $X = C$.
 \end{defn}
 
 \begin{exmp}
-In the example \ref{clone-sets} the only non-trivial clone sets were
+In Example \ref{clone-sets} the only non-trivial clone sets are
 $\{a,b,c\}$, $\{e,f\}$ and $\{b,c\}$.
 \end{exmp}
 
 \begin{defn}[decloning]
-We call a decloning for preference profile $P$ over $C$
-such a partition of $C$  into $C_1, ... , C_k$
-that for each $1 \leq i \leq k$ $C_i$ is a clone set for $P$.
+Let $P$ be a preference profile over candidate set $C$.
+We say that a partition of $C$ into $C_1, ..., C_k$ is a decloning
+if for each $i=1,...,k$, $C_i$ is a clone set for $P$.
 \end{defn}
 
 \begin{exmp}
-In the example \ref{clone-sets} some of the possible declonings are:
+In Example \ref{clone-sets}, some of the possible declonings are:
 $$
 \big\{ \{a,b,c\}, \{d\}, \{e,f\} \big\} \text{, }
 \big\{ \{a\}, \{b,c\}, \{d\}, \{e\}, \{f\} \big\} \text{, }
@@ -61,7 +62,7 @@ $$
 
 \begin{rmrk} \label{sequence-split}
 Let us note that a decloning corresponds to some splitting into parts
-the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g. first voter).
+the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g. the first voter).
 \end{rmrk}
 
 
@@ -78,29 +79,36 @@ the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g.
 \begin{proof}
 We will show a polynomial algorithm for the \textsc{Decloning} problem.
 
-Let us denote candidate set as $C = \{c_1, ..., c_n\}$ and preference profile as $P = (\succ_1, ... , \succ_n)$.
-Without loss of generality let us assume that $c_1 \succ_1 c_2 \succ_1 ... \succ_1 c_n$.
-We will use the remark \ref{sequence-split} to split the sequence $(c_1, ..., c_n)$
-into $k$ parts to obtain a decloning for~$P$.
+Let $C = \{c_1, ..., c_n\}$ be out input candidate set
+and let $P = (\succ_1, ... , \succ_n)$ be the input preference profile.
+Without loss of generality, let us assume that $c_1 \succ_1 c_2 \succ_1 ... \succ_1 c_n$.
+We will use Remark \ref{sequence-split} to split the sequence $(c_1, ..., c_n)$
+into $k$ parts, to obtain a decloning of $P$.
 
-Let us define a helper predicate $IsCloneSet: 2^C \rightarrow \{true,false\}$
-such that $IsCloneSet(X) = true$ iff $X$ is a clone set for $P$.
-It is easy to see that $IsCloneSet$ is computable in polynomial time
-using either simple brute-force method or any more sophisticated algorithm.
+Let us define a predicate
+$\mathit{IsCloneSet}: 2^C \rightarrow \{\text{\textsc{true}},\text{\textsc{false}}\}$
+such that $\mathit{IsCloneSet}(X) = \text{\textsc{true}}$ iff $X$ is a clone set for $P$.
+It is easy to see that $\mathit{IsCloneSet}$ is computable in polynomial time
+by an explicit application of the definition of a clone set.
 
 % TODO ranges
-Now let us define another predicate $IsDeclonable: \{1,...,n\}\times\{1,...,k\} \rightarrow \{true,false\}$
-such that $IsDeclonable(i,j)= true$ iff there is a decloning for $P$ over reduced candidate set $\{c_1,...,c_i\}$
+Now let us define another predicate,
+$\mathit{IsDeclonable}: \{1,...,n\}\times\{1,...,k\} \rightarrow \{\text{\textsc{true}},\text{\textsc{false}}\}$
+such that $\mathit{IsDeclonable}(i,j) = \text{\textsc{true}}$
+iff there is a decloning for $P$ over reduced candidate set $\{c_1,...,c_i\}$
 with cardinality $j$.
-Predicate $IsDeclonable$ can be computed with the following recursive formula:
-$$ IsDeclonable(i,j) =
+We note that $\mathit{IsDeclonable}(i, 1)$ for every valid $i$, because partition to one part is a decloning.
+We also note that for $j>1$ it holds that $\mathit{IsDeclonable}(i,j)$ iff
+there exists $1 \leq a < i$ such that $\mathit{IsDeclonable}(a,j-1)$ and $\mathit{IsCloneSet}(\{c_{a+1}, ..., c_i\})$.
+Thus predicate $\mathit{IsDeclonable}$ can be computed with the following recursive formula:
+$$ \mathit{IsDeclonable}(i,j) =
 \begin{cases}
-true,	&\text{when} j=1 \\
-IsCloneSet(\{c_i\}) \wedge IsDeclonable(i-1,j-1) \vee \\
-IsCloneSet(\{c_{i-1},c_i\}) \wedge IsDeclonable(i-2, j-1) \vee \\
+\text{\textsc{true}},	&\text{when $j=1$} \\
+\mathit{IsCloneSet}(\{c_i\}) \wedge \mathit{IsDeclonable}(i-1,j-1) \vee \\
+\mathit{IsCloneSet}(\{c_{i-1},c_i\}) \wedge \mathit{IsDeclonable}(i-2, j-1) \vee \\
 ... \vee \\
-IsCloneSet(\{c_2,...,c_i\}) \wedge IsDeclonable(1,j-1)
-, 		&\text{when} j>1
+\mathit{IsCloneSet}(\{c_2,...,c_i\}) \wedge \mathit{IsDeclonable}(1,j-1)
+, 		&\text{when $j>1$}
 \end{cases}
 $$
 

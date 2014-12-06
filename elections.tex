@@ -1,8 +1,10 @@
-In order to model views of each voter we assume that each voter has his full preference order over the set of candidates.
-This model is general enough to describe special cases when we care only for some first or last candidates for every voter.
+In order to model views of each voter,
+we assume that each voter has a full preference order over the set of candidates.
+This model is general enough to describe special cases
+when we care only for some first or last candidates for every voter.
 It assumes the ability of each voter to arrange all candidates according to his preferences.
 On the other hand, it fails to express the situation when a voter perceives that some differences
-between his consecutive candidates are bigger than others, e.g. statement like:
+between his consecutive candidates are bigger than others, e.g. statement such as:
 \textit{candidates A and B are fine, with A slightly better than B, but C and D are absolutely not acceptable}.
 
 \begin{defn}[preference order]
@@ -11,18 +13,19 @@ is~a~total order over $C$.
 \end{defn}
 
 \begin{defn}[preference profile]
-Preference profile $P = (\succ_1, ... , \succ_n)$ for given candidate set $C$
+Preference profile $P = (\succ_1, ... , \succ_n)$ for given candidate set $C$,
 is a sequence of $n$ preference orders over $C$,
-where each $\succ_i, 1 \leq i \leq n$ represents preference order of $i$-th voter.
+where each $\succ_i, 1 \leq i \leq n$, represents the preference order of the $i$-th voter.
 \end{defn}
 
 
 \begin{exmp}
-For a candidate set $C = \{a, b, c, d\}$ we have that $P = (\succ_1, \succ_2, \succ_3)$ with
+For a candidate set $C = \{a, b, c, d\}$,
+let us consider a preference profile $P = (\succ_1, \succ_2, \succ_3)$ with
 \begin{align*}
-a \succ_1 b \succ_1 c \succ_1 d \\
-b \succ_2 d \succ_2 c \succ_2 a	\\
-a \succ_3 b \succ_3 d \succ_3 c
+a \succ_1 b \succ_1 c \succ_1 d, \\
+b \succ_2 d \succ_2 c \succ_2 a,	\\
+a \succ_3 b \succ_3 d \succ_3 c.
 \end{align*}
 is a preference profile over $C$.
 \end{exmp}
