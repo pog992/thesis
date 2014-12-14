@@ -1,18 +1,19 @@
 In this chapter we generalize our problem to allow for partitioning $C$ into parts
-that are not necessarily clone sets.
-We then measure how much such a partition differs from a decloning.
-For given preference profile we try to find a partition that minimizes this value.
+that are not necessarily clone sets, but that are, nonetheless, close to being clone sets in some sense.
+We formalize the measurement of distance from given partition to some decloning.
+For given preference profile we try to find a partition that minimizes distance value.
 
 \section{General Problem}
 
-The problem of \textsc{Decloning} turned out to be simple in the sense of $P$ vs. $NP$-hard.
+The problem of \textsc{Decloning} turns out to be simple in the sense of being in $P$.
 We may suppose that it is caused by too tight requirements imposed on a part of candidate set partition,
 namely it being a clone set.
 Now we drop this restriction and instead measure how different in some sense a part is from some clone set.
 Of course, we require that this measure equals $0$ only for clone sets.
 
 \begin{defn}[clone set error function]
-Given a preference profile $P$ over $C$ we say that a function
+Let $P$ be a preference profile over candidate set $C$.
+We say that a function
 $f: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{R}_+\cup\{0\}$
 is a clone set error function for $P$ when $f(X) = 0$ iff $X$ is a clone set for $P$.
 \end{defn}
@@ -20,10 +21,9 @@ is a clone set error function for $P$ when $f(X) = 0$ iff $X$ is a clone set for
 Now we can generalize the \textsc{Decloning} problem into \textsc{OptimalDecloning}
 where we try to minimize the sum of errors of parts of candidate set partition.
 
-
 \begin{problem}{OptimalDecloning}
 % TODO: function f as a polynomial circuit
-	Input: Preference profile $P$ over $C$, clone set error function $f$,
+	Input: Preference profile $P$ over candidate set $C$, clone set error function $f$,
 		integer $k$, positive real number $l$.
 
 	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f(C_i) \leq l$?
@@ -33,6 +33,8 @@ where we try to minimize the sum of errors of parts of candidate set partition.
 	\textsc{OptimalDecloning} is $NP$-complete.
 \end{thm}
 
+The following will be useful to prove the theorem.
+
 \begin{lmm} \label{lmmnotrivial}
 	Preference profle $P = (\succ_1, ... , \succ_m)$ over $C = \{1, ..., n\}$
 	where for each $i=1,...,m$ we have
@@ -41,31 +43,31 @@ where we try to minimize the sum of errors of parts of candidate set partition.
 \end{lmm}
 
 \begin{proof}[Proof by contradiction]
-Let us consider a non-trivial clone set $X$ for $P$.
+Let us consider some non-trivial clone set $X$ for $P$.
 It is a contiguous subsequence of preference order $\succ_1$, so $X = \{i,...,j\}$ for some $i,j \in C$.
-Clone set $X$ is not trivial, so both $i\neq{j}$ and $X\neq{C}$.
-Let us notice that $X$ is not contiguous on the preference order $\succ_{i+1}$.
-Subset $X$ is thus not a clone set for $P$.
+Clone set $X$ is not trivial, so $i\neq{j}$ and $X\neq{C}$.
+We note that $X$ is not contiguous on the preference order $\succ_{i+1}$.
+Subset $X$ is, thus, not a clone set for $P$.
 \end{proof}
 
-\begin{proof}[Proof of theorem \ref{optdecl}]
-We will show a reduction from the \textsc{X3C} problem.
-
-We are given set $X$, collection $S$ and integer $n$.
+\begin{proof}[Proof of Theorem \ref{optdecl}]
+We give a reduction from the \textsc{X3C} problem. \\
+We are given set $X$, collection $S$ of 3-element subsets of $X$, and integer $n$.
 Let us take clone set $C = X$ and function $f:2^C\rightarrow \{0,1,n+1\}$ such that:
 $$ f(X) =
 \begin{cases}
-0, &\text{when} \abs{X} \in \{1,3n\} \\
-1, &\text{when} X \in S \\
-n+1, &\text{in other cases}
+0, &\text{when } \abs{X} \in \{1,3n\} \text{,} \\
+1, &\text{when }  X \in S \text{,} \\
+n+1, &\text{otherwise.}
 \end{cases}
 $$
 Function $f$ is well-defined when $n>1$, because if $X \in S$ then $\abs{X} = 3 \not\in \{1,3n\}$.
-Condition $n=1$ can be special-cased during the runtime of reduction.
+Trivial calse $n=1$ can be treated specially during the runtime of the reduction.
 Let us take preference profile $P$ over $C$ as in lemma \ref{lmmnotrivial}.
 Function $f$ is a clone set error function for $P$, because $f(X) = 0$ iff $X$ is a trivial clone set
 and preference profile $P$ has no non-trivial clone sets.
-Let us take $l=k=n$, what gives us all the inputs necessary for \textsc{OptimalDecloning} problem.
+Let us take $l=k=n$.
+Now we have all the inputs necessary for \textsc{OptimalDecloning} problem.
 Let us check when the answer to this problem is \textsc{yes}.
 
 No part $X$ of the partition of $C$ can have $f(X)=n+1$, as it itself exceeds limit $l$.
@@ -75,12 +77,12 @@ When $n>1$ we cannot use $3n$-sized parts,
 as it yields only one part in partition while $k>1$.
 
 We are left with $\abs{X} \in \{1,3\}$.
-Let us note that due to the specified size $k=n$ of partition and $\abs{C} = 3n$
+Let us note that due to the specified size $k=n$ of partition and $\abs{C} = 3n$,
 the partition can contain only three-element parts.
 This means that we may choose $X$ only from $S$.
 It is possible to construct a valid partition only when there is an $A \subset S$ satisfying the \textsc{X3C} problem.
 
-In that case we have partition $A$ of candidate set $C$ such that
+In this case, we have partition $A$ of candidate set $C$ such that
 $$ \sum_{X \in A} f(X) = \sum_{X \in A} 1 = n,$$
 so the answer to \textsc{OptimalDecloning} problem is \textsc{yes}
 iff the answer to \textsc{X3C} is~\textsc{yes}.
@@ -90,16 +92,15 @@ iff the answer to \textsc{X3C} is~\textsc{yes}.
 
 \section{Specific Error Functions}
 
-Let us try to fix a value of error function input to \textsc{OptimalDecloning} problem
+Let us try to fix a value of error function input to \textsc{OptimalDecloning} problem,
 treating it as if it was hardcoded into the specification of the new problem.
 
 Given a specific error function we will consider the following family of problems.
 
-\begin{problem}{Specific Error Function $f$ Optimal Decloning Template}
+\begin{problem}{ $f$ Optimal Decloning}
 	Input: Preference profile $P$ over $C$, integers $k$ and $l$.
 
-	Question: Given than $f$ is a known component error function for $P$,
-		is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f(C_i) \leq l$?
+	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f(C_i) \leq l$?
 \end{problem}
 
 We want from such an error function $f$ to capture the intuitive notion
@@ -107,11 +108,13 @@ of distance of given partition from some decloning.
 
 \subsection{Component Error Function}
 
-% intuition for f_com
+We note that in decloning, each clone set occurs in a contiguous part of every voter's preference order.
+We may use this feature to compute clone set error for any partition.
+Component error function counts the sum for each part of the partition of excessive connected components in each preference order.
 
-To formulate the definition of component error function we will need a definition of kernel of total order relation.
+To formulate the formal definition of component error function we will need a definition of kernel of total order relation.
 
-Given a total order $\succ$ over a finite set we may sort its elements into a sequence
+Given a total order $\succ$ over a finite set, we may sort its elements into a sequence
 such that for every pair of elements former is in the relation $\succ$ with the latter.
 This sequence naturally induces another relation, namely relation $\overline{\succ}$
 between every two consecutive elements.
@@ -119,7 +122,7 @@ We will call such a relation a kernel of $\overline{\succ}$.
 It is easy to recover $\succ$ from $\overline{\succ}$ simply by taking the transitive closure of $\succ$.
 
 \begin{defn}[kernel of total order]
-Given a total order $\succ$ over a finite set we say that $\overline{\succ}$ is its kernel when
+Given a total order $\succ$ over a finite set, we say that $\overline{\succ}$ is its kernel when
 $\overline{\succ}$ is a minimal relation whose transitive closure equals $\succ$.
 \end{defn}
 
@@ -129,7 +132,8 @@ $\overline{>} = \{(4,3), (3,2), (2,1)\}$.
 \end{exmp}
 
 \begin{defn}[component error function]
-Let us define for given preference profile $P = (\succ_1, ..., \succ_m)$ over candidate set $C$
+Let $P = (\succ_1, ..., \succ_m)$ be a preference profile over candidate set $C$.
+We define component error function for $P$ as
 a function $f_{com}: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{N}_0$ with the following formula:
 $$ f_{com}(X) = \sum_{i=1}^m \left( \abs{X}-1 -
 \abs{\left\lbrace \left( a,b \right) \in X^2 : a \overline{\succ}_i b \right\rbrace }
@@ -137,7 +141,7 @@ $$ f_{com}(X) = \sum_{i=1}^m \left( \abs{X}-1 -
 \end{defn}
 
 \begin{rmrk}
-Function $f_{com}$ for preference profile $P$ is a clone set error function for $P$.
+Component error function $f_{com}$ for preference profile $P$ is a clone set error function for $P$.
 \end{rmrk}
 
 \begin{problem}{ComponentOptimalDecloning (COD)}
@@ -147,10 +151,10 @@ Function $f_{com}$ for preference profile $P$ is a clone set error function for 
 		is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f_{com}(C_i) \leq l$?
 \end{problem}
 
-Given a preference profile $P = (\succ_1, ..., \succ_m)$ let us create now a multigraph $G=(C,E)$
+Given a preference profile $P = (\succ_1, ..., \succ_m)$, let us create a multigraph $G=(C,E)$
 where $E$ is a multiset obtained by multisum
-of each $\{a,b\}$ such that $a,b \in P$ and $a \overline{\succ} b$ for some $\succ \in P$.
-We get a multigraph created from Hamiltonian path of each voter's preferences.
+of each $\{a,b\}$ such that $a,b \in C$ and $a \overline{\succ} b$ for some $\succ$ \xspace $ \in P$.
+We get a multigraph created from multisum of edges of Hamiltonian paths inferred from each voter's preferences.
 Let us call this a Hamiltonian path multigraph.
 
 \begin{defn}[Hamiltonian path multigraph]
@@ -162,13 +166,14 @@ Partitioning $C$ into $C_1,...,C_k$ corresponds to
 partitioning Hamiltonian path multigraph $G$ into submultigraphs $G_1,...,G_k$
 % necessary induced graphs? maybe just partition of V?
 induced by $C_1,...,C_k$ respectively.
-Let us denote by $c_{ij}$ part
+Let us denote by number $c_{ij}$ part
 $\abs{\left\lbrace \left( a,b \right) \in C_i^2 : a \overline{\succ}_j b \right\rbrace }$
 of the formula of $f_{com}(C_i)$ such that
 $f_{com}(C_i) = \sum_{j=1}^m \left( \abs{C_i} - 1 - c_{ij} \right)$.
 We have that $c_{ij}$ is the number of edges from $j$-th voter's Hamiltonian path
-that connects two vertices from $C_i$.
-We will call such edges the $C_i$ intra-part edges and edges that end in different parts the inter-part edges.
+that connect two vertices from $C_i$.
+We will call such edges the $C_i$ intra-part edges.
+We will also call edges that end in different parts the inter-part edges.
 
 Now the error value equals:
 $$
@@ -181,11 +186,11 @@ m(n-k) - \sum_{j=i}^m \sum_{i=1}^k c_{ij}
 Let us note that $\sum_{i=1}^k c_{ij}$ is the total number of $C_i$ intra-part edges
 and $\sum_{j=i}^m \sum_{i=1}^k c_{ij}$ is the total number of intra-part edges.
 As value of $m(n-k)$ is constant for a given graph,
-we have that \textsc{ComponentOptimalDecloning} is essentially a problem of maximizing the number of intra-part edges.
-We will that number a score of partition.
+we have that \textsc{ComponentOptimalDecloning} is, essentially, a problem of maximizing the number of intra-part edges.
+We will call that number a score of partition.
 
 \begin{defn}[partition score]
-Given a multigraph $G=(V,E)$, $E=(V,e)$ and a partition $(V_1, ..., V_k)$ of $V$
+Given a multigraph $G=(V,E)$, where $E=(V,e)$, and a partition $(V_1, ..., V_k)$ of $V$
 we say that a score of part $V_i$ for $i=1,...,k$ equals $\sum_{u,v \in V_i} e(\{u,v\})$.
 We say that a partition score is a sum of the scores of its parts.
 \end{defn}
@@ -194,31 +199,41 @@ We say that a partition score is a sum of the scores of its parts.
 Score of a part that is a singleton equals $0$.
 \end{rmrk}
 
-This lets us to formulate another problem which is equivalent to \textsc{ComponentOptimalDecloning}
-in terms of reduction.
+This lets us formulate another problem, which is polynomially reducible
+to \textsc{ComponentOptimalDecloning}.
 
 \begin{problem}{HamiltonianPathMultigraphPartition (HPMP)}
 	Input: Hamiltonian path multigraph $G=(V,E)$
 		together with its partition into Hamiltonian paths, integers $k$ and $s$.
 
-	Question: Is there a $k$-sized partition of $V$ of score at least $s$?
+	Question: Is there a partition of $V$ into $V_1, ..., V_k$,
+        of score at least $s$?
 \end{problem}
 
-\begin{rmrk}
-There is a reduction of problem \textsc{HPMP} to \textsc{COD}.
-\end{rmrk}
+\begin{thm}
+There is a polynomial-time reduction of problem \textsc{HPMP} to \textsc{COD}.
+\end{thm}
+
+\begin{proof}
+Given $G=(V,E)$ from input, we take candidate set $C=V$.
+For each Hamiltonian path from input, we add to output preference profile $P$
+the preference order created by transitive closure of relation of vertices being consecutive on a path.
+We have previously shown that resulting instance of \textsc{COD} problem 
+has the same answer as the input instance of \textsc{HPMP} problem.
+\end{proof}
+
 
 \begin{thm} \label{ultimate-theorem}
 \textsc{ComponentOptimalDecloning} is $NP$-complete.
 \end{thm}
 
 \begin{lmm} \label{hpmd-red}
-For every graph $G=(V,E)$ and hamiltonian path multigraph $G=(V',E')$, $E=(V',w)$ such that $V' \supset V$ and
+For every graph $G=(V,E)$ and hamiltonian path multigraph $G'=(V',E')$, $E=(V',w)$ such that $V' \supset V$ and
 $$ w(\{u,v\}) =
 \begin{cases}
 2, 				&\text{when } \{u,v\} \in E \\
 0, 				&\text{when } \{u,v\} \not\in E \text{ and } u,v \in V \\
-w_{u v}\leq 1,	&\text{when } u \not\in V \text{ and } v \not\in V
+w_{u v}\leq 1,	&\text{when } u \not\in V \text{ or } v \not\in V
 \end{cases}
 $$
 there is a clique of size $c$ in $G$ iff
@@ -226,7 +241,7 @@ there is $\left(\abs{V'}-c-1\right)$-sized partition of $V'$ of score $c(c-1)$.
 \end{lmm}
 
 \begin{proof} \label{hpmp-red-2}
-Let us consider any graphs $G=(V,E)$ and $G'=(V',(V',w))$ satisfying the condition of the lemma.
+Let us consider graph $G=(V,E)$ and multigraph $G'=(V',(V',w))$, satisfying the condition of the lemma.
 If there is a $c$-sized clique $C \subset V$ in $G$,
 then we may partition $V'$ into $C$ and singletons for each $u \in V' \setminus C$.
 As $f(\{u,v\})=2$ for $u,v \in C$, such a partition has score $2 {c(c-1) \over 2} = c(c-1)$.
@@ -238,22 +253,24 @@ Partition $P$ cannot contain any part bigger than $c$,
 because all of the parts need to be non-empty.
 If $P$ contains $c$-sized part $V_1$ included entirely in $V$, then its score is less than $c(c-1)$,
 for $V$ does not contain $c$-sized cliques.
-In other case part $V_1$ contains a vertex from $V' \setminus V$.
-This means that there is an edge $e$ ended in $V_1$ such $w(e)<=1$, so the score of $P$ is less that $c(c-1)$.
+In other case, part $V_1$ contains a vertex from $V' \setminus V$.
+This means that there is an edge $e$ with one vertex in $V_1$ such that $w(e) \leq 1$,
+so the score of $P$ is smaller that $c(c-1)$.
 
-The only case left is when each part of $P$ has size less than $c$.
-We will do reasoning similar to the one in the proof of theorem \ref{gp-np}.
-Let us denote the upper bound of the score $m$-sized part of $f(m)$, $f(m) = m(m-1)$.
-Function $f$ is strictly convex because $f'' = 2 > 0$
-and sequence $(c,1,...,1)$ majorizes sequence $S$ of sizes, so we can use inequality \ref{thm:Kar}
-for $f$ and both sequence.
-This gives us the following upper limit on score $q$ of $P$:
+The only case left is when each part of $P$ has size smaller than $c$.
+We will do reasoning similar to the one in the proof of Theorem \ref{gp-np}.
+Let us denote the upper bound of the score of $m$-sized part of $f(m)$, $f(m) = m(m-1)$.
+Function $f$ is strictly convex because $f''(x) = 2 > 0$
+and sequence $(c,1,...,1)$ majorizes sequence $S$ of sizes of $V_1, ..., V_k$,
+so we can use inequality from Theorem \ref{thm:Kar}
+for $f$ and both sequences.
+This gives us the following upper bound on the score $q$ of $P$:
 $$q \leq \sum_{s \in S} f(s) < f(c) + f(1) + ... + f(1) = c(c-1) \text{.}$$
-So also in this case the score of $P$ is less than $c(c-1)$ and the lemma is proved.
+So, also in this case the score of $P$ is smaller than $c(c-1)$ and the lemma is proved.
 \end{proof}
 
 \begin{lmm}
-Given a graph $G$ and integer $c$ there is a polynomial-time construction
+Given a graph $G$ and integer $c$, there is a polynomial-time construction
 of hamiltonian path multigraph $G'$ together with its path decomposition
 satisfying the conditions of lemma \ref{hpmd-red}.
 \end{lmm}
@@ -273,15 +290,15 @@ So \textsc{HPMP} problem is $NP$-complete.
 
 \subsection{Inconsistent Voters Error Function}
 
-Component error function has useful properties, but also could yield partition
+Component error function has useful properties, but also could yield partitions
 intuitively far from optimal.
 It constructs the partition using only very local information,
-such as edges in the graph of kernels of preference orders.
-For example, in the proof of theorem \ref{ultimate-theorem} we constructed a partition
+such as edges in the graphs of kernels of preference orders.
+For example, in the proof of Theorem \ref{ultimate-theorem}, we constructed a partition
 which was not in accordance with any voter.
 
-On the other side of spectrum, we may think of an error function which
-takes into consideration only global information in the sense of a single voter.
+On the other side of spectrum of locality, we may think of an error function which
+takes into consideration only global information, in the sense of a single voter.
 Such an information is what we call consistency with a voter's preferences, what we define below.
 
 \begin{defn}[inconsistent voter]
@@ -306,7 +323,7 @@ Now we can introduce optimal decloning problem using $f_{iv}$ clone set error fu
 \begin{problem}{ConsistentVotersOptimalDecloning (CVOD)}
 	Input: Preference profile $P$ over $C$, integers $k$ and $l$.
 
-	Question: Given than $f_{iv}$ is a inconsistent voters error function for $P$,
+	Question: Given than $f_{iv}$ is the inconsistent voters error function for $P$,
 		is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f_{iv}(C_i) \leq l$?
 \end{problem}
 
