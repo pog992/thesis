@@ -4,19 +4,19 @@ In this work we defined elections, decloning and decloning problems.
 
 We have shown that \textsc{Decloning} problem is in \p.
 This means that if all voters perfectly detect clones
-and there is no noise in their decision,
+and there is no noise in their preference orders,
 we can easily infer clones from voters' preferences.
 
 We have also shown that problems \textsc{OptimalDecloning} and \textsc{ComponentOptimalDecloning}
 are \np-complete.
-Those problems are reconstructing optimal partition minimizing 
-sum of distances to some clone sets for each part.
-They use any metric to measure distance to some clone set and a fixed one respectively.
-This means that it is potentially intractable to detect clones in elections
+Those problems attempt to reconstruct optimal partition while minimizing 
+the sum of distances to some clone sets for each part.
+They use a given metric to measure the distance to some clone set and a fixed one respectively.
+This means that it is potentially intractable to detect clones in elections,
 in conditions where votes contain noise or are randomly biased.
 
 We have also considered problem \textsc{ConsistentVotersOptimalDecloning}
-which uses different clone set error function that \textsc{ComponentOptimalDecloning}.
+which uses a different clone set error function than \textsc{ComponentOptimalDecloning}.
 
 Table \ref{cclasses} summarizes complexity classes of studied decloning problems.
 
@@ -33,14 +33,14 @@ Table \ref{cclasses} summarizes complexity classes of studied decloning problems
 \end{table}
 
 
-\section{Further Works}
+\section{Future Research}
 
-Natural continuation of this work is more accurate classification of \textsc{ConsistentVotersOptimalDecloning} problem.
+Natural continuation of this work is to more accurately classify the complexity of \textsc{ConsistentVotersOptimalDecloning} problem.
 We may expect that, similarly to \textsc{ComponentOptimalDecloning}, this problem is \np-complete.
 
 Moreover, \np-completeness of optimal decloning problems does not mean
 that decloning in face of voters' errors is computationally infeasible.
 There may be either an efficient approximation algorithm
-or a parametrization resulting in fixed-parameter tractable algorithm.
+or a parametrization resulting in a fixed-parameter tractable algorithm.
 
-It is also possible that there is a clone set error function for which optimal decloning problem is in \p.
+It is also possible that there is a natural clone set error function for which optimal decloning problem is in \p.
