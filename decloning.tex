@@ -61,7 +61,7 @@ $$
 \end{exmp}
 
 \begin{rmrk} \label{sequence-split}
-Let us note that a decloning corresponds to some splitting into parts
+We note that a decloning corresponds to some splitting into parts
 the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g. the first voter).
 \end{rmrk}
 
@@ -80,7 +80,7 @@ the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g.
 We will show a polynomial algorithm for the \textsc{Decloning} problem.
 
 Let $C = \{c_1, ..., c_n\}$ be out input candidate set
-and let $P = (\succ_1, ... , \succ_n)$ be the input preference profile.
+and let $P = (\succ_1, ... , \succ_m)$ be the input preference profile.
 Without loss of generality, let us assume that $c_1 \succ_1 c_2 \succ_1 ... \succ_1 c_n$.
 We will use Remark \ref{sequence-split} to split the sequence $(c_1, ..., c_n)$
 into $k$ parts, to obtain a decloning of $P$.
@@ -113,6 +113,6 @@ $$ \mathit{IsDeclonable}(i,j) =
 $$
 
 Direct implementation of this recursion with memoizing
-results in a polynomial-time algorithm that computes the value $IsDeclonable(n,k)$
+results in a polynomial-time algorithm that computes the value of $IsDeclonable(n,k)$
 solving the \textsc{Decloning} problem.
 \end{proof}

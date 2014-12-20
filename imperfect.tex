@@ -36,15 +36,17 @@ where we try to minimize the sum of errors of parts of candidate set partition.
 The following will be useful to prove the theorem.
 
 \begin{lmm} \label{lmmnotrivial}
-	Preference profle $P = (\succ_1, ... , \succ_m)$ over $C = \{1, ..., n\}$
-	where for each $i=1,...,m$ we have
-	$$i \succ_i i+1 \succ_i ... \succ_i n \succ_i 1 \succ_i 2 \succ_i ... \succ_i i-1$$
+        Let $C = \{c_1, ..., c_n\}$ be any candidate set.
+	Preference profle $P = (\succ_1, ... , \succ_n)$ over $C$
+	where for each $i=1,...,n$ we have
+	$$c_i \succ_i c_{i+1} \succ_i ... \succ_i c_n \succ_i c_1 \succ_i c_2 \succ_i ... \succ_i c_{i-1}$$
 	has no non-trivial clone sets.
 \end{lmm}
 
 \begin{proof}[Proof by contradiction]
 Let us consider some non-trivial clone set $X$ for $P$.
-It is a contiguous subsequence of preference order $\succ_1$, so $X = \{i,...,j\}$ for some $i,j \in C$.
+From Remark \ref{sequence-split} we have that it is a contiguous subsequence of preference order $\succ_1$,
+so $X = \{c_i, ..., c_j\}$ for some $c_i, c_j \in C$.
 Clone set $X$ is not trivial, so $i\neq{j}$ and $X\neq{C}$.
 We note that $X$ is not contiguous on the preference order $\succ_{i+1}$.
 Subset $X$ is, thus, not a clone set for $P$.
