@@ -1,22 +1,30 @@
 \section{Results}
 
-In this work we defined elections, decloning and decloning problems.
-
+In this work we have defined decloning, which is a parition of candidates into clone sets.
+We defined \textsc{Decloning} problem of finding for a preference profile a decloning of given cardinality.
 We have shown that \textsc{Decloning} problem is in \p.
 This means that if all voters perfectly detect clones
 and there is no noise in their preference orders,
 we can easily infer clones from voters' preferences.
 
-We have also shown that problems \textsc{OptimalDecloning} and \textsc{ComponentOptimalDecloning}
+We have also considered imperfect clones.
+We have measured clone-wise imperfection of given subset of candidates using clone set error function.
+We have defined \textsc{OptimalDecloning} problem.
+It takes as input any polynomial-time computable clone set error function and preference profile
+and computes partition of candidate set with the lowest possible value of sum of clone set errors for each part.
+We have also defined \textsc{ComponentOptimalDecloning} problem which uses a fixed clone set error function.
+That error function computes how much extra parts a candidate set subset is split into
+on preference orders of voters.
+
+We have shown that problems \textsc{OptimalDecloning} and \textsc{ComponentOptimalDecloning}
 are \np-complete.
-Those problems attempt to reconstruct optimal partition while minimizing 
-the sum of distances to some clone sets for each part.
-They use a given metric to measure the distance to some clone set and a fixed one respectively.
 This means that it is potentially intractable to detect clones in elections,
 in conditions where votes contain noise or are randomly biased.
 
 We have also considered problem \textsc{ConsistentVotersOptimalDecloning}
 which uses a different clone set error function than \textsc{ComponentOptimalDecloning}.
+Its error function returns how many voters has to be removed from elections
+to make the given candidate subset a clone set.
 
 Table \ref{cclasses} summarizes complexity classes of studied decloning problems.
 
@@ -43,4 +51,9 @@ that decloning in face of voters' errors is computationally infeasible.
 There may be either an efficient approximation algorithm
 or a parametrization resulting in a fixed-parameter tractable algorithm.
 
-It is also possible that there is a natural clone set error function for which optimal decloning problem is in \p.
+It is also possible that there is a natural clone set error function
+for which optimal decloning problem is in \p.
+
+Another interesting result would be to show a dichotomy that determines
+which clone set error functions yield optimal decloning problem in \p
+and which yield problem that is \np-hard.

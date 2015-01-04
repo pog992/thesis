@@ -71,14 +71,21 @@ A graph $G$ is an ordered pair $(V,E)$ of set $V$ of vertices and a set $E$ of e
 Each edge is a 2-element subset of $V$.
 \end{defn}
 
+\begin{defn}[clique]
+Let $G=(V,E)$ be a graph.
+We say that a subset $C \subset V$ of the set of vertices is a clique if
+for each $u,v \in C$ it holds that $\{u,v\} \in E$.
+\end{defn}
+
 \begin{defn}[multigraph]
 A multigraph $G$ is an ordered pair $(V,E)$ of a set $V$ of vertices and a multiset $E$ of edges,
 where the edges are defined in the same way as for graphs.
 \end{defn}
 
-\begin{defn}[induced subgraph]
-(Multi)graph $(V', E')$ is a sub(multi)graph of (multi)graph $(V,E)$ induced by $V'$
-if $V' \subset V$, $E' \subset E$, and for each $u,v \in V'$ if $\{u,v\}\in E$ then $\{u,v\}\in E'$.
+\begin{defn}[induced submultigraph]
+Multigraph $(V', E')$ is a submultigraph of multigraph $(V,E)$ induced by $V'$
+if $V' \subset V$, $E' \subset E$, and for each $u,v \in V'$ 
+number of occurrences of $\{u,v\}$ in $E'$ is equal to the number of occurrences of $\{u,v\}$ in $E$.
 \end{defn}
 
 \begin{defn}[Hamiltonian path]
@@ -88,14 +95,14 @@ i.e. for each $i=1,...,n-1$ we have $\{u_i, u_{i+1}\} \in E$.
 \end{defn}
 
 
-This theorem states that prime number are dense in an informal sense.
+This theorem states that prime number are dense.
 
-\begin{thm}[Bertrand–Chebyshev]
+\begin{thm}[Bertrand–Chebyshev] \label{bertrand-chebyshev}
 For any integer $n>1$ there exists $p \in \mathbb{P}$ such that $n < p < 2n$.
 \end{thm}
 
 
-The following are definitions necessary to formulate the Karamata's inequality.
+The following are definitions necessary to formulate an inequality which will be useful later.
 
 \begin{defn}[strictly convex function]
 We say that a function $f:\mathbb{R}\rightarrow\mathbb{R}$ is strictly convex on an interval $I \subset \mathbb{R}$
@@ -142,6 +149,8 @@ The Church-Turing Thesis states informally what a Turing machine can.
 \begin{cnj}[Church-Turing Thesis]
 Computability by Turing machine is equivalent to intuitive notion of computability.
 \end{cnj}
+
+The next definition formalizes the notion of a problem.
 
 \begin{defn}[decision problem]
 Decision problem is a function that transforms an input into one of two possible answers,

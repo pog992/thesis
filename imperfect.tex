@@ -5,10 +5,11 @@ For given preference profile we try to find a partition that minimizes distance 
 
 \section{General Problem}
 
-The problem of \textsc{Decloning} turns out to be simple in the sense of being in $P$.
-We may suppose that it is caused by too tight requirements imposed on a part of candidate set partition,
-namely it being a clone set.
-Now we drop this restriction and instead measure how different in some sense a part is from some clone set.
+One may claim that \textsc{Decloning} problem is unrealistic,
+because it assumes that every single voter can perfectly group clones.
+It disallows any error in that matter during voting or any personal biases.
+Now we drop the restriction that a part of the candidate set partition needs to be a clone set.
+Instead, we will measure how different in some sense a part is from some clone set.
 Of course, we require that this measure equals $0$ only for clone sets.
 
 \begin{defn}[clone set error function]
@@ -22,9 +23,9 @@ Now we can generalize the \textsc{Decloning} problem into \textsc{OptimalDecloni
 where we try to minimize the sum of errors of parts of candidate set partition.
 
 \begin{problem}{OptimalDecloning}
-% TODO: function f as a polynomial circuit
-	Input: Preference profile $P$ over candidate set $C$, clone set error function $f$,
-		integer $k$, positive real number $l$.
+	Input: Preference profile $P$ over candidate set $C$, integer $k$, positive real number $l$,
+        clone set error function $f$ encoded as a turing machine that given input $X$ computes $f(X)$
+        in at most $a \abs{X}^b$ steps for some integers $a$ and $b$
 
 	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f(C_i) \leq l$?
 \end{problem}
@@ -53,7 +54,11 @@ Subset $X$ is, thus, not a clone set for $P$.
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{optdecl}]
-We give a reduction from the \textsc{X3C} problem. \\
+\textsc{OptimalDecloning} is clearly in \np,
+as given a partition we may verify the inequality in polynomial time.
+Now we only need to show that the problem is \np-hard.
+We give a reduction from the \textsc{X3C} problem.
+
 We are given set $X$, collection $S$ of 3-element subsets of $X$, and integer $n$.
 Let us take clone set $C = X$ and function $f:2^C\rightarrow \{0,1,n+1\}$ such that:
 $$ f(X) =
