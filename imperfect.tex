@@ -283,6 +283,51 @@ satisfying the conditions of lemma \ref{hpmd-red}.
 \end{lmm}
 
 \begin{proof}
+Let $G = (V,E)$, $V = \{v_1, ..., v_n\}$ and $E = \{\{v_{e_i}, v_{d_i}\}: i = 1, ..., m\}$,
+$e_i < d_i$ for $i=1,...,m$.
+We need a prime number $p > 8m^2 n$.
+Using Theorem \ref{bertrand-chebyshev} we have that there exists a prime number between $8m^2n$ and $16m^2 n$.
+This lets us find $p$ using a brute-force linear search.
+
+We will construct hamiltonian path multigraph $G' = (V',E')$
+with $V' = \{v_1, ..., v_n, v_{n+1}, ..., v_{n+p}\}$. 
+Now we create $2m$ paths, where $i$-th path for $i=1,...,2m$
+is formed by the following sequence $P_i$ of vertices:
+$$ P_i = ({P_i}_1, ..., {P_i}_p) =  (v_{n+1+(ji \mod p)})_{j=1,...,p} \text{.}$$ 
+From \eqref{zp} we have that each such path has every vertex from
+$V' \setminus V = \{v_{n+1}, ..., v_{n+p}\}$.
+We also note that the paths do not share edges,
+because if $i$-th path contains edge $\{v_a, v_b\}$, then $\abs{a-b} = i$.
+
+To make them Hamiltonian paths we need to extend them with the vertices from $V$.
+Let us create $2m$ permutations $S_i$ of $V$ for $i=1,...,2m$ such that
+$$S_i = ({S_i}_1, ..., {S_i}_n) =
+(v_{e_i}, v_{d_i}, v_1, ..., v_{e_i-1}, v_{e_i+1}, ..., v_{d_i-1}, v_{d_i+1}, ..., v_n)\text{,}$$
+where we denote $v_{e_i} = v_{e_{i-m}}$ and $v_{d_i} = v_{d_{i-m}}$ for $i>m$. 
+
+Now we zip sequences $P_i$ and $S_i$ for $i=1,...,2m$ respectively to obtain hamiltonian paths.
+Sequence of $H_i$ of vertices of $i$-th hamiltonian path looks as follows:
+$$H_i = ({P_i}_1, ..., {P_i}_{1+ni}, {S_i}_1, {S_i}_2, {P_i}_{2+ni}, {S_i}_3, ..., {P_i}_{n-1+ni}, {S_i}_n,
+{P_i}_{n+1+ni}, ..., {P_i}_p) \text{.}$$
+What happened here is that we skipped $1+ni$ first vertices from $P_i$,
+put two first vertices from $S_i$, zipped next vertices from $P_i$ and $S_i$ one to one,
+and put remaining vertices from $P_i$.
+In $H_i$ there are edges between $P_i$ and $S_i$ only for ${P_i}_{1+ni}, ..., {P_i}_{n+1+ni}$.
+These are vertices $v_{n+1+((1+ni)i \mod p)}, ..., v_{n+1+((n+1+ni)i \mod p)} $.
+As $i \leq 2m$, $(n+1+ni)i \leq (mn+mn+2mn)2m = 8m^2 n < p$,
+we may remove modulo operations from those indices.
+Now for $H_i$ we have vertices $v_{n+1+i+ni^2}, ..., v_{n+1+ni+i+ni^2}$.
+We note that for each $i=1,...,2m$ those vertices are disjoint, so no edge between $V$ and $V'$ appears twice.
+
+The result Hamiltonian paths have the following properties:
+\begin{itemize}
+\item each contains one edge from $E$ with both ends in $V$,
+  and each edge in $E$ appears in two paths,
+\item no path share a common edge with both ends in $V' \setminus V$,
+  i.e. for each $u,v \in V' \setminus V$ edge $\{u,v\}$ appears at most once,
+\item the same holds for vertices $u,v$ such that $u \in V$, $v \in V' \setminus V$.
+\end{itemize}
+This means that we constructed a required multigraph, together with its decomposition into paths.
 \end{proof}
 
 \begin{proof}[Proof of theorem \ref{ultimate-theorem}.]

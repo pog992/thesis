@@ -22,6 +22,7 @@ Table \ref{symbols} presents symbol that we use in this work.
 	$\abs{\cdot}$	& set cardinality \\ \hline
 	$2^\cdot$		& family of subsets \\ \hline
 	$f''$			& second derivative of function $f$ \\ \hline
+  $ a | b$              & $a$ divides $b$ \\ \hline
 \end{tabular}
 \caption{Mathematical symbols used throughout the work.} \label{symbols}
 \end{table}
@@ -101,6 +102,18 @@ This theorem states that prime number are dense.
 For any integer $n>1$ there exists $p \in \mathbb{P}$ such that $n < p < 2n$.
 \end{thm}
 
+This is a useful property of prime numbers.
+
+\begin{thm} \label{zp}
+Let $p$ be a prime number and $a$ some positive integer less than $p$.
+We have that values $a, 2a, ..., pa$ divided by $p$ give all the remainders from the set $\{0, ..., p-1\}$.
+\end{thm}
+
+\begin{proof}
+It suffices to show that every $ia$ and $ja$ for $i,j \in \{1, ..., p\}, i \neq j$
+have different remainders from division by $p$.
+If some $i$ and $j$ had, then we would have $p | ia - ja$, $p | (i-j)a$, and $p | i-j$, which is impossible.
+\end{proof}
 
 The following are definitions necessary to formulate an inequality which will be useful later.
 
