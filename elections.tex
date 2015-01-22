@@ -18,7 +18,6 @@ is a sequence of $n$ preference orders over $C$,
 where each $\succ_i, 1 \leq i \leq n$, represents the preference order of the $i$-th voter.
 \end{defn}
 
-
 \begin{exmp}
 For a candidate set $C = \{a, b, c, d\}$,
 let us consider a preference profile $P = (\succ_1, \succ_2, \succ_3)$ with
@@ -27,5 +26,22 @@ a \succ_1 b \succ_1 c \succ_1 d, \\
 b \succ_2 d \succ_2 c \succ_2 a,	\\
 a \succ_3 b \succ_3 d \succ_3 c.
 \end{align*}
-is a preference profile over $C$.
+$P$ is a preference profile over $C$.
+\end{exmp}
+
+This is where our interests in elections for this work end.
+However, for completness, we will discuss what is election system and give some examples.
+
+\begin{defn}[election]
+Election is a pair $(C, P)$, where $C$ is a candidate set, and $P$ is a preference profile for $C$.
+\end{defn}
+
+\begin{defn}[election system]
+Election system is a function $R : (C,P) \rightarrow 2^{C} \setminus \{\emptyset\}$
+that maps election to non-empty set of winners.
+\end{defn}
+
+\begin{exmp}[plurality]
+Plurality is an election system that for given election choses winners as candidates
+with the most voters which ranked them on the first position.
 \end{exmp}
