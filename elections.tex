@@ -6,6 +6,8 @@ It assumes the ability of each voter to arrange all candidates according to his 
 On the other hand, it fails to express the situation when a voter perceives that some differences
 between his consecutive candidates are bigger than others, e.g. statement such as:
 \textit{candidates A and B are fine, with A slightly better than B, but C and D are absolutely not acceptable}.
+Range voting \cite{rangevoting} or fallback voting \cite{fallbackvoting} systems
+allow for more elastic expressing of opinions.
 
 \begin{defn}[preference order]
 Given a finite candidate set $C$ a preference order over $C$
@@ -30,7 +32,7 @@ $P$ is a preference profile over $C$.
 \end{exmp}
 
 This is where our interests in elections for this work end.
-However, for completness, we will discuss what is election system and give some examples.
+However, for completeness, we will discuss what is election system and give some examples.
 
 \begin{defn}[election]
 Election is a pair $(C, P)$, where $C$ is a candidate set, and $P$ is a preference profile for $C$.
@@ -41,7 +43,20 @@ Election system is a function $R : (C,P) \rightarrow 2^{C} \setminus \{\emptyset
 that maps election to non-empty set of winners.
 \end{defn}
 
-\begin{exmp}[plurality]
-Plurality is an election system that for given election choses winners as candidates
-with the most voters which ranked them on the first position.
+\begin{exmp}[Plurality]
+Plurality is an election system that for given election chooses winners as candidates
+with the most number of voters who ranked them on the first position.
+\end{exmp}
+
+\begin{exmp}[Borda]
+Borda is an elections system in which each voter gives its $i$-th candidate score $i$.
+Winners are candidates with lowest score.
+\end{exmp}
+
+\begin{exmp}[Copeland]
+We say for given candidate that a pairwise victory is a situation
+when majority of voters prefer that candidate from the other one.
+The opposite situation is a pairwise defeat.
+Copeland is an election system in which winners are those candidates that have
+highest number of pairwise victories minus number of pairwise defeats.
 \end{exmp}

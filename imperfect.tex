@@ -16,7 +16,7 @@ Of course, we require that this measure equals $0$ only for clone sets.
 Let $P$ be a preference profile over candidate set $C$.
 We say that a function
 $f: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{R}_+\cup\{0\}$
-is a clone set error function for $P$ when $f(X) = 0$ iff $X$ is a clone set for $P$.
+is a clone set error function for $P$ when $f(X) = 0$ if $X$ is a clone set for $P$.
 \end{defn}
 
 Now we can generalize the \textsc{Decloning} problem into \textsc{OptimalDecloning}
@@ -24,7 +24,7 @@ where we try to minimize the sum of errors of parts of candidate set partition.
 
 \begin{problem}{OptimalDecloning}
 	Input: Preference profile $P$ over candidate set $C$, integer $k$, positive real number $l$,
-        clone set error function $f$ encoded as a turing machine that given input $X$ computes $f(X)$
+        clone set error function $f$ encoded as a Turing machine that given input $X$ computes $f(X)$
         in at most $a \abs{X}^b$ steps for some integers $a$ and $b$
 
 	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f(C_i) \leq l$?
