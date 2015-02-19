@@ -21,10 +21,29 @@ So similar, that they are indistinguishable or hardly distinguishable for voters
 We call such candidates clones.
 
 Our goal in this work is to conceive methods of defending against such clone-based attacks.
-We are interested in figuring out whether such an attack took place, or, at least, likely took place.
+We aim to figure out whether such an attack took place, or, at least, likely took place.
 Given voters preferences, regardless of the election system used, we want to detect latent clone structures.
+We are interested in computational complexity of detection problems.
+We treat easily-computable detection as an argument that it is easy to defend against clone-based attacks.
+On the other hand, hard to compute detection means that such attacks are serious threat.
 
 \section{Related Works}
+
+Elections are well-studied research area.
+Book \cite{handbook} presents general overview of voting.
+%TODO: election systems
+Computational approach to elections has been studied in \cite{compsocialchoice}.
+%TODO: attacks on elections
+Work \cite{usingcomplexity} discusses defending against attacks using computational complexty:
+making the attack computationally prohibitive.
+More background on computational-complexity approach to elections
+can be found in papers \cite{usingcomp1}, \cite{usingcomp2}, and \cite{usingcomp3}.
+
+Structures of groups of simillar candidates has been studied for instance in \cite{clones1}, \cite{clones2}, and \cite{clones3}.
+Work \cite{independenceofclones} discusses an attack on elections where new candidates,
+clones, very similar to existing ones, are introduced to change the outcome of elections.
+Algorithm for cloning for many voting rules are studied in \cite{cloninginelections}.
+Paper \cite{clonestructures} gives properties of clone structures regardless of voting rule.
 
 
 \section{Structure of the Thesis}
