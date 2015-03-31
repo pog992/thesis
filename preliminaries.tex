@@ -3,7 +3,7 @@ that we use throughout this thesis.
 This chapter is divided into two sections.
 The first one is a short revision of necessary mathematics.
 The second section revises basics ideas of, and builds intuition regarding, computational complexity theory.
-It also introduces some $NP$-complete decision problems for further use.
+It also introduces some \np-complete decision problems for further use.
 
 %This chapter might be skipped and used as a reference only when necessary.
 
@@ -16,6 +16,7 @@ Table \ref{symbols} presents symbol that we use in this work.
 	$\mathbb{N}_0$	& natural numbers including zero \\ \hline
 	$\mathbb{N}_+$	& positive natural numbers \\ \hline
 	$\mathbb{R}$	& real numbers \\ \hline
+	$\mathbb{R}_0^+$& non-negative real numbers \\ \hline
 	$\mathbb{P}$	& prime numbers \\ \hline
 	$\sum$	& sum \\ \hline 
 	$\bigcup \cdot$	& union of elements of set\\ \hline
@@ -27,6 +28,8 @@ Table \ref{symbols} presents symbol that we use in this work.
 \caption{Mathematical symbols used throughout the work.} \label{symbols}
 \end{table}
 
+We need the notion of total order to model voters' preferences.
+
 \begin{defn}[total order]
 A total order over set $X$ is a binary relation $\succ$ on $X$ which~is:
 \begin{itemize}
@@ -36,14 +39,18 @@ A total order over set $X$ is a binary relation $\succ$ on $X$ which~is:
 \end{itemize}
 \end{defn}
 
+We will use the following to define a useful subrelation of total order.
+
 \begin{defn}[transitive closure]
 Transitive closure $R^*$ of relation $R$ is a minimal transitive relation 
 such that $R^*$ is a superset of $R$.
 \end{defn}
 
+We define predicates to use them for recursive boolean functions.
+
 \begin{defn}[predicate]
-A predicate is a function $f$ with a codomain $\{true, false\}$,
-where $true$ is a logical truth and $false$ is falsity.
+A predicate is a function $f$ with codomain $\{true, false\}$,
+where $true$ is the logical truth and $false$ is falsity.
 \end{defn}
 
 A multiset is a generalization of the notion of a set that can hold multiple instances of the same element.
@@ -54,22 +61,28 @@ is a multiplicity function.
 That is, for each $x \in X$, $c(x)$ denotes the number of occurrences of $x$ in $M$.
 \end{defn}
 
-For a multiset $M$, we say that $x \in M$ when $c(x) > 0$.
-We also say that $M_1 = (X, c_1)$ is a multiset union of $M_2 = (X, c_2)$ and $M_3 = (X, c_3)$
-if for each $x \in X$ we have $c_1(x) = c_2(x) + c_3(x)$.
+For multiset $M$ we say that $x \in M$ when $c(x) > 0$.
 
-When the set $X$ is clear from context, we will informally refer to $c$ itself as a multiset.
+We also generalize the notion of set union to multiset union.
+
+\begin{defn}[multiset union]
+We say that multiset $M = (X, c)$ is a multiset union of sets from family $F = \{S_1, ..., S_n\}$
+if $M = \bigcup F$ and for each $x \in X$ we have that $c(x) = \abs{\{S \in F : x \in S\}}$.
+\end{defn}
+
+Set partition is the core of our work.
+We treat detecting clones as partitioning the set of candidates.
 
 \begin{defn}[set partition]
 A partition of a set $X$ is a family $F$ of non-empty subsets of $X$
 such that for every $a \in X$ there is exactly one $Y \in F$ such that $a \in Y$.
 \end{defn}
 
-Let us now revise some notions from graph theory.
-More background is described in \cite{graphtheory}.
+We will model our problems with graphs.
+More background on described in Wilson's classical book \cite{graphtheory}.
 
 \begin{defn}[graph]
-A graph $G$ is an ordered pair $(V,E)$ of set $V$ of vertices and a set $E$ of edges.
+A graph $G$ is an ordered pair $(V,E)$, where $V$ is the set of vertices and $E$ is the set of edges.
 Each edge is a 2-element subset of $V$.
 \end{defn}
 
@@ -87,35 +100,36 @@ where the edges are defined in the same way as for graphs.
 \begin{defn}[induced submultigraph]
 Multigraph $(V', E')$ is a submultigraph of multigraph $(V,E)$ induced by $V'$
 if $V' \subset V$, $E' \subset E$, and for each $u,v \in V'$ 
-number of occurrences of $\{u,v\}$ in $E'$ is equal to the number of occurrences of $\{u,v\}$ in $E$.
+the number of occurrences of $\{u,v\}$ in $E'$ is equal to the number of occurrences of $\{u,v\}$ in $E$.
 \end{defn}
 
 \begin{defn}[Hamiltonian path]
 A Hamiltionian path in (multi)graph $(V,E)$
 is a sequence of edges $\{u_1, u_2\}, \{u_2, u_3\} ..., \{u_{n-1}, u_n\}$,
-i.e. for each $i=1,...,n-1$ we have $\{u_i, u_{i+1}\} \in E$.
+such that for each $i=1,...,n-1$ we have $\{u_i, u_{i+1}\} \in E$.
 \end{defn}
 
 
-This theorem states that prime number are dense.
+The following theorem states that prime number are dense.
+We will need that to set an upper bound on the smallest $p \in \mathbb{P}$
+bigger that some $n \in \mathbb{N}$.
 
 \begin{thm}[Bertrand–Chebyshev] \label{bertrand-chebyshev}
 For any integer $n>1$ there exists $p \in \mathbb{P}$ such that $n < p < 2n$.
 \end{thm}
 
-Its proof can be found in \cite{bertrand}.
-
-This is a useful property of prime numbers.
+Its proof can be found in Galvin's work \cite{bertrand}.
 
 \begin{thm} \label{zp}
 Let $p$ be a prime number and $a$ some positive integer less than $p$.
-We have that values $a, 2a, ..., pa$ divided by $p$ give all the remainders from the set $\{0, ..., p-1\}$.
+We have that values $a, 2a, ..., pa$ divided modulo $p$ give all the remainders from the set $\{0, ..., p-1\}$.
 \end{thm}
 
 \begin{proof}
-It suffices to show that every $ia$ and $ja$ for $i,j \in \{1, ..., p\}, i \neq j$
-have different remainders from division by $p$.
-If some $i$ and $j$ had, then we would have $p | ia - ja$, $p | (i-j)a$, and $p | i-j$, which is impossible.
+It suffices to show that every $ia$ and $ja$ for $i,j \in \{1, ..., p\}, i \neq j$,
+have different remainders from division modulo $p$.
+If some $i$ and $j$ had the same remainders,
+then we would have $p | ia - ja$, $p | (i-j)a$, and $p | i-j$, which is impossible.
 \end{proof}
 
 The following are definitions necessary to formulate an inequality which will be useful later.
@@ -128,7 +142,7 @@ if for each $x_1, x_2 \in I$ and $t \in [0,1]$ it holds that $f(t x_1 + (1-t) x_
 The next property is a convenient way of proving that a function is strictly convex.
 
 \begin{prp}
-A twice differentiable function $f:\mathbb{R}\rightarrow\mathbb{R}$
+A twice-differentiable function $f:\mathbb{R}\rightarrow\mathbb{R}$
 that for each $x$ on interval $I \subset \mathbb{R}$ has $f''(x) > 0$
 is strictly convex on $I$.
 \end{prp}
@@ -143,7 +157,7 @@ if the following conditions hold:
 \end{itemize}
 \end{defn}
 
-Finally the Karamata's inequality that formalizes a very intuitive phenomenon.
+Finally the Karamata's inequality formalizes a very intuitive phenomenon.
 
 \begin{thm}[Karamata's inequality] \label{thm:Kar}
 If function $f:\mathbb{R}\rightarrow\mathbb{R}$ is strictly convex on interval~$I \subset \mathbb{R}$,
@@ -152,18 +166,18 @@ and $(a_1, ..., a_n) \neq (b_1, ..., b_n)$, then
 $\sum_{i=1}^n f(a_i) > \sum_{i=1}^n f(b_i)$.
 \end{thm}
 
-Proof of the equality can be found in \cite{karamata}.
+A proof of the equality can be found in Kadelburg's et al. work \cite{karamata}.
 
 \section{Complexity Theory}
 
-We will not give a full introduction to computational complexity theory here,
-but instead, we will revise the most important notions.
-Textbooks \cite{compcomplexity} and \cite{computersandintractability}
-contain more complete and more formal description of the topic. %TODO: fix ref
+We will not give full introduction to the computational complexity theory here,
+but instead we will review the most important notions.
+Papadimitriou's \cite{compcomplexity}, and Garey's and Johnson's \cite{computersandintractability} textbooks
+contain more complete and more formal descriptions of the topic.
 
-We model algorithms through \textit{Turing machine}.
-Computation is an execution of Turing machine on a given input.
-The Church-Turing Thesis states informally what a Turing machine can.
+We model algorithms through the notion of a \textit{Turing machine}.
+Computation means execution of a Turing machine on a given input.
+The Church-Turing Thesis states informally what a Turing machine can do.
 
 \begin{cnj}[Church-Turing Thesis]
 Computability by Turing machine is equivalent to intuitive notion of computability.
@@ -185,25 +199,25 @@ it ends its execution in a state equal to $A(x)$.
 
 \begin{defn}[polynomial-time Turing machine]
 A polynomial-time Turing machine is a Turing machine $M$ for which there are integers $k$ and $c$
-that for every input of size $n$ machine $M$ executed on this input makes at most $c n^k$ steps.
+such that for every input of size $n$ machine $M$ executed on this input makes at most $c n^k$ steps.
 \end{defn}
 
-we define \p as a class of problems solvable by polynomial-time Turing machines.
+We define \p as the class of problems solvable by polynomial-time Turing machines.
 
 \begin{defn}[class \p]
-Decision problem $A$ belongs to class $P$ if there is a polynomial-time Turing machine that solves $A$.
+Decision problem $A$ belongs to class \p if there is a polynomial-time Turing machine that solves $A$.
 \end{defn}
 
 A reduction is an algorithm that transforms an input of one problem
-into an input of another while one preserving the answer.
+into an input of another one while preserving the answer.
 
 \begin{defn}[polynomial-time reduction]
-A polynomial-time reduction from problem $A$ to $B$ is a polynomial-time Turing machine
+A polynomial-time reduction from problem $A$ to problem $B$ is a polynomial-time Turing machine
 that transforms every \textsc{yes}-input of $A$ into some \textsc{yes}-input of $B$,
 and every \textsc{no}-input of $A$ into some \textsc{no}-input of $B$.
 \end{defn}
 
-If there is a polynomial-time reduction from problem $A$ to $B$,
+If there is a polynomial-time reduction from problem $A$ to problem $B$,
 then we say that $A$ polynomially reduces to $B$.
 
 Here we present some simple facts about reductions.
@@ -213,10 +227,10 @@ Relation "reduces polynomially to" is transitive.
 \end{rmrk}
 
 \begin{rmrk}\label{p-red}
-If problem $A$ reduces polynomially to $B$ and $B \in \p$ then $A \in \p$.
+If problem $A$ reduces polynomially to problem $B$ and $B \in \p$ then $A \in \p$.
 \end{rmrk}
 
-\np is a complexity class of problems to which \textsc{yes}-inputs are polynomially verifiable.
+\np is the complexity class of problems to which \textsc{yes}-inputs are polynomially verifiable.
 We verify an input by augmenting it with a polynomial-sized proof.
 
 \begin{defn}[\np]
@@ -228,7 +242,7 @@ $M$ answers \textsc{no} to input $(z,w)$ for every $w$ whose size is not greater
 \end{defn}
 
 It remains an open problem whether $\text{\textsc{P}}\neq\np$.
-This is why we define \np-hard as complexity class of problems as hard or harder than every problem in \np.
+This is why we define \np-hard as the complexity class of problems as hard or harder than every problem in \np.
 
 \begin{defn}[\np-hard]
 Problem $A$ is \np-hard if for each problem $B \in \np$
@@ -253,12 +267,12 @@ This, using contraposition, gives us that if $\p \neq \np$ then \np-complete pro
 We have a very convenient method of proving that a problem is \np-hard.
 
 \begin{rmrk}
-If an \np-hard problem $A$ reduces polynomially to problem $B$, then also $B$ is also \np-hard.
+If an \np-hard problem $A$ reduces polynomially to problem $B$, then also $B$ is \np-hard.
 \end{rmrk}
 
 With that we only need to show a polynomial-time reduction from a well-known \np-hard problem
-to prove that a given problem is \np-hard.
-Now we will introduce some such problems.
+to our problem to prove that our problem is \np-hard.
+Now we will introduce some \np-hard (indeed, \np-complete) problems.
 
 \begin{problem}{Exact3Cover (X3C)}
 	Input: Set $X$, family $S$ of three-element subsets of $X$, $\vert{X}\vert = 3n$.
@@ -270,7 +284,7 @@ Now we will introduce some such problems.
 \textsc{X3C} is $NP$-complete.
 \end{thm}
 
-Its proof can be found in \cite{computersandintractability}.
+Its proof can be found in Garey's and Johnson's textbook \cite{computersandintractability}.
 
 \begin{problem}{Clique}
     Input: Graph $G = (V, E)$, integer $c$.
@@ -282,10 +296,10 @@ Its proof can be found in \cite{computersandintractability}.
 \textsc{Clique} is $NP$-complete.
 \end{thm}
 
-Again, its proof in included in \cite{computersandintractability}.
+Again, its proof in included in the textbook \cite{computersandintractability}.
 
 
-We will show an example of an $NP$-completeness proof using the method of reduction.
+We will show an example of an \np-completeness proof by giving a reduction.
 
 \begin{problem}{GraphPartition}
 Input: Graph $G = (V, E)$, integer $k$ and $l$.
@@ -315,7 +329,7 @@ Let us first consider the case where the answer to the \textsc{Clique} problem i
 i.e., $G$ contains a clique consisting of $c$ vertices $C$.
 We may then partition $V$ into $k$ parts:
 $C$ istelf and $n-c$ singletons of the remaining vertices from $V \backslash C$.
-The number of intra-part edges equals $c(c-1)/2$ for part $C$ and $0$ for remaining parts.
+The number of intra-part edges equals $c(c-1)/2$ for part $C$ and $0$ for the remaining parts.
 This gives $l$ in total, so the answer to \textsc{GraphPartition} problem is \textsc{yes} as well.
 
 Now it suffices to show that when there is no $c$-size clique in $G$,
