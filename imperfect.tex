@@ -31,7 +31,7 @@ where we try to minimize the sum of errors of parts of candidate set partition.
 \end{problem}
 
 \begin{thm} \label{optdecl}
-	\textsc{OptimalDecloning} is $NP$-complete.
+	\textsc{OptimalDecloning} is \np-complete.
 \end{thm}
 
 The following will be useful to prove the theorem.
@@ -231,7 +231,7 @@ has the same answer as the input instance of \textsc{HPMP} problem.
 
 
 \begin{thm} \label{ultimate-theorem}
-\textsc{ComponentOptimalDecloning} is $NP$-complete.
+\textsc{ComponentOptimalDecloning} is \np-complete.
 \end{thm}
 
 \begin{lmm} \label{hpmd-red}
@@ -336,7 +336,7 @@ We are given graph $G$ and integer $c$
 Lemma \ref{hpmp-red-2} shows a polynomial-time construction of multigraph $G'$.
 Let us take $k=\abs{V'}-c-1$ and $s=c(c-1)$.
 Lemma \ref{hpmd-red} proves that it is a valid reduction, i.e. it preserves the answer.
-So \textsc{HPMP} problem is $NP$-complete.
+So \textsc{HPMP} problem is \np-complete.
 \end{proof}
 
 

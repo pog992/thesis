@@ -281,7 +281,7 @@ Now we will introduce some \np-hard (indeed, \np-complete) problems.
 \end{problem}
 
 \begin{thm}
-\textsc{X3C} is $NP$-complete.
+\textsc{X3C} is \np-complete.
 \end{thm}
 
 Its proof can be found in Garey's and Johnson's textbook \cite{computersandintractability}.
@@ -293,7 +293,7 @@ Its proof can be found in Garey's and Johnson's textbook \cite{computersandintra
 \end{problem}
 
 \begin{thm}
-\textsc{Clique} is $NP$-complete.
+\textsc{Clique} is \np-complete.
 \end{thm}
 
 Again, its proof in included in the textbook \cite{computersandintractability}.
@@ -312,13 +312,13 @@ We will call an edge whose vertices belong to the same part an internal edge
 and the set of all internal edges an intra-part edges.
 
 \begin{thm} \label{gp-np}
-\textsc{GraphPartition} is $NP$-complete.
+\textsc{GraphPartition} is \np-complete.
 \end{thm}
 
 \begin{proof}
-\textsc{GraphPartition} is clearly in $NP$,
+\textsc{GraphPartition} is clearly in \np,
 as given the partition we may verify its properties in a polynomial time.
-To prove $NP$-hardness we will show a reduction from the \textsc{Clique} problem.
+To prove \np-hardness we will show a reduction from the \textsc{Clique} problem.
 
 We are given graph $G$ and integer $c$.
 Let us denote $n = \abs{S}$.
