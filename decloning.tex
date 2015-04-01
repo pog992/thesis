@@ -14,7 +14,7 @@ Still, members of a single clone set are ranked consecutively by every voter.
 We say that a non-empty set $X \subseteq C$ is a clone set
 for preference profile $P = (\succ_1, ... , \succ_n)$ over $C$,
 if for each $k,l \in X$, each $a \in C \backslash X$, and each $i=1, ..., n$ it holds that
-$k \succ_i a$ if $l \succ_i a$.
+$k \succ_i a$ if and only if $l \succ_i a$.
 \end{defn}
 
 \begin{exmp} \label{clone-sets}
@@ -32,7 +32,7 @@ $$\{a,b,c,d,e,f\}, \{a\}, \{b\}, \{c\}, \{d\}, \{e\}, \{f\}, \{a,b,c\}, \{e,f\},
 
 \begin{rmrk}
 We note that for any preference profile $P$ over candidate set $C$
-we have that for each $c \in C$, $\{c\}$ is a clone set and as is $C$ itself.
+we have that for each $c \in C$, $\{c\}$ is a clone set and so is $C$ itself.
 \end{rmrk}
 
 \begin{defn}[trivial clone set]
@@ -77,9 +77,9 @@ the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g.
 \end{thm}
 
 \begin{proof}
-We will show a polynomial algorithm for the \textsc{Decloning} problem.
+We will show a polynomial-time algorithm for the \textsc{Decloning} problem.
 
-Let $C = \{c_1, ..., c_n\}$ be out input candidate set
+Let $C = \{c_1, ..., c_n\}$ be the input candidate set
 and let $P = (\succ_1, ... , \succ_m)$ be the input preference profile.
 Without loss of generality, let us assume that $c_1 \succ_1 c_2 \succ_1 ... \succ_1 c_n$.
 We will use Remark \ref{sequence-split} to split the sequence $(c_1, ..., c_n)$
@@ -96,7 +96,8 @@ $\mathit{IsDeclonable}: \{1,...,n\}\times\{1,...,k\} \rightarrow \{\text{\textsc
 such that $\mathit{IsDeclonable}(i,j) = \text{\textsc{true}}$
 iff there is a decloning for $P$ over reduced candidate set $\{c_1,...,c_i\}$
 with cardinality $j$.
-We note that $\mathit{IsDeclonable}(i, 1)$ for every valid $i$, because partition to one part is a decloning.
+We note that $\mathit{IsDeclonable}(i, 1)$ is \textsc{true} for every valid $i$,
+because partition into a single part is a valid decloning.
 We also note that for $j>1$ it holds that $\mathit{IsDeclonable}(i,j)$ iff
 there exists $1 \leq a < i$ such that $\mathit{IsDeclonable}(a,j-1)$ and $\mathit{IsCloneSet}(\{c_{a+1}, ..., c_i\})$.
 Thus predicate $\mathit{IsDeclonable}$ can be computed with the following recursive formula:
