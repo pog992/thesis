@@ -1,25 +1,28 @@
 In this chapter we generalize our problem to allow for partitioning $C$ into parts
 that are not necessarily clone sets, but that are, nonetheless, close to being clone sets in some sense.
 We formalize the measurement of distance from given partition to some decloning.
-For given preference profile we try to find a partition that minimizes distance value.
+For given preference profile we try to find a partition that minimizes the distance value.
 
 \section{General Problem}
 
-One may claim that \textsc{Decloning} problem is unrealistic,
+One may claim that the \textsc{Decloning} problem is unrealistic
 because it assumes that every single voter can perfectly group clones.
-It disallows any error in that matter during voting or any personal biases.
-Now we drop the restriction that a part of the candidate set partition needs to be a clone set.
-Instead, we will measure how different in some sense a part is from some clone set.
+It disallows any error in that matter during voting, or any personal biases.
+Now we drop the restriction that every part of the candidate set partition needs to be a clone set.
+Instead, we will measure how far, in some sense, a given part is from being a clone set.
 Of course, we require that this measure equals $0$ only for clone sets.
+
+Let us define the clone set error function that captures this measure.
+We can evaluate it on each non-empty subset of the candidate set.
 
 \begin{defn}[clone set error function]
 Let $P$ be a preference profile over candidate set $C$.
 We say that a function
-$f: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{R}_+\cup\{0\}$
-is a clone set error function for $P$ when $f(X) = 0$ if $X$ is a clone set for $P$.
+$f: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{R}_0^+$
+is a clone set error function for $P$ when $f(X) = 0$ iff $X$ is a clone set for $P$.
 \end{defn}
 
-Now we can generalize the \textsc{Decloning} problem into \textsc{OptimalDecloning}
+Now we can generalize the \textsc{Decloning} problem into \textsc{OptimalDecloning},
 where we try to minimize the sum of errors of parts of candidate set partition.
 
 \begin{problem}{OptimalDecloning}
@@ -34,7 +37,8 @@ where we try to minimize the sum of errors of parts of candidate set partition.
 	\textsc{OptimalDecloning} is \np-complete.
 \end{thm}
 
-The following will be useful to prove the theorem.
+The following lemma will be useful to prove the theorem.
+It shows how to, for any candidate set, create a preference profile with no non-trivial clone sets.
 
 \begin{lmm} \label{lmmnotrivial}
         Let $C = \{c_1, ..., c_n\}$ be any candidate set.
@@ -53,14 +57,25 @@ We note that $X$ is not contiguous on the preference order $\succ_{i+1}$.
 Subset $X$ is, thus, not a clone set for $P$.
 \end{proof}
 
+The property of preference profile having no non-trivial clones lets us easily
+verify whether given function is clone set error function for this preference profile.
+
+\begin{rmrk}
+Let $P$ be a preference profile over candidate set $C$
+and $f : 2^C\setminus\{\emptyset\} \rightarrow \mathbb{R}_0^+$ be some function.
+If $P$ has no non-trivial clones, then $f$ is clone set error function for $P$
+iff for each $X \subset C$, $X \neq \emptyset$ we have that $f(X) = 0$ only when $\abs{X} \in \{1, \abs{C}\}$.
+\end{rmrk}
+
 \begin{proof}[Proof of Theorem \ref{optdecl}]
 \textsc{OptimalDecloning} is clearly in \np,
 as given a partition we may verify the inequality in polynomial time.
 Now we only need to show that the problem is \np-hard.
 We give a reduction from the \textsc{X3C} problem.
 
-We are given set $X$, collection $S$ of 3-element subsets of $X$, and integer $n$.
-Let us take clone set $C = X$ and function $f:2^C\rightarrow \{0,1,n+1\}$ such that:
+We are given set $X$, collection $S$ of 3-element subsets of $X$, and an integer $n$ such that $\abs{X} = 3n$.
+Let us take candidate set $C = X$
+and function $f:2^C \setminus \{\emptyset\} \rightarrow \{0,1,n+1\}$ such that:
 $$ f(X) =
 \begin{cases}
 0, &\text{when } \abs{X} \in \{1,3n\} \text{,} \\
@@ -69,8 +84,8 @@ n+1, &\text{otherwise.}
 \end{cases}
 $$
 Function $f$ is well-defined when $n>1$, because if $X \in S$ then $\abs{X} = 3 \not\in \{1,3n\}$.
-Trivial calse $n=1$ can be treated specially during the runtime of the reduction.
-Let us take preference profile $P$ over $C$ as in lemma \ref{lmmnotrivial}.
+Trivial case $n=1$ can be treated specially during the runtime of the reduction.
+Let us take preference profile $P$ over $C$ as in Lemma \ref{lmmnotrivial}.
 Function $f$ is a clone set error function for $P$, because $f(X) = 0$ iff $X$ is a trivial clone set
 and preference profile $P$ has no non-trivial clone sets.
 Let us take $l=k=n$.
@@ -89,7 +104,7 @@ the partition can contain only three-element parts.
 This means that we may choose $X$ only from $S$.
 It is possible to construct a valid partition only when there is an $A \subset S$ satisfying the \textsc{X3C} problem.
 
-In this case, we have partition $A$ of candidate set $C$ such that
+In this case, we have partition $A$ of candidate set $C$ such that:
 $$ \sum_{X \in A} f(X) = \sum_{X \in A} 1 = n,$$
 so the answer to \textsc{OptimalDecloning} problem is \textsc{yes}
 iff the answer to \textsc{X3C} is~\textsc{yes}.
@@ -110,23 +125,46 @@ Given a specific error function we will consider the following family of problem
 	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f(C_i) \leq l$?
 \end{problem}
 
+In the proof of \np-completeness of the \textsc{OptimalDecloning} problem
+we used a very artificial preference profile and error function.
+Now, we will study more natural ones.
 We want from such an error function $f$ to capture the intuitive notion
 of distance of given partition from some decloning.
 
 \subsection{Component Error Function}
 
-We note that in decloning, each clone set occurs in a contiguous part of every voter's preference order.
+We note that in decloning each clone set occurs in a contiguous part of every voter's preference order.
 We may use this feature to compute clone set error for any partition.
-Component error function counts the sum for each part of the partition of excessive connected components in each preference order.
+Let the value of component error function on given part be the sum of excessive connected components
+of this part in each voter's preference order.
 
-To formulate the formal definition of component error function we will need a definition of kernel of total order relation.
+\begin{exmp}
+For a candidate set $C = \{a, b, c, d, e\}$,
+let us consider a preference profile $P = (\succ_1, \succ_2, \succ_3)$ with:
+\begin{align*}
+a \succ_1 b \succ_1 c \succ_1 d \succ_1 e,\\
+e \succ_2 d \succ_2 c \succ_2 a \succ_2 b,\\
+a \succ_3 b \succ_3 e \succ_3 d \succ_3 c.
+\end{align*}
+The value of component error function for subset $\{b,c,e\}$ is $4$.
+It is split into one extra piece on preference orders $\succ_1$ and $\succ_3$
+($\{b,c\}$ and $\{e\}$, and $\{b,e\}$ and $\{c\}$ respectively),
+and two extra pieces on preference order $\succ_2$ ($\{e\}$, $\{c\}$, and $\{b\}$).
+
+The error value for clone set $\{c, d, e\}$ is $0$,
+because it is contiguous on each preference order.
+\end{exmp}
+
+To formulate the formal definition of component error function
+we will need a definition of a kernel of a total order relation.
 
 Given a total order $\succ$ over a finite set, we may sort its elements into a sequence
 such that for every pair of elements former is in the relation $\succ$ with the latter.
 This sequence naturally induces another relation, namely relation $\overline{\succ}$
 between every two consecutive elements.
-We will call such a relation a kernel of $\overline{\succ}$.
-It is easy to recover $\succ$ from $\overline{\succ}$ simply by taking the transitive closure of $\succ$.
+We will call such a relation a kernel of $\succ$.
+It is easy to recover $\succ$ from $\overline{\succ}$
+simply by taking the transitive closure of $\overline{\succ}$.
 
 \begin{defn}[kernel of total order]
 Given a total order $\succ$ over a finite set, we say that $\overline{\succ}$ is its kernel when
@@ -134,6 +172,7 @@ $\overline{\succ}$ is a minimal relation whose transitive closure equals $\succ$
 \end{defn}
 
 \begin{exmp}
+\sloppy
 Kernel of natural order $>$ over set $\{1,2,3,4\}$ is the relation
 $\overline{>} = \{(4,3), (3,2), (2,1)\}$.
 \end{exmp}
@@ -151,6 +190,8 @@ $$ f_{com}(X) = \sum_{i=1}^m \left( \abs{X}-1 -
 Component error function $f_{com}$ for preference profile $P$ is a clone set error function for $P$.
 \end{rmrk}
 
+Now we may formulate optimal decloning problem that uses component error function.
+
 \begin{problem}{ComponentOptimalDecloning (COD)}
 	Input: Preference profile $P$ over $C$, integers $k$ and $l$.
 
@@ -158,10 +199,14 @@ Component error function $f_{com}$ for preference profile $P$ is a clone set err
 		is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f_{com}(C_i) \leq l$?
 \end{problem}
 
-Given a preference profile $P = (\succ_1, ..., \succ_m)$, let us create a multigraph $G=(C,E)$
-where $E$ is a multiset obtained by multisum
-of each $\{a,b\}$ such that $a,b \in C$ and $a \overline{\succ} b$ for some $\succ$ \xspace $ \in P$.
-We get a multigraph created from multisum of edges of Hamiltonian paths inferred from each voter's preferences.
+We will express this problem in a language of graph theory.
+
+Given a preference profile $P = (\succ_1, ..., \succ_m)$ over candidate set $C$,
+let us create a multigraph $G=(C,E)$.
+Let $E$ be the multiset union of sets
+$\left\lbrace \left\lbrace a,b \right\rbrace: a \succ_i b \right\rbrace$ for $i=1, ..., m$.
+We got a multigraph created from multiset union of edges of some Hamiltonian paths,
+for each voter's preference order.
 Let us call this a Hamiltonian path multigraph.
 
 \begin{defn}[Hamiltonian path multigraph]
@@ -169,13 +214,13 @@ A multigraph $G=(V,E)$ is a Hamiltonian path multigraph if there exists a partit
 into sets of edges of Hamiltonian paths in $G$.
 \end{defn}
 
-Partitioning $C$ into $C_1,...,C_k$ corresponds to
+Partitioning candidate set $C$ into $C_1,...,C_k$ corresponds to
 partitioning Hamiltonian path multigraph $G$ into submultigraphs $G_1,...,G_k$
 % necessary induced graphs? maybe just partition of V?
 induced by $C_1,...,C_k$ respectively.
 Let us denote by number $c_{ij}$ part
 $\abs{\left\lbrace \left( a,b \right) \in C_i^2 : a \overline{\succ}_j b \right\rbrace }$
-of the formula of $f_{com}(C_i)$ such that
+of the formula of $f_{com}(C_i)$, so
 $f_{com}(C_i) = \sum_{j=1}^m \left( \abs{C_i} - 1 - c_{ij} \right)$.
 We have that $c_{ij}$ is the number of edges from $j$-th voter's Hamiltonian path
 that connect two vertices from $C_i$.
@@ -197,8 +242,9 @@ we have that \textsc{ComponentOptimalDecloning} is, essentially, a problem of ma
 We will call that number a score of partition.
 
 \begin{defn}[partition score]
-Given a multigraph $G=(V,E)$, where $E=(V,e)$, and a partition $(V_1, ..., V_k)$ of $V$
-we say that a score of part $V_i$ for $i=1,...,k$ equals $\sum_{u,v \in V_i} e(\{u,v\})$.
+Let $G=(V,E)$ be a multigraph, where $E=(D, e)$ for some edge set $D$,
+and let $(V_1, ..., V_k)$ be a partition of $V$.
+We say that a score of part $V_i$ for $i=1,...,k$ equals $\sum_{u,v \in V_i} e(\{u,v\})$.
 We say that a partition score is a sum of the scores of its parts.
 \end{defn}
 
@@ -217,15 +263,15 @@ to \textsc{ComponentOptimalDecloning}.
         of score at least $s$?
 \end{problem}
 
-\begin{thm}
+\begin{thm} \label{hpmp-to-cod}
 There is a polynomial-time reduction of problem \textsc{HPMP} to \textsc{COD}.
 \end{thm}
 
 \begin{proof}
-Given $G=(V,E)$ from input, we take candidate set $C=V$.
-For each Hamiltonian path from input, we add to output preference profile $P$
+Given $G=(V,E)$ from the input, we take candidate set $C=V$.
+For each Hamiltonian path from the input, we add to the output preference profile $P$
 the preference order created by transitive closure of relation of vertices being consecutive on a path.
-We have previously shown that resulting instance of \textsc{COD} problem 
+We have previously shown that resulting instance of the \textsc{COD} problem 
 has the same answer as the input instance of \textsc{HPMP} problem.
 \end{proof}
 
@@ -234,21 +280,30 @@ has the same answer as the input instance of \textsc{HPMP} problem.
 \textsc{ComponentOptimalDecloning} is \np-complete.
 \end{thm}
 
-\begin{lmm} \label{hpmd-red}
-For every graph $G=(V,E)$ and hamiltonian path multigraph $G'=(V',E')$, $E=(V',w)$ such that $V' \supset V$ and
+We will prove that with a reduction of the \textsc{Clique} problem to the \textsc{HPMP} problem
+(and using Theorem \ref{hpmp-to-cod} further to the \textsc{COD} problem).
+To do that, we will construct from the \textsc{Clique} problem instance
+a Hamiltonian path multigraph with special properties.
+The following lemma lets us reason on the answer to the original \textsc{Clique} problem instance.
+
+\begin{lmm} \label{hpmp-red}
+Let graph $G = (V, E)$ and integer $c$ be an instance of the \textsc{Clique} problem.
+Let $G'=(V',E')$,  be a Hamiltonian path multigraph
+such that $V' \supset V$, $E'=(\{\{u,v\}: u,v \in V'\}, w)$, and
 $$ w(\{u,v\}) =
 \begin{cases}
-2, 				&\text{when } \{u,v\} \in E \\
-0, 				&\text{when } \{u,v\} \not\in E \text{ and } u,v \in V \\
-w_{u v}\leq 1,	&\text{when } u \not\in V \text{ or } v \not\in V
+2, 				&\text{when } \{u,v\} \in E ,\\
+0, 				&\text{when } \{u,v\} \not\in E \text{ and } u,v \in V ,\\
+w_{u v}\leq 1,	&\text{when } u \not\in V \text{ or } v \not\in V.
 \end{cases}
 $$
-there is a clique of size $c$ in $G$ iff
+There is a clique of size $c$ in $G$ iff
 there is $\left(\abs{V'}-c-1\right)$-sized partition of $V'$ of score $c(c-1)$.
 \end{lmm}
 
-\begin{proof} \label{hpmp-red-2}
-Let us consider graph $G=(V,E)$ and multigraph $G'=(V',(V',w))$, satisfying the condition of the lemma.
+\begin{proof}
+Let us consider graph $G=(V,E)$ and multigraph $G'=(V',(\{\{u,v\}: u,v \in V'\},w))$,
+satisfying the condition of the lemma.
 If there is a $c$-sized clique $C \subset V$ in $G$,
 then we may partition $V'$ into $C$ and singletons for each $u \in V' \setminus C$.
 As $f(\{u,v\})=2$ for $u,v \in C$, such a partition has score $2 {c(c-1) \over 2} = c(c-1)$.
@@ -276,10 +331,14 @@ $$q \leq \sum_{s \in S} f(s) < f(c) + f(1) + ... + f(1) = c(c-1) \text{.}$$
 So, also in this case the score of $P$ is smaller than $c(c-1)$ and the lemma is proved.
 \end{proof}
 
-\begin{lmm}
-Given a graph $G$ and integer $c$, there is a polynomial-time construction
-of hamiltonian path multigraph $G'$ together with its path decomposition
-satisfying the conditions of lemma \ref{hpmd-red}.
+Now we need to show that these properties are feasible,
+i.e., we can compute a multigraph that satisfies them.
+
+\begin{lmm} \label{hpmp-red-2}
+Given a $(G, c)$ instance of the \textsc{Clique} problem,
+there is a polynomial-time construction
+of Hamiltonian path multigraph $G'$ together with its path decomposition
+satisfying the conditions of Lemma \ref{hpmp-red}.
 \end{lmm}
 
 \begin{proof}
@@ -289,54 +348,71 @@ We need a prime number $p > 8m^2 n$.
 Using Theorem \ref{bertrand-chebyshev} we have that there exists a prime number between $8m^2n$ and $16m^2 n$.
 This lets us find $p$ using a brute-force linear search.
 
-We will construct hamiltonian path multigraph $G' = (V',E')$
+\sloppy
+We will construct Hamiltonian path multigraph $G' = (V',E')$
 with $V' = \{v_1, ..., v_n, v_{n+1}, ..., v_{n+p}\}$. 
-Now we create $2m$ paths, where $i$-th path for $i=1,...,2m$
+Now we create $2m$ paths, where the $i$-th path for $i=1,...,2m$
 is formed by the following sequence $P_i$ of vertices:
 $$ P_i = ({P_i}_1, ..., {P_i}_p) =  (v_{n+1+(ji \mod p)})_{j=1,...,p} \text{.}$$ 
-From \eqref{zp} we have that each such path has every vertex from
+From Theorem \ref{zp} we have that each such path has every vertex from
 $V' \setminus V = \{v_{n+1}, ..., v_{n+p}\}$.
 We also note that the paths do not share edges,
-because if $i$-th path contains edge $\{v_a, v_b\}$, then $\abs{a-b} = i$.
+because if the $i$-th path contains edge $\{v_a, v_b\}$, then $\abs{a-b} = i$.
 
 To make them Hamiltonian paths we need to extend them with the vertices from $V$.
 Let us create $2m$ permutations $S_i$ of $V$ for $i=1,...,2m$ such that
-$$S_i = ({S_i}_1, ..., {S_i}_n) =
+$$S_i = ({S_i}_{,1}; ...; {S_i}_{,n}) =
 (v_{e_i}, v_{d_i}, v_1, ..., v_{e_i-1}, v_{e_i+1}, ..., v_{d_i-1}, v_{d_i+1}, ..., v_n)\text{,}$$
 where we denote $v_{e_i} = v_{e_{i-m}}$ and $v_{d_i} = v_{d_{i-m}}$ for $i>m$. 
 
-Now we zip sequences $P_i$ and $S_i$ for $i=1,...,2m$ respectively to obtain hamiltonian paths.
-Sequence of $H_i$ of vertices of $i$-th hamiltonian path looks as follows:
-$$H_i = ({P_i}_1, ..., {P_i}_{1+ni}, {S_i}_1, {S_i}_2, {P_i}_{2+ni}, {S_i}_3, ..., {P_i}_{n-1+ni}, {S_i}_n,
-{P_i}_{n+1+ni}, ..., {P_i}_p) \text{.}$$
-What happened here is that we skipped $1+ni$ first vertices from $P_i$,
-put two first vertices from $S_i$, zipped next vertices from $P_i$ and $S_i$ one to one,
+Now we merge sequences $P_i$ and $S_i$ for $i=1,...,2m$ respectively to obtain Hamiltonian paths.
+Sequence $H_i$ of vertices of the $i$-th Hamiltonian path looks as follows:
+$$H_i = ({P_i}_{,1}; ...; {P_i}_{,1+ni}; {S_i}_{,1}; {S_i}_{,2}; {P_i}_{,2+ni}; {S_i}_{,3}; ...;
+{P_i}_{,n-1+ni}; {S_i}_{,n}; {P_i}_{,n+1+ni}; ...; {P_i}_{,p}) \text{.}$$
+What happened here is that we put $1+ni$ first vertices from $P_i$,
+put two first vertices from $S_i$, merged next vertices from $P_i$ and $S_i$ one to one,
 and put remaining vertices from $P_i$.
-In $H_i$ there are edges between $P_i$ and $S_i$ only for ${P_i}_{1+ni}, ..., {P_i}_{n+1+ni}$.
+In $H_i$ there are edges between $P_i$ and $S_i$ only for ${P_i}_{,1+ni}; ...; {P_i}_{,n+1+ni}$.
 These are vertices $v_{n+1+((1+ni)i \mod p)}, ..., v_{n+1+((n+1+ni)i \mod p)} $.
-As $i \leq 2m$, $(n+1+ni)i \leq (mn+mn+2mn)2m = 8m^2 n < p$,
-we may remove modulo operations from those indices.
+As $i \leq 2m$, then $(n+1+ni)i \leq (mn+mn+2mn)2m = 8m^2 n < p$,
+so we may remove modulo operations from those indices.
 Now for $H_i$ we have vertices $v_{n+1+i+ni^2}, ..., v_{n+1+ni+i+ni^2}$.
 We note that for each $i=1,...,2m$ those vertices are disjoint, so no edge between $V$ and $V'$ appears twice.
 
-The result Hamiltonian paths have the following properties:
+The resulting Hamiltonian paths have the following properties:
 \begin{itemize}
 \item each contains one edge from $E$ with both ends in $V$,
   and each edge in $E$ appears in two paths,
-\item no path share a common edge with both ends in $V' \setminus V$,
-  i.e. for each $u,v \in V' \setminus V$ edge $\{u,v\}$ appears at most once,
+\item no two paths share a common edge with both ends in $V' \setminus V$,
+  i.e., for each $u,v \in V' \setminus V$ edge $\{u,v\}$ appears at most once,
 \item the same holds for vertices $u,v$ such that $u \in V$, $v \in V' \setminus V$.
 \end{itemize}
 This means that we constructed a required multigraph, together with its decomposition into paths.
 \end{proof}
 
-\begin{proof}[Proof of theorem \ref{ultimate-theorem}.]
+Using the previous two lemmas, we are ready to prove our theorem.
+
+\begin{proof}[Proof of Theorem \ref{ultimate-theorem}.]
 We will show a reduction from \textsc{Clique} problem to \textsc{HPMP}.
-We are given graph $G$ and integer $c$
-Lemma \ref{hpmp-red-2} shows a polynomial-time construction of multigraph $G'$.
-Let us take $k=\abs{V'}-c-1$ and $s=c(c-1)$.
-Lemma \ref{hpmd-red} proves that it is a valid reduction, i.e. it preserves the answer.
-So \textsc{HPMP} problem is \np-complete.
+We are given graph $G = (V, E)$ and integer $c$.
+Lemma \ref{hpmp-red-2} shows a polynomial-time construction of Hamiltonian path multigraph $G'$,
+such that $V' \supset V$, $E'=(\{\{u,v\}: u,v \in V'\}, w)$, and
+$$ w(\{u,v\}) =
+\begin{cases}
+2, 				&\text{when } \{u,v\} \in E ,\\
+0, 				&\text{when } \{u,v\} \not\in E \text{ and } u,v \in V ,\\
+w_{u v}\leq 1,	&\text{when } u \not\in V \text{ or } v \not\in V.
+\end{cases}
+$$
+Let us take $k=\abs{V'}-c-1$ and $s=c(c-1)$, what gives us full instance of the \textsc{HPMP} problem.
+From Lemma \ref{hpmp-red} follows that there is a $c$-sized clique in $G$
+iff there is a $k$-sized partition of $V'$ of score $s$.
+This means it is a valid reduction from the \textsc{Clique} problem to \textsc{HPMP}.
+Using Theorem \ref{hpmp-to-cod} we can reduce it further to the \textsc{COD} problem.
+
+We have shown a reduction from \np-complete problem to the \textsc{COD} problem,
+and \textsc{COD} is clearly in \np.
+From this follows that the \textsc{COD} problem is \np-complete.
 \end{proof}
 
 
@@ -349,9 +425,9 @@ such as edges in the graphs of kernels of preference orders.
 For example, in the proof of Theorem \ref{ultimate-theorem}, we constructed a partition
 which was not in accordance with any voter.
 
-On the other side of spectrum of locality, we may think of an error function which
+On the other side of the spectrum of locality, we may think of an error function which
 takes into consideration only global information, in the sense of a single voter.
-Such an information is what we call consistency with a voter's preferences, what we define below.
+Such an information is what we call consistency with a voter's preferences, that we define below.
 
 \begin{defn}[inconsistent voter]
 We say that a voter described by preference order~$\succ$ over $C$
@@ -363,7 +439,7 @@ We also say that $\succ$ is inconsistent with $X$ if it is not consistent with $
 \begin{defn}[inconsistent voters error function]
 Given a preference profile $P$ over $C$ we define function
 $f_{iv}: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{N}_0$ so that
-$f(X)$ is a number of preference orders in $P$ that are inconsistent with $X$.
+$f(X)$ is the number of preference orders in $P$ that are inconsistent with $X$.
 \end{defn}
 
 \begin{rmrk}
