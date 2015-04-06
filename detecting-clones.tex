@@ -72,7 +72,7 @@
 \begin{titlepage}
 \begin{center}
 {\Large AGH University of Science and Technology}\\[0.2cm]
-{\Large Faculty of Computer Science,\\Electronics and Telecommunications}\\[0.25cm]
+{\Large Faculty of Computer Science,\\Electronics and Telecommunications}\\[0.4cm]
 {\Large Department of Computer Science}\\[1.5cm]
 
 {\Large Master's Thesis}\\[1.0cm]
@@ -110,15 +110,17 @@ ze~źródeł innych niż wymienione w pracy.
 
 
 \abstract{
-In this work we study computational complexity of problems related to elections.
-We are interested in problems of detecting whether
-some subsets of candidates are either indistinguishable or hardly distinguishable for voters.
+In this work we study the computational complexity of problems related to elections.
+We are interested in problems of detecting whether some subsets of candidates
+are either indistinguishable or hardly distinguishable from the point of view of the voters.
 We call such candidates clones and imperfect clones, respectively.
-We conclude that detecting clones is in \textsc{P}.
-For imperfect clones we discuss measures of the distance from some clone.
+We treat detecting clones as the problem of partitioning the candidate set
+into subsets whose elements are ranked consecutively by every voter.
+We conclude that detecting clones is a polynomial-time solvable task.
+For imperfect clones we discuss measures of the distance from being some clone.
 We define optimal decloning as the problem of finding imperfect clones
 with minimal sum of the distances.
-We show that optimal decloning is \textsc{NP}-complete for some measures.
+We show that optimal decloning is \textsc{NP}-complete for some natural measures.
 }
 
 \tableofcontents
