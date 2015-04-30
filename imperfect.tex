@@ -369,6 +369,16 @@ Now we merge sequences $P_i$ and $S_i$ for $i=1,...,2m$ respectively to obtain H
 Sequence $H_i$ of vertices of the $i$-th Hamiltonian path looks as follows:
 $$H_i = ({P_i}_{,1}; ...; {P_i}_{,1+ni}; {S_i}_{,1}; {S_i}_{,2}; {P_i}_{,2+ni}; {S_i}_{,3}; ...;
 {P_i}_{,n-1+ni}; {S_i}_{,n}; {P_i}_{,n+1+ni}; ...; {P_i}_{,p}) \text{.}$$
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{path.eps}
+    \caption{Sequence $H_i$ of vertices of $i$-th Hamiltonian path.}
+    \label{fig:path}
+\end{figure}
+
+We get a path as depicted on Figure \ref{fig:path}.
+
 What happened here is that we put $1+ni$ first vertices from $P_i$,
 put two first vertices from $S_i$, merged next vertices from $P_i$ and $S_i$ one to one,
 and put remaining vertices from $P_i$.
