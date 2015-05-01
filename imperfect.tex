@@ -114,6 +114,10 @@ iff the answer to \textsc{X3C} is~\textsc{yes}.
 
 \section{Specific Error Functions}
 
+In the proof of \np-completeness of the \textsc{OptimalDecloning} problem
+we used a very artificial preference profile and error function.
+Now, we will study more natural ones.
+
 Let us try to fix a value of error function input to \textsc{OptimalDecloning} problem,
 treating it as if it was hardcoded into the specification of the new problem.
 
@@ -125,9 +129,6 @@ Given a specific error function we will consider the following family of problem
 	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f(C_i) \leq l$?
 \end{problem}
 
-In the proof of \np-completeness of the \textsc{OptimalDecloning} problem
-we used a very artificial preference profile and error function.
-Now, we will study more natural ones.
 We want from such an error function $f$ to capture the intuitive notion
 of distance of given partition from some decloning.
 
@@ -147,9 +148,9 @@ e \succ_2 d \succ_2 c \succ_2 a \succ_2 b,\\
 a \succ_3 b \succ_3 e \succ_3 d \succ_3 c.
 \end{align*}
 The value of component error function for subset $\{b,c,e\}$ is $4$.
-It is split into one extra piece on preference orders $\succ_1$ and $\succ_3$
-($\{b,c\}$ and $\{e\}$, and $\{b,e\}$ and $\{c\}$ respectively),
-and two extra pieces on preference order $\succ_2$ ($\{e\}$, $\{c\}$, and $\{b\}$).
+The subset is split into one extra piece on preference orders $\succ_1$ and $\succ_3$
+($\{b,c\}, \{e\}$ and $\{b,e\}, \{c\}$ respectively),
+and two extra pieces on preference order $\succ_2$ ($\{e\}, \{c\}, \{b\}$).
 
 The error value for clone set $\{c, d, e\}$ is $0$,
 because it is contiguous on each preference order.
@@ -281,10 +282,10 @@ has the same answer as the input instance of \textsc{HPMP} problem.
 \end{thm}
 
 We will prove that with a reduction of the \textsc{Clique} problem to the \textsc{HPMP} problem
-(and using Theorem \ref{hpmp-to-cod} further to the \textsc{COD} problem).
+(and using Theorem \ref{hpmp-to-cod} to further reduce to the \textsc{COD} problem).
 To do that, we will construct from the \textsc{Clique} problem instance
 a Hamiltonian path multigraph with special properties.
-The following lemma lets us reason on the answer to the original \textsc{Clique} problem instance.
+The following lemma uses these properties to reason on the answer to the original \textsc{Clique} problem instance.
 
 \begin{lmm} \label{hpmp-red}
 Let graph $G = (V, E)$ and integer $c$ be an instance of the \textsc{Clique} problem.
@@ -368,7 +369,7 @@ where we denote $v_{e_i} = v_{e_{i-m}}$ and $v_{d_i} = v_{d_{i-m}}$ for $i>m$.
 Now we merge sequences $P_i$ and $S_i$ for $i=1,...,2m$ respectively to obtain Hamiltonian paths.
 Sequence $H_i$ of vertices of the $i$-th Hamiltonian path looks as follows:
 $$H_i = ({P_i}_{,1}; ...; {P_i}_{,1+ni}; {S_i}_{,1}; {S_i}_{,2}; {P_i}_{,2+ni}; {S_i}_{,3}; ...;
-{P_i}_{,n-1+ni}; {S_i}_{,n}; {P_i}_{,n+1+ni}; ...; {P_i}_{,p}) \text{.}$$
+{P_i}_{,n-1+ni}; {S_i}_{,n}; {P_i}_{,n+ni}; ...; {P_i}_{,p}) \text{.}$$
 
 \begin{figure}[h]
     \centering
@@ -382,12 +383,14 @@ We get a path as depicted on Figure \ref{fig:path}.
 What happened here is that we put $1+ni$ first vertices from $P_i$,
 put two first vertices from $S_i$, merged next vertices from $P_i$ and $S_i$ one to one,
 and put remaining vertices from $P_i$.
-In $H_i$ there are edges between $P_i$ and $S_i$ only for ${P_i}_{,1+ni}; ...; {P_i}_{,n+1+ni}$.
-These are vertices $v_{n+1+((1+ni)i \mod p)}, ..., v_{n+1+((n+1+ni)i \mod p)} $.
+In the sequence $H_i$ there are edges between vertices from $P_i$ and $S_i$
+only for vertices ${P_i}_{,1+ni}; ...; {P_i}_{,n+ni}$ in $P_i$.
+These are vertices $v_{n+1+((1+ni)i \mod p)}, ..., v_{n+((n+1+ni)i \mod p)} $.
 As $i \leq 2m$, then $(n+1+ni)i \leq (mn+mn+2mn)2m = 8m^2 n < p$,
 so we may remove modulo operations from those indices.
-Now for $H_i$ we have vertices $v_{n+1+i+ni^2}, ..., v_{n+1+ni+i+ni^2}$.
-We note that for each $i=1,...,2m$ those vertices are disjoint, so no edge between $V$ and $V'$ appears twice.
+Now for $H_i$ we have vertices $v_{n+1+i+ni^2}, ..., v_{n+ni+i+ni^2}$.
+We note that for each $i=1,...,2m$ those vertices are disjoint,
+so no edge between $V$ and $V' \setminus V$ appears twice.
 
 The resulting Hamiltonian paths have the following properties:
 \begin{itemize}

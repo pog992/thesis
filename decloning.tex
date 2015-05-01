@@ -6,9 +6,11 @@ We also introduce the problem of detecting clones and show an efficient algorith
 \section{Decloning}
 
 We are interested in a situation where some candidates are indistinguishable for voters.
+We call such candidates clones and and a set of pairwise indistinguishable candidates a clone set.
 We expect a total order over the set of candidates for each voter,
 so every voter needs to somehow break ties.
 Still, members of a single clone set are ranked consecutively by every voter.
+This leads to the following definition of the clone set.
 
 \begin{defn}[clone set]
 We say that a non-empty set $X \subseteq C$ is a clone set
@@ -32,7 +34,7 @@ $$\{a,b,c,d,e,f\}, \{a\}, \{b\}, \{c\}, \{d\}, \{e\}, \{f\}, \{a,b,c\}, \{e,f\},
 
 \begin{rmrk}
 We note that for any preference profile $P$ over candidate set $C$
-we have that for each $c \in C$, $\{c\}$ is a clone set and so is $C$ itself.
+we have that for each $c \in C$, $\{c\}$ is a clone set, and so is $C$ itself.
 \end{rmrk}
 
 \begin{defn}[trivial clone set]
@@ -44,6 +46,11 @@ when $\abs{X} = 1$ or $X = C$.
 In Example \ref{clone-sets} the only non-trivial clone sets are
 $\{a,b,c\}$, $\{e,f\}$ and $\{b,c\}$.
 \end{exmp}
+
+We are interested in detecting whether someone might have attacked the election by introducing
+additional candidates that resulted in emergence of (non-trivial) clone sets.
+So as not to restrict ourselves to detecting only one non-trivial clone set, we formulate the problem as follows.
+Given election, partition candidates into clone sets.
 
 \begin{defn}[decloning]
 Let $P$ be a preference profile over candidate set $C$.
@@ -60,10 +67,8 @@ $$
 $$
 \end{exmp}
 
-\begin{rmrk} \label{sequence-split}
-We note that a decloning corresponds to some splitting into parts
-the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g. the first voter).
-\end{rmrk}
+In order to avoid the situation when we partition the candidate set into only trivial clone sets,
+we treat the cardinality of decloning as part of the input.
 
 
 \begin{problem}{Decloning}
@@ -72,11 +77,28 @@ the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g.
     Question: Is there a decloning for $P$ with cardinality $k$?
 \end{problem}
 
-\begin{thm}
+\begin{rmrk}
+If $1 < k < \abs{C}$, we will find at least one non-trivial clone set if it exits.
+Decreasing the $k$ parameter starting from $\abs{C} - 1$, we search for either
+bigger clone sets or greater number of non-trivial clone sets.
+\end{rmrk}
+
+Our approach to defending against attacks by introducing clones
+is to detect them, preferably efficiently.
+We can indeed perform that efficiently.
+
+\begin{thm} \label{decloning-is-in-p}
 \textsc{Decloning} is in \p.
 \end{thm}
 
-\begin{proof}
+We will use the following in the proof.
+
+\begin{rmrk} \label{sequence-split}
+We note that a decloning corresponds to some splitting into parts
+the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g. the first voter).
+\end{rmrk}
+
+\begin{proof}[Proof of Theorem \ref{decloning-is-in-p}.]
 We will show a polynomial-time algorithm for the \textsc{Decloning} problem.
 
 Let $C = \{c_1, ..., c_n\}$ be the input candidate set
@@ -116,3 +138,8 @@ Direct implementation of this recursion with memoizing
 results in a polynomial-time algorithm that computes the value of $IsDeclonable(n,k)$
 solving the \textsc{Decloning} problem.
 \end{proof}
+
+
+The fact that the \textsc{Decloning} problem is in \p means that we can efficiently
+detect an attack on elections by introducing clones.
+This is an argument against effectiveness of such attacks.
