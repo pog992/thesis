@@ -36,24 +36,20 @@ $P$ is a preference profile over $C$.
 Election is a pair $(C, P)$, where $C$ is a candidate set, and $P$ is a preference profile for $C$.
 \end{defn}
 
-These were the notions necessary for our work in the following sections.
-However, for completeness, we will discuss what is election system and give some examples.
+These are the notions necessary for our work in the following sections.
+However, for completeness, we will discuss what is an election system and give some examples.
 
 \begin{defn}[election system]
 Election system is a function that maps election to non-empty set of winners.
 \end{defn}
 
 Let us introduce now some examples of election systems.
-
 Plurality is an election system that for given election chooses winners as the candidates
 with the highest number of voters who ranked them on the first position.
-
 Veto is an election system where winners are candidates with
 the lowest number of voters who ranked them on the last position.
-
 Borda is an elections system in which each voter gives its $i$-th candidate score $i$.
 Winners are candidates with lowest scores.
-
 Given two candidates we say that a pairwise victory of one of them
 is a situation when a majority of voters prefer that candidate from the other one.
 The opposite situation is a pairwise defeat.

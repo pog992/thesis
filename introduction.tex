@@ -3,8 +3,8 @@ one or many winners among multiple candidates.
 It is an established way of aggregating opinions of multiple agents into a single global decision.
 Group decision making is crucial in contemporary societies.
 It is used in both formal election systems, such as parliamentary elections,
-and also in informal casual situation, such as deciding on the date of meeting that suits most interested parties.
-It may be used also to reach consensus in distributed computer systems, e.g. as in the Paxos algorithm \cite{paxos}.
+and also in informal casual situations, such as deciding on the date of meeting that suits most interested parties.
+It may be used also to reach consensus in distributed computer systems, e.g., as in the Paxos algorithm \cite{paxos}.
 
 \section{Attacking Elections with Clones}
 
@@ -24,7 +24,7 @@ depending on the person performing the attack.
 We are interested in the variant where the new candidates are very similar to some of the existing ones.
 So similar, that they are indistinguishable or hardly distinguishable for voters.
 We call such candidates clones.
-Clones can be deliberately introduced to election to alter its outcome.
+Clones can be deliberately introduced to an election to alter its outcome.
 
 Our goal in this work is to assess how dangerous are such clone-based attacks.
 We aim to figure out whether such an attack took place, or, at least, likely took place.
@@ -43,7 +43,7 @@ It states that no election system can simultaneously satisfy a set of specific f
 Computational approach to elections has been described in the work of
 Brandt et al. \cite{compsocialchoice}.
 They view the social choice theory from the algorithmic perspective.
-It studies the problem of strategic manipulation
+For example, algorithmic studies of elections include considering the problem of strategic manipulation
 and circumventing impossibilities pointed by the Gibbard–Satterthwaite Theorem.
 The theorem states that a voting rule that is deterministic and not dictatorial is susceptible to tactical voting
 -- situation when a voter can vote not accordingly to his sincere preference in order to prevent an undesirable outcome.
@@ -53,12 +53,11 @@ making the attack computationally prohibitive.
 For some election systems it was proven that the algorithms of seeking the attack on the elections are \np-hard.
 The work studied also dichotomy theorems for elections systems to be computationally resistant to attacks.
 
-More background on computational-complexity approach to elections can be found
-in the work of Bartholdi and Orlin \cite{usingcomp1}.
-They studied computational resilience to attacks of the Single Transferable Vote election system.
-They showed that the problem of finding a preference that makes given candidate win the election is \np-complete.
-Another work of Bartholdi et al. \cite{usingcomp2} shows an election system,
+Early work on computational-complexity approach to elections includes, e.g.,
+work of Bartholdi et al. \cite{usingcomp2}, who show an election system,
 where computing winners can be done efficiently, but strategic manipulation is computationally prohibitive.
+Bartholdi and Orlin \cite{usingcomp1} studied computational resilience to attacks of the Single Transferable Vote election system.
+They showed that the problem of finding a preference that makes given candidate win the election is \np-complete.
 
 Bartholdi et al. \cite{controlbyadding} studied the computational complexity of altering the election
 outcome by introducing new candidates.
@@ -70,8 +69,8 @@ Tideman \cite{independenceofclones} discusses an attack on elections where new c
 very similar to existing ones, clones, are introduced to change the outcome of an election.
 He formulates a condition that makes voting rules resilient to such attacks.
 
-Algorithms for cloning for various voting rules are studied by Elking et al. \cite{cloninginelections}.
-They characterize the preference profiles for which exists successful attack by cloning.
+Algorithms for cloning for various voting rules are studied by Elkind et al. \cite{cloninginelections}.
+They characterize the preference profiles for which successful attacks by cloning exist.
 They also study the problem of finding minimum-cost attack for a model with weighted cost of producing each clone.
 
 Elkind et al. \cite{clonestructures} give properties of clone structures, regardless of the voting rule.

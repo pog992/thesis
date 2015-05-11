@@ -10,7 +10,7 @@ We call such candidates clones and and a set of pairwise indistinguishable candi
 We expect a total order over the set of candidates for each voter,
 so every voter needs to somehow break ties.
 Still, members of a single clone set are ranked consecutively by every voter.
-This leads to the following definition of the clone set.
+This leads to the following definition of a clone set.
 
 \begin{defn}[clone set]
 We say that a non-empty set $X \subseteq C$ is a clone set
@@ -95,7 +95,8 @@ We will use the following in the proof.
 
 \begin{rmrk} \label{sequence-split}
 We note that a decloning corresponds to some splitting into parts
-the sequence from the preference order of the $i$-th voter for $i=1,...,n$ (e.g. the first voter).
+the sequence from the preference order of the $i$-th voter for $i=1,...,n$
+(e.g., the first voter).
 \end{rmrk}
 
 \begin{proof}[Proof of Theorem \ref{decloning-is-in-p}.]
@@ -135,8 +136,8 @@ $$ \mathit{IsDeclonable}(i,j) =
 $$
 
 Direct implementation of this recursion with memoizing
-results in a polynomial-time algorithm that computes the value of $IsDeclonable(n,k)$
-solving the \textsc{Decloning} problem.
+results in a polynomial-time algorithm that computes the value of $IsDeclonable(n,k)$.
+It solves the \textsc{Decloning} problem.
 \end{proof}
 
 

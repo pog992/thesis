@@ -1,7 +1,7 @@
 In this chapter we generalize our problem to allow for partitioning $C$ into parts
 that are not necessarily clone sets, but that are, nonetheless, close to being clone sets in some sense.
-We formalize the measurement of distance from given partition to some decloning.
-For given preference profile we try to find a partition that minimizes the distance value.
+We formalize the measurement of distance from a given partition to some decloning.
+For a given preference profile we try to find a partition that minimizes the distance value.
 
 \section{General Problem}
 
@@ -27,8 +27,8 @@ where we try to minimize the sum of errors of parts of candidate set partition.
 
 \begin{problem}{OptimalDecloning}
 	Input: Preference profile $P$ over candidate set $C$, integer $k$, positive real number $l$,
-        clone set error function $f$ encoded as a Turing machine that given input $X$ computes $f(X)$
-        in at most $a \abs{X}^b$ steps for some integers $a$ and $b$
+        clone set error function $f$ encoded as a Turing machine that given input $P,X$ computes $f(X)$
+        in at most $a \abs{P}^b$ steps for some integers $a$ and $b$
 
 	Question: Is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f(C_i) \leq l$?
 \end{problem}
@@ -130,13 +130,13 @@ Given a specific error function we will consider the following family of problem
 \end{problem}
 
 We want from such an error function $f$ to capture the intuitive notion
-of distance of given partition from some decloning.
+of distance of a given partition from some decloning.
 
 \subsection{Component Error Function}
 
 We note that in decloning each clone set occurs in a contiguous part of every voter's preference order.
 We may use this feature to compute clone set error for any partition.
-Let the value of component error function on given part be the sum of excessive connected components
+Let the value of component error function on a given part be the sum of excessive connected components
 of this part in each voter's preference order.
 
 \begin{exmp}
@@ -147,7 +147,7 @@ a \succ_1 b \succ_1 c \succ_1 d \succ_1 e,\\
 e \succ_2 d \succ_2 c \succ_2 a \succ_2 b,\\
 a \succ_3 b \succ_3 e \succ_3 d \succ_3 c.
 \end{align*}
-The value of component error function for subset $\{b,c,e\}$ is $4$.
+The value of the component error function for subset $\{b,c,e\}$ is $4$.
 The subset is split into one extra piece on preference orders $\succ_1$ and $\succ_3$
 ($\{b,c\}, \{e\}$ and $\{b,e\}, \{c\}$ respectively),
 and two extra pieces on preference order $\succ_2$ ($\{e\}, \{c\}, \{b\}$).
@@ -167,7 +167,7 @@ We will call such a relation a kernel of $\succ$.
 It is easy to recover $\succ$ from $\overline{\succ}$
 simply by taking the transitive closure of $\overline{\succ}$.
 
-\begin{defn}[kernel of total order]
+\begin{defn}[kernel of a total order]
 Given a total order $\succ$ over a finite set, we say that $\overline{\succ}$ is its kernel when
 $\overline{\succ}$ is a minimal relation whose transitive closure equals $\succ$.
 \end{defn}
@@ -200,12 +200,11 @@ Now we may formulate optimal decloning problem that uses component error functio
 		is there a partition of $C$ into $C_1, ..., C_k$ such that $\sum_{i=1}^k f_{com}(C_i) \leq l$?
 \end{problem}
 
-We will express this problem in a language of graph theory.
-
+We will express this problem in the language of graph theory.
 Given a preference profile $P = (\succ_1, ..., \succ_m)$ over candidate set $C$,
 let us create a multigraph $G=(C,E)$.
 Let $E$ be the multiset union of sets
-$\left\lbrace \left\lbrace a,b \right\rbrace: a \succ_i b \right\rbrace$ for $i=1, ..., m$.
+$\left\lbrace \left\lbrace a,b \right\rbrace: a \overline{\succ_i} b \right\rbrace$ for $i=1, ..., m$.
 We got a multigraph created from multiset union of edges of some Hamiltonian paths,
 for each voter's preference order.
 Let us call this a Hamiltonian path multigraph.
@@ -240,17 +239,17 @@ Let us note that $\sum_{i=1}^k c_{ij}$ is the total number of $C_i$ intra-part e
 and $\sum_{j=i}^m \sum_{i=1}^k c_{ij}$ is the total number of intra-part edges.
 As value of $m(n-k)$ is constant for a given graph,
 we have that \textsc{ComponentOptimalDecloning} is, essentially, a problem of maximizing the number of intra-part edges.
-We will call that number a score of partition.
+We will call that number the score of the partition.
 
 \begin{defn}[partition score]
 Let $G=(V,E)$ be a multigraph, where $E=(D, e)$ for some edge set $D$,
 and let $(V_1, ..., V_k)$ be a partition of $V$.
-We say that a score of part $V_i$ for $i=1,...,k$ equals $\sum_{u,v \in V_i} e(\{u,v\})$.
-We say that a partition score is a sum of the scores of its parts.
+We say that the score of part $V_i$ for $i=1,...,k$ equals $\sum_{u,v \in V_i} e(\{u,v\})$.
+We say that the partition score is the sum of the scores of its parts.
 \end{defn}
 
 \begin{rmrk}
-Score of a part that is a singleton equals $0$.
+The score of a part that is a singleton equals $0$.
 \end{rmrk}
 
 This lets us formulate another problem, which is polynomially reducible
@@ -289,7 +288,7 @@ The following lemma uses these properties to reason on the answer to the origina
 
 \begin{lmm} \label{hpmp-red}
 Let graph $G = (V, E)$ and integer $c$ be an instance of the \textsc{Clique} problem.
-Let $G'=(V',E')$,  be a Hamiltonian path multigraph
+Let $G'=(V',E')$ be a Hamiltonian path multigraph
 such that $V' \supset V$, $E'=(\{\{u,v\}: u,v \in V'\}, w)$, and
 $$ w(\{u,v\}) =
 \begin{cases}

@@ -9,17 +9,17 @@ It also introduces some \np-complete decision problems for further use.
 
 \section{Mathematics}
 
-Table \ref{symbols} presents symbol that we use in this work.
+Table \ref{symbols} presents symbols that we use in this work.
 
 \begin{table} \centering
 \begin{tabular}{| l | l |} \hline
-	$\mathbb{N}_0$	& natural numbers including zero \\ \hline
-	$\mathbb{N}_+$	& positive natural numbers \\ \hline
-	$\mathbb{R}$	& real numbers \\ \hline
-	$\mathbb{R}_0^+$& non-negative real numbers \\ \hline
-	$\mathbb{P}$	& prime numbers \\ \hline
+	$\mathbb{N}_0$	& set of natural numbers including zero \\ \hline
+	$\mathbb{N}_+$	& set of positive natural numbers \\ \hline
+	$\mathbb{R}$	& set of real numbers \\ \hline
+	$\mathbb{R}_0^+$& set of non-negative real numbers \\ \hline
+	$\mathbb{P}$	& set of prime numbers \\ \hline
 	$\sum$			& sum \\ \hline 
-	$\bigcup \cdot$	& union of elements of set\\ \hline
+	$\bigcup A$	& union of elements of set A\\ \hline
 	$\abs{\cdot}$	& set cardinality \\ \hline
 	$2^\cdot$		& family of subsets \\ \hline
 	$f''$			& second derivative of function $f$ \\ \hline
@@ -28,18 +28,18 @@ Table \ref{symbols} presents symbol that we use in this work.
 \caption{Mathematical symbols used throughout the work.} \label{symbols}
 \end{table}
 
-We need the notion of total order to model voters' preferences.
+We need the notion of a total order to model voters' preferences.
 
 \begin{defn}[total order]
 A total order over set $X$ is a binary relation $\succ$ on $X$ which~is:
 \begin{itemize}
-	\item transitive, i.e. $\forall a,b,c \in X: a \succ b \land b \succ c \Rightarrow a \succ c$,
-	\item antisymmetric, i.e. $\forall a,b \in X: a \succ b \land b \succ a \Rightarrow a=b $,
-	\item total, i.e. $\forall a,b \in X: a \succ b \lor b \succ a$.
+	\item transitive, i.e., $\forall a,b,c \in X: a \succ b \land b \succ c \Rightarrow a \succ c$,
+	\item antisymmetric, i.e., $\forall a,b \in X: a \succ b \land b \succ a \Rightarrow a=b $,
+	\item total, i.e., $\forall a,b \in X: a \succ b \lor b \succ a$.
 \end{itemize}
 \end{defn}
 
-We will use the following to define a useful subrelation of total order.
+We will use the following to define a useful subrelation for total orders.
 
 \begin{defn}[transitive closure]
 Transitive closure $R^*$ of relation $R$ is a minimal transitive relation 
@@ -67,7 +67,7 @@ We also generalize the notion of set union to multiset union.
 
 \begin{defn}[multiset union]
 We say that multiset $M = (X, c)$ is a multiset union of sets from family $F = \{S_1, ..., S_n\}$
-if $M = \bigcup F$ and for each $x \in X$ we have that $c(x) = \abs{\{S \in F : x \in S\}}$.
+if $X = \bigcup F$ and for each $x \in X$ we have that $c(x) = \abs{\{S \in F : x \in S\}}$.
 \end{defn}
 
 Set partition is the core of our work.
@@ -79,7 +79,7 @@ such that for every $a \in X$ there is exactly one $Y \in F$ such that $a \in Y$
 \end{defn}
 
 We will model our problems with graphs.
-More background on described in Wilson's classical book \cite{graphtheory}.
+More background on graphs is described in Wilson's classical book \cite{graphtheory}.
 
 \begin{defn}[graph]
 A graph $G$ is an ordered pair $(V,E)$, where $V$ is the set of vertices and $E$ is the set of edges.
@@ -103,14 +103,17 @@ if $V' \subset V$, $E' \subset E$, and for each $u,v \in V'$
 the number of occurrences of $\{u,v\}$ in $E'$ is equal to the number of occurrences of $\{u,v\}$ in $E$.
 \end{defn}
 
+Hamiltonian path in a graph is a path that visits each vertex exactly once.
+
 \begin{defn}[Hamiltonian path]
 A Hamiltionian path in (multi)graph $(V,E)$
 is a sequence of edges $\{u_1, u_2\}, \{u_2, u_3\} ..., \{u_{n-1}, u_n\}$,
-such that for each $i=1,...,n-1$ we have $\{u_i, u_{i+1}\} \in E$.
+such that for each $i=1,...,n-1$ we have $\{u_i, u_{i+1}\} \in E$
+and $\{u_1, ..., u_n\} = V$.
 \end{defn}
 
 
-The following theorem states that prime number are dense.
+The following theorem states that prime numbers are dense.
 We will need that to set an upper bound on the smallest $p \in \mathbb{P}$
 bigger that some $n \in \mathbb{N}$.
 
@@ -121,7 +124,7 @@ For any integer $n>1$ there exists $p \in \mathbb{P}$ such that $n < p < 2n$.
 Its proof can be found in Galvin's work \cite{bertrand}.
 
 \begin{thm} \label{zp}
-Let $p$ be a prime number and $a$ some positive integer less than $p$.
+Let $p$ be a prime number and let $a$ be some positive integer smaller than $p$.
 We have that values $a, 2a, ..., pa$ divided modulo $p$ give all the remainders from the set $\{0, ..., p-1\}$.
 \end{thm}
 
@@ -166,13 +169,13 @@ and $(a_1, ..., a_n) \neq (b_1, ..., b_n)$, then
 $\sum_{i=1}^n f(a_i) > \sum_{i=1}^n f(b_i)$.
 \end{thm}
 
-A proof of the equality can be found in Kadelburg's et al. work \cite{karamata}.
+A proof of the equality can be found in Kadelburg et al.'s work \cite{karamata}.
 
 \section{Complexity Theory}
 
 We will not give full introduction to the computational complexity theory here,
 but instead we will review the most important notions.
-Papadimitriou's \cite{compcomplexity}, and Garey's and Johnson's \cite{computersandintractability} textbooks
+Papadimitriou's \cite{compcomplexity}, and Garey and Johnson's \cite{computersandintractability} textbooks
 contain more complete and more formal descriptions of the topic.
 
 We model algorithms through the notion of a \textit{Turing machine}.
@@ -280,11 +283,12 @@ Now we will introduce some \np-hard (indeed, \np-complete) problems.
 	Question: Is there an $n$-element subset $A \subset S$ such that $\bigcup A = X$?
 \end{problem}
 
-\begin{thm}
+\begin{thm} \label{x3s-is-hard}
 \textsc{X3C} is \np-complete.
 \end{thm}
 
-Its proof can be found in Garey's and Johnson's textbook \cite{computersandintractability}.
+The proof of Theorem \ref{x3c-is-hard} can be found, e.g., in
+Garey and Johnson's textbook \cite{computersandintractability}.
 
 \begin{problem}{Clique}
     Input: Graph $G = (V, E)$, integer $c$.
@@ -292,11 +296,12 @@ Its proof can be found in Garey's and Johnson's textbook \cite{computersandintra
     Question: Is there a subgraph of $G$ that is a clique of size $c$?
 \end{problem}
 
-\begin{thm}
+\begin{thm} \label{clique-is-hard}
 \textsc{Clique} is \np-complete.
 \end{thm}
 
-Again, its proof in included in the textbook \cite{computersandintractability}.
+Again, the proof of Theorem \ref{clique-is-hard} can be found, e.g.,
+in the textbook \cite{computersandintractability}.
 
 
 We will show an example of an \np-completeness proof by giving a reduction.
@@ -328,7 +333,7 @@ We will show that this is a valid reduction to \textsc{GraphPartition}.
 Let us first consider the case where the answer to the \textsc{Clique} problem is \textsc{yes},
 i.e., $G$ contains a clique consisting of $c$ vertices $C$.
 We may then partition $V$ into $k$ parts:
-$C$ istelf and $n-c$ singletons of the remaining vertices from $V \backslash C$.
+$C$ itself and $n-c$ singletons of the remaining vertices from $V \backslash C$.
 The number of intra-part edges equals $c(c-1)/2$ for part $C$ and $0$ for the remaining parts.
 This gives $l$ in total, so the answer to \textsc{GraphPartition} problem is \textsc{yes} as well.
 
