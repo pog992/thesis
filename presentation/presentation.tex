@@ -1,0 +1,78 @@
+\documentclass{beamer}
+%\usetheme{Warsaw}
+\useoutertheme{split}
+\useinnertheme{rounded}
+\usecolortheme{crane}
+\beamertemplatenavigationsymbolsempty
+
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage[polish]{babel}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{wrapfig}
+
+\usepackage{environ}
+
+\NewEnviron{aproblem}[1]{%
+\begin{center}\fbox{\parbox{\linewidth}{%
+    {\centering\scshape #1\par}%
+    \parskip=1ex
+    \everypar{\hangindent=1em}%
+    \BODY
+}}\end{center}}
+
+
+\begin{document}	
+\title[Złożoność obliczeniowa wykrywania klonów w wyborach]{Złożoność obliczeniowa\\ wykrywania klonów w wyborach}
+\author[Szymon Gut]{Szymon Gut\\ \hfill \\opiekun pracy:\\dr hab. inż. Piotr Faliszewski}
+%\institute{AGH}
+\date{}
+\frame{\titlepage}
+
+%\begin{frame} \frametitle{Spis treści}
+%		\tableofcontents
+%\end{frame}
+
+\begin{frame} \frametitle{Podejście}
+  obrona przed atakami na systemy wyborcze przez wykrywanie ich
+
+  jeśli wykrywanie 
+\end{frame}
+
+\begin{frame} \frametitle{Atak przez klonowanie}
+
+\end{frame}
+
+\begin{frame} \frametitle{Wybory}
+  zbiór kandydatów $C$
+\end{frame}
+
+\begin{frame} \frametitle{Klony}
+
+\end{frame}
+
+\begin{frame} \frametitle{Deklonowanie}
+  \begin{aproblem}{Deklonowanie}
+    Wejście: profil preferencji $P$ nad zbiorem kandydatów $C$, liczba naturalna $k$
+
+    Pytanie: czy istnieje deklonowanie dla $P$ o mocy $k$?
+  \end{aproblem}
+
+  $\textsc{Deklonowanie} \in \text{P}$
+
+\end{frame} 
+
+\begin{frame} \frametitle{Niedoskonałe klony}
+  przyjmujemy funkcję błędu $f: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{R}_0^+$,
+  która mierzy błąd danego niepustego podzbioru kandydatów 
+\end{frame}
+
+\begin{frame} \frametitle{Wnioski}
+  
+\end{frame}
+
+\frame{\titlepage}
+
+\end{document}
