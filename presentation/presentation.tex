@@ -15,8 +15,13 @@
 \usepackage{subcaption}
 \usepackage{marvosym}
 \usepackage{color}
+\usepackage{tabularx}
 
 \usepackage{environ}
+
+\newtheorem{tw}{Twierdzenie}
+
+\renewcommand{\tabularxcolumn}[1]{>{\small}m{#1}}
 
 \NewEnviron{aproblem}[1]{%
 \begin{center}\fbox{\parbox{\linewidth}{%
@@ -95,41 +100,100 @@
 	\end{align*}
 \end{frame}
 
-\begin{frame} \frametitle{Klony}
+\begin{frame} \frametitle{Klony, deklonowanie}
 	\begin{align*}
 		\textcolor{blue}{a \succ_1 b \succ_1 c} \succ_1 \textcolor{red}{d} \succ_1 \textcolor{green}{e \succ_1 f} \\
 		\textcolor{blue}{b \succ_2 c \succ_2 a} \succ_2 \textcolor{red}{d} \succ_2 \textcolor{green}{f \succ_2 e} \\
 		\textcolor{green}{e \succ_3 f} \succ_3 \textcolor{blue}{c \succ_3 b \succ_3 a} \succ_3 \textcolor{red}{d} \\
 		\textcolor{red}{d} \succ_4 \textcolor{green}{f \succ_4 e} \succ_4 \textcolor{blue}{a \succ_4 c \succ_4 b}
 	\end{align*}
+	
+	\begin{aproblem}{Deklonowanie}
+    Wejście: profil preferencji $P$ nad zbiorem kandydatów $C$,\\
+    	liczba naturalna $k$
+
+    Pytanie: czy istnieje podział zbioru kandydatów $C$ na $k$ klonów?
+  \end{aproblem}
 \end{frame}
 
-\begin{frame} \frametitle{Deklonowanie}
-  \begin{aproblem}{Deklonowanie}
-    Wejście: profil preferencji $P$ nad zbiorem kandydatów $C$, liczba naturalna $k$
-
-    Pytanie: czy istnieje deklonowanie dla $P$ o mocy $k$?
-  \end{aproblem}
-
-  $\textsc{Deklonowanie} \in \text{P}$
-
+\begin{frame} \frametitle{Klasa złożoności problemu \textsc{Deklonowanie}}
+	\begin{tw}
+		Problem \textsc{Deklonowanie} należy do klasy P.
+	\end{tw}
+	\vfill
+	Algorytm dynamiczny...
+	\begin{itemize}
+		\item sprawdzanie w czasie wielomianowym, czy dany podzbiór kandydatów jest klonem
+		\item podział zbioru kandydatów będzie podziałem preferencji pierwszego wyborcy
+		\item dynamicznie dla każdego prefiksu preferencji pierwszego wyborcy
+			oraz dla każdego $i=1,...,k$ sprawdzamy, czy da się deklonować ten prefiks na $i$ klonów
+	\end{itemize}
 \end{frame} 
 
-\begin{frame} \frametitle{Niedoskonałe klony}
+\begin{frame} \frametitle{Niedoskonałe klony -- problem optymalizacyjny}
   przyjmujemy funkcję błędu $f: 2^C \setminus \{\emptyset\} \rightarrow \mathbb{R}_0^+$,
   która mierzy błąd danego niepustego podzbioru kandydatów 
+  
+  
+	\begin{aproblem}{Optymalne Deklonowanie}
+		Wejście: profil preferencji $P$ nad zbiorem kandydatów $C$,\\
+			liczba naturalna $k$, dodatnia liczba rzeczywista $l$, funkcja błędu $f$
+
+		Pytanie: czy istnieje podział $C$ na $C_1, ..., C_k$ taki, że $\sum_{i=1}^k f(C_i) \leq l$?
+	\end{aproblem}
+
+	\vfill
+	
+	\begin{tw}
+		Problem \textsc{Optymalne Deklonowanie} jest $\text{NP}$-zupełny.
+	\end{tw}
+	
+	Redukcja z problemu \textsc{Exact 3 Cover}.
+\end{frame}
+
+\begin{frame} \frametitle{Komponentowa funkcja błędu}
+	Przykład: $C = \{a, b, c, d, e\}$, $P = (\succ_1, \succ_2, \succ_3)$,
+	
+	\begin{align*}
+		a \succ_1 b \succ_1 c \succ_1 d \succ_1 e\\
+		e \succ_2 d \succ_2 c \succ_2 a \succ_2 b\\
+		a \succ_3 b \succ_3 e \succ_3 d \succ_3 c
+	\end{align*}
+	\vfill
+	
+	$f_{com}(\{b,c,e\}) = 4$ \\
+	$f_{com}(\{c,d,e\}) = 0$ \\
+	$f_{com}(\{a,c\}) = 2$
+\end{frame}
+
+\begin{frame} \frametitle{Problem optymalizacyjny dla funkcji komponentowej}
+	\begin{aproblem}{Komponentowe Optymalne Deklonowanie}
+		Wejście: profil preferencji $P$ nad zbiorem kandydatów $C$,\\
+			liczby naturalne $k$ i $l$
+
+		Pytanie: czy istnieje podział $C$ na $C_1, ..., C_k$ taki, \\
+			że $\sum_{i=1}^k f_{com}(C_i) \leq l$?
+	\end{aproblem}
+
+	\vfill	
+	
+	\begin{tw}
+		Problem \textsc{Komponentowe Optymalne Deklonowanie} jest $\text{NP}$-zupełny.
+	\end{tw}
+	
+	Interpretacja (multi)grafowa i redukcja z problemu \textsc{Clique}.
 \end{frame}
 
 \begin{frame} \frametitle{Wyniki}
 
 
-\begin{tabular}{| c | c |}\hline
-	\textbf{problem} & \textbf{klasa zł. obl.} \\ \hline
+\begin{tabularx}{\textwidth}{| X | X |}\hline
+	\textbf{problem} & \textbf{klasa złożoności} \\ \hline
 	\textsc{Deklonowanie} & P \\ \hline
-	\textsc{OptymalneDeklonowanie} & NP-complete \\ \hline
-	\textsc{KomponentoweOptymalneDeklonowanie} & NP-complete \\ \hline
-	\textsc{ConsistentVotersOptimalDecloning} & NP \\ \hline
-\end{tabular}
+	\textsc{\mbox{Optymalne Deklonowanie}} & NP-zupełny \\ \hline
+	\textsc{Komponentowe \mbox{Optymalne Deklonowanie}} & NP-zupełny \\ \hline
+	%\textsc{\mbox{Optymalne Deklonowanie} \mbox{Dla Zgodnych Wyborców}} & NP \\ \hline
+\end{tabularx}
 
 \end{frame}
 
