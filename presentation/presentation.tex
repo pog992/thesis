@@ -12,6 +12,9 @@
 \usepackage{listings}
 \usepackage{amsthm}
 \usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{marvosym}
+\usepackage{color}
 
 \usepackage{environ}
 
@@ -35,22 +38,70 @@
 %		\tableofcontents
 %\end{frame}
 
-\begin{frame} \frametitle{Podejście}
-  obrona przed atakami na systemy wyborcze przez wykrywanie ich
-
-  jeśli wykrywanie 
-\end{frame}
 
 \begin{frame} \frametitle{Atak przez klonowanie}
+	wprowadzenie do wyborów nowego kandydata (kandydatów), bardzo podobnego do pewnego istniejącego
+	
+	\vfill
 
+	\begin{center}
+	\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.3\textwidth}
+			\begin{tabular}{ | l |  r | } \hline
+  				$\mathbf{A}$ & \textbf{60\%} \\ \hline
+  				$B$ & 40\% \\ \hline
+			\end{tabular}
+        \end{subfigure}
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.1\textwidth}
+        	\MVRightarrow
+        \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}
+			\begin{tabular}{ | l |  r | } \hline
+  				$A$ & 35\% \\ \hline
+  				$A'$ & 25\% \\ \hline
+  				$\mathbf{B}$ & \textbf{40\%} \\ \hline
+			\end{tabular}
+        \end{subfigure}
+	\end{figure}
+	\end{center}
+\end{frame}
+
+\begin{frame} \frametitle{Podejście}
+	\begin{itemize}
+		\item obrona przed atakiem przez wykrycie go
+										
+		\vfill
+		\item jeśli wykrywanie da się przeprowadzić efektywnie,\\
+				 atak uznajemy za mało groźny
+		\item w przeciwnym razie, atak może być niebezpieczny
+	\end{itemize}
 \end{frame}
 
 \begin{frame} \frametitle{Wybory}
-  zbiór kandydatów $C$
+  zbiór kandydatów $C$, \\ 
+  pełne preferencje wyborcze każdego wyborcy (porządek liniowy nad zbiorem kandydatów), mamy tzw. profil preferencji $P$
+
+	\vfill
+
+	Przykład: $C = \{a, b, c, d\}$, $P = (\succ_1, \succ_2, \succ_3, \succ_4)$
+   	\begin{align*}
+		a \succ_1 b \succ_1 c \succ_1 d \succ_1 e \succ_1 f \\
+		b \succ_2 c \succ_2 a \succ_2 d \succ_2 f \succ_2 e \\
+		e \succ_3 f \succ_3 c \succ_3 b \succ_3 a \succ_3 d \\
+		d \succ_4 f \succ_4 e \succ_4 a \succ_4 c \succ_4 b
+	\end{align*}
 \end{frame}
 
 \begin{frame} \frametitle{Klony}
-
+	\begin{align*}
+		\textcolor{blue}{a \succ_1 b \succ_1 c} \succ_1 \textcolor{red}{d} \succ_1 \textcolor{green}{e \succ_1 f} \\
+		\textcolor{blue}{b \succ_2 c \succ_2 a} \succ_2 \textcolor{red}{d} \succ_2 \textcolor{green}{f \succ_2 e} \\
+		\textcolor{green}{e \succ_3 f} \succ_3 \textcolor{blue}{c \succ_3 b \succ_3 a} \succ_3 \textcolor{red}{d} \\
+		\textcolor{red}{d} \succ_4 \textcolor{green}{f \succ_4 e} \succ_4 \textcolor{blue}{a \succ_4 c \succ_4 b}
+	\end{align*}
 \end{frame}
 
 \begin{frame} \frametitle{Deklonowanie}
@@ -69,8 +120,17 @@
   która mierzy błąd danego niepustego podzbioru kandydatów 
 \end{frame}
 
-\begin{frame} \frametitle{Wnioski}
-  
+\begin{frame} \frametitle{Wyniki}
+
+
+\begin{tabular}{| c | c |}\hline
+	\textbf{problem} & \textbf{klasa zł. obl.} \\ \hline
+	\textsc{Deklonowanie} & P \\ \hline
+	\textsc{OptymalneDeklonowanie} & NP-complete \\ \hline
+	\textsc{KomponentoweOptymalneDeklonowanie} & NP-complete \\ \hline
+	\textsc{ConsistentVotersOptimalDecloning} & NP \\ \hline
+\end{tabular}
+
 \end{frame}
 
 \frame{\titlepage}
