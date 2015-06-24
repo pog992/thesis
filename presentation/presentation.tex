@@ -16,6 +16,8 @@
 \usepackage{marvosym}
 \usepackage{color}
 \usepackage{tabularx}
+\usepackage{bm}
+\usepackage{amsmath}
 
 \usepackage{environ}
 
@@ -121,12 +123,14 @@
 		Problem \textsc{Deklonowanie} należy do klasy P.
 	\end{tw}
 	\vfill
-	Algorytm dynamiczny...
+	Algorytm dynamiczny:
 	\begin{itemize}
-		\item sprawdzanie w czasie wielomianowym, czy dany podzbiór kandydatów jest klonem
-		\item podział zbioru kandydatów będzie podziałem preferencji pierwszego wyborcy
-		\item dynamicznie dla każdego prefiksu preferencji pierwszego wyborcy
-			oraz dla każdego $i=1,...,k$ sprawdzamy, czy da się deklonować ten prefiks na $i$ klonów
+		\item podział zbioru kandydatów na klony będzie podziałem preferencji pierwszego wyborcy
+		\item sprawdzanie w czasie wielomianowym, czy dany spójny podciąg $a..b$ preferencji
+			pierwszego kandydata jest klonem -- $IsCloneSet(a, b)$
+		\item dynamicznie dla każdego prefiksu o rozmiarze $i$ preferencji pierwszego wyborcy
+			oraz dla każdego $j=1,...,k$ sprawdzamy, czy da się deklonować ten prefiks na $j$ klonów \\
+			$IsDeclonable(i,j) = [\exists t < i : IsDeclonable(t, j-1) \wedge IsCloneSet(t+1, i)]$
 	\end{itemize}
 \end{frame} 
 
@@ -151,7 +155,7 @@
 	Redukcja z problemu \textsc{Exact 3 Cover}.
 \end{frame}
 
-\begin{frame} \frametitle{Komponentowa funkcja błędu}
+\begin{frame} \frametitle{Komponentowa funkcja błędu $f_{com}$}
 	Przykład: $C = \{a, b, c, d, e\}$, $P = (\succ_1, \succ_2, \succ_3)$,
 	
 	\begin{align*}
@@ -181,11 +185,25 @@
 		Problem \textsc{Komponentowe Optymalne Deklonowanie} jest $\text{NP}$-zupełny.
 	\end{tw}
 	
-	Interpretacja (multi)grafowa i redukcja z problemu \textsc{Clique}.
+	%Interpretacja (multi)grafowa i redukcja z problemu \textsc{Clique}.
 \end{frame}
 
-\begin{frame} \frametitle{Wyniki}
+\begin{frame} \frametitle{Szkic dowodu}	
+	Postać równoważna:
+	\begin{itemize}
+		\item tworzymy multigraf, w którym wierzchołki są kandydatami
+		\item dla każdego wyborcy do grafu dokładamy ścieżkę Hamiltona stworzoną z jego preferencji
+		\item w nowym problemie należy pogrupować wierzchołki na $k$ części, tak, aby odpowiednio mało
+		 	krawędzi łączyło różne części
+	\end{itemize}
+	\vfill
+	Redukcja z problemu \textsc{Clique} do problemu grafowego:\\
+	tworzymy taki multigraf, żeby istniała w nim część odpowiednio duża, w której wszystkie krawędzie są podwójne
+	tylko wtedy, gdy~w~grafie wejściowym istnieje szukana klika.
+\end{frame}
 
+
+\begin{frame} \frametitle{Wyniki}
 
 \begin{tabularx}{\textwidth}{| X | X |}\hline
 	\textbf{problem} & \textbf{klasa złożoności} \\ \hline
